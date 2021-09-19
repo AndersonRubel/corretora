@@ -10,8 +10,8 @@ $className = $base->getControllerName();
     <title><?= env('app.nomeSistema'); ?> | <?= str_replace('Controller', '', $className); ?></title>
     <link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/app-logo.svg'); ?>" />
 
-    <meta name="application-name" content="Porta Jóias">
-    <meta name="description" content="Sistema Porta Jóias">
+    <meta name="application-name" content="Corretora">
+    <meta name="description" content="Sistema Corretora">
     <meta name="msapplication-TileColor" content="#FFFFFF">
     <meta name="msapplication-TileImage" content="<?= base_url('assets/img/favicon/mstile-144x144.png'); ?>">
     <meta name="msapplication-square70x70logo" content="<?= base_url('assets/img/favicon/mstile-70x70.png'); ?>">
@@ -72,7 +72,7 @@ $className = $base->getControllerName();
     <!-- Tinymce -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.8.2/tinymce.min.js?versao=<?= $base->version; ?>"></script>
 
-    <!-- ILUMINAREWEB - Funções Padrão -->
+    <!-- Funções Padrão -->
     <script type="text/javascript" src="<?= base_url("assets/js/ajax-control.js"); ?>?versao=<?= $base->version; ?>"></script>
     <script type="text/javascript" src="<?= base_url("assets/js/app.js"); ?>?versao=<?= $base->version; ?>"></script>
     <script type="text/javascript" src="<?= base_url("assets/js/convert.js"); ?>?versao=<?= $base->version; ?>"></script>
@@ -80,7 +80,7 @@ $className = $base->getControllerName();
     <script type="text/javascript" src="<?= base_url("assets/js/notification.js"); ?>?versao=<?= $base->version; ?>"></script>
     <script type="text/javascript" src="<?= base_url("assets/js/ui.js"); ?>?versao=<?= $base->version; ?>"></script>
     <script type="text/javascript" src="<?= base_url("assets/js/valid.js"); ?>?versao=<?= $base->version; ?>"></script>
-    <!-- ILUMINAREWEB - Funções Padrão -->
+    <!-- Funções Padrão -->
 
     <!-- Fim :: Assets básicos que carregam em todas as telas -->
 

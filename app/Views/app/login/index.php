@@ -7,7 +7,7 @@
                         <img class="logo-icon me-2" src="assets/img/app-logo.svg" alt="logo">
                     </a>
                 </div>
-                <h2 class="auth-heading text-center mb-5">Porta Jóias</h2>
+                <h2 class="auth-heading text-center mb-5">Corretora</h2>
                 <div class="auth-form-container text-start">
                     <form class="auth-form login-form" method="POST" action="<?= base_url("login/email"); ?>">
 
@@ -42,7 +42,7 @@
                 <div class="container text-center py-3">
                     <small class="copyright">
                         Desenvolvido por
-                        <a class="app-link" href="https://iluminareweb.com.br" target="_blank">Iluminare Web</a>.
+                        <a class="app-link" href="/" target="_blank">Anderson Rubel</a>.
                         Todos os direitos reservados. - Versão <?= $base->version; ?>
                     </small>
                 </div>

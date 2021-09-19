@@ -6,7 +6,7 @@ use App\Models\BaseModel;
 
 /**
  * Relatorio de Vendas
- * @author Matheus L Lange <matheus@iluminareweb.com.br>
+ * @author Anderson Rubel <andersonrubel@gmail.com.br>
  */
 class RelatorioClientesModel extends BaseModel
 {

@@ -3,7 +3,7 @@
         <div class="container text-center py-3">
             <small class="copyright">
                 Desenvolvido por
-                <a class="app-link" href="https://iluminareweb.com.br" target="_blank">Iluminare Web</a>.
+                <a class="app-link" href="/" target="_blank">Anderson Rubel</a>.
                 Todos os direitos reservados. - Versão <?= $base->version; ?>
             </small>
         </div>

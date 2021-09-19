@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\Response;
 
 /**
  * Relatorio
- * @author Matheus L Lange <matheus@iluminareweb.com.br>
+ * @author Anderson A Rubel <andersonrubel@gmail.com.br>
  *
  *     Obrigatóriamente a Model Especifica do Relatorio (relatorioDinamicoModel) deve conter as seguintes Funções
  *      - getFiltrosDisponiveis | Disponibiliza os filtros disponiveis na Tela

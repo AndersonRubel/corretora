@@ -1,8 +1,8 @@
 {
-  "name": "iluminareweb/portajoias",
+  "name": "github/corretora",
   "type": "project",
-  "description": "Sistema Porta Jóias para gerenciamento de Vendas",
-  "homepage": "https://portajoias.iluminareweb.com.br",
+  "description": "Sistema Corretora para gerenciamento de Imóveis",
+  "homepage": "https://smcorretora.com.br",
   "license": "MIT",
   "version": "1.0.0",
   "require": {

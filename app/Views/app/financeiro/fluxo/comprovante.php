@@ -161,7 +161,7 @@
             <td colspan="4" align="center">
                 <b>Usuário:</b> <?= $fluxo['usuario_criacao']; ?><br>
                 <b>Criado em:</b> <?= $fluxo['criado_em']; ?><br>
-                www.iluminareweb.com.br -
+                www.corretora.com.br -
                 <?= date('d/m/Y H:i'); ?>
             </td>
         </tr>

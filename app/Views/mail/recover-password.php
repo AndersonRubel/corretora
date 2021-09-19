@@ -37,14 +37,14 @@
                                             </div>
                                         </div>
                                         <div style="padding-top:20px;font-size:12px;line-height:16px;color:#5f6368;letter-spacing:0.3px;text-align:center">Desenvolvido por<br>
-                                            <a href="https://iluminareweb.com.br" target="_blank" style="color:rgba(0,0,0,0.87);text-decoration:inherit">Iluminare Web</a>
+                                            <a href="/" target="_blank" style="color:rgba(0,0,0,0.87);text-decoration:inherit">Anderson Rubel</a>
                                         </div>
                                     </div>
                                     <div style="text-align:left">
                                         <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.54);font-size:11px;line-height:18px;padding-top:12px;text-align:center">
                                             <div>Para sua segurança, não encaminhe este e-mail para ninguém.</div>
                                             <a style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.54);font-size:11px;line-height:18px;padding-top:12px;text-align:center">
-                                                © <?= date("Y"); ?> Iluminare Web
+                                                © <?= date("Y"); ?> Anderson Rubel
                                             </a>
                                         </div>
                                     </div>

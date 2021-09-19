@@ -18,7 +18,7 @@
 #         os: [ubuntu-latest]
 #         slack_url: ["https://hooks.slack.com/services/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"]
 #         slack_channel: ["#software"]
-#         slack_text: ["[PRODUÇÃO] Sistema Porta Jóias Atualizado"]
+#         slack_text: ["[PRODUÇÃO] Sistema Corretora Atualizado"]
 
 #     steps:
 #       - name: Executando Deploy no ambiente de Produção

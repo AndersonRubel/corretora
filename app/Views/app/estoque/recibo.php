@@ -129,7 +129,7 @@
             <td colspan="4" align="center">
                 <b>Venda:</b> <?= $venda['codigo_venda']; ?> <br>
                 <b>Vendedor (a):</b> <?= $vendedor; ?> <br>
-                www.iluminareweb.com.br <br>
+                www.corretora.com.br <br>
                 <?= date('d/m/Y H:i'); ?>
             </td>
         </tr>

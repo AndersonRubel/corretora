@@ -1,15 +1,14 @@
 <p align="center">
-  <a href="https://iluminareweb.com.br">
-    <img src="public/assets/img/logo.png" alt="Iluminare Web" />
+  <a href="/corretora">
+    <img src="public/assets/img/logo.png" alt="Corretora" />
   </a>
 </p>
 
-<h1 align="center">Porta Jóias</h1>
-<h4 align="center">Software de gerenciamento de Vendas</h4>
+<h1 align="center">Corretora</h1>
+<h4 align="center">Software de gerenciamento de Imóveis</h4>
 
 <div align="center">
 
-[![ILUMINARE](https://img.shields.io/static/v1?label=Feito%20com%20%E2%99%A1%20por&message=ILUMINARE%20WEB&color=0E2D39&style=for-the-badge)](https://iluminareweb.com.br)
 [![INICIO](https://img.shields.io/static/v1?label=Iniciado%20em&message=Julho%20de%202021&color=41B095&style=for-the-badge)](#)
 [![PHP](https://img.shields.io/static/v1?label=PHP&message=8.0&color=73c1fe&style=for-the-badge)](#)
 [![CODEIGNITER](https://img.shields.io/static/v1?label=CODEIGNITER&message=4&color=ffbf69&style=for-the-badge)](#)
@@ -20,7 +19,7 @@
 
 ## Visão Geral
 
-O Porta Jóias é um software de gerenciamento de vendas para empresas que possui vendedores externos e precisam controlar o estoque de seus vendedores.
+O Corretora é um software de gerenciamento de imóveis.
 
 ### Pré-requisitos
 
@@ -32,13 +31,13 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ```bash
 # Tenha primeiramente em seu disco o diretorio
-$ C:\repositorio\iluminare-web (Windows) ou /var/www/html/iluminare-web (Linux/MAC)
+$ C:\repositorio\corretora (Windows) ou /var/www/html/corretora (Linux/MAC)
 
 # Clone este repositório
-$ git clone <https://github.com/Iluminare-Web/portajoias.git>
+$ git clone <https://github.com/AndersonRubel/corretora.git>
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd portajoias
+$ cd corretora
 
 # Instale as dependências
 $ composer install
@@ -77,4 +76,4 @@ $ php spark serve
 
 ## Licença
 
-MIT © [Iluminare Web](https://github.com/Iluminare-Web)
+MIT © [AndersonRubel](https://github.com/AndersonRubel)

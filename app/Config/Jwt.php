@@ -18,9 +18,9 @@ class Jwt extends BaseConfig
      * @var array
      */
     public $payload = [
-        'iss' => 'https://portajoias.iluminareweb.com.br',
-        'aud' => 'https://www.iluminareweb.com.br',
-        'sub' => 'Iluminareweb',
+        'iss' => 'https://corretora.com.br',
+        'aud' => 'https://www.corretora.com.br',
+        'sub' => 'corretora',
     ];
 
     /**

@@ -11,18 +11,11 @@ class UsuarioSeeder extends DatabaseSeeder
     public function run()
     {
         $this->saveOnce('usuario', [
-            'nome'                  => '1#_Implantação Iluminare',
-            'email'                 => 'implantacao@iluminareweb.com.br',
-            'senha'                 => password_hash('iluminareweb', PASSWORD_BCRYPT),
-            'codigo_empresa_padrao' => 3,
-            'codigo_vendedor'       => 3,
+            'nome'                  => '1#_Implantação corretora',
+            'email'                 => 'implantacao@corretora.com.br',
+            'senha'                 => password_hash('corretora', PASSWORD_BCRYPT),
+            'codigo_empresa_padrao' => 1,
+            'codigo_vendedor'       => 1,
         ]);
-
-        // $this->saveOnce('usuario', [
-        //     'nome'                  => 'Suporte Iluminare',
-        //     'email'                 => 'suporte@iluminareweb.com.br',
-        //     'senha'                 => password_hash('iluminareweb', PASSWORD_BCRYPT),
-        //     'codigo_empresa_padrao' => 3,
-        // ]);
     }
 }
