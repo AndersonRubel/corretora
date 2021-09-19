@@ -6,7 +6,7 @@ use Exception;
 
 use App\Models\Cadastro\CadastroMenuModel;
 use App\Models\Empresa\EmpresaModel;
-use App\Models\Estoque\EstoqueModel;
+use App\Models\Produto\ProdutoModel;
 use App\Models\Log\LogLoginModel;
 use App\Models\Usuario\UsuarioModel;
 
@@ -49,7 +49,7 @@ class LoginController extends BaseController
         $empresaModel = new EmpresaModel;
         $cadastroMenuModel = new CadastroMenuModel;
         $usuarioModel = new UsuarioModel;
-        $estoqueModel = new EstoqueModel;
+        $produtoModel = new ProdutoModel;
         $dadosRequest = $this->request->getVar();
         $erros = $this->validarRequisicao($this->request, [
             'email' => 'required|valid_email',
@@ -122,11 +122,11 @@ class LoginController extends BaseController
         }
 
         // Busca os dados da Empresa
-        $estoque = $estoqueModel->get(['codigo_empresa' => $empresa['codigo_empresa'], 'padrao' => 't'], ['codigo_estoque'], true);
+        $produto = $produtoModel->get(['codigo_empresa' => $empresa['codigo_empresa']]);
 
         // Monta um Array com os dados que ficarão na Sessão
         $dadosSessao['usuario']                   = $usuario;
-        $dadosSessao['usuario']['codigo_estoque'] = !empty($estoque['codigo_estoque']) ? $estoque['codigo_estoque'] : null;
+        $dadosSessao['usuario']['codigo_produto'] = !empty($produto['codigo_produto']) ? $produto['codigo_produto'] : null;
         $dadosSessao['usuario']['avatar_base64']  = $this->getFileImagem($usuario['diretorio_avatar']);
         $dadosSessao['usuario']['data_login']     = date('Y-m-d H:i');
         $dadosSessao['empresa']                   = $empresa;

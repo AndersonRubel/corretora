@@ -62,17 +62,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
     // Rotas que necessitam de Permissão
     $routes->group('', ['filter' => 'permissao'], function ($routes) {
 
-        // Rotas de Aniversários
-        $routes->group('aniversario', function ($routes) {
-            // Páginas
-            $routes->get('', 'AniversarioController::index');
-
-            // Funcionalidades
-            $routes->post('envio', 'AniversarioController::send');
-            $routes->post('getDataGrid', 'AniversarioController::getDataGrid');
-            $routes->post('backendCall/(:alphanum)', 'AniversarioController::backendCall/$1');
-        });
-
         // Rotas da Dashboard
         $routes->group('dashboard', function ($routes) {
             $routes->get('', 'DashboardController::index');
@@ -145,99 +134,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('backendCall/(:alphanum)', 'EmpresaController::backendCall/$1');
         });
 
-        // Rotas de Estatisticas
-        $routes->group('estatistica', function ($routes) {
-            // Páginas
-            $routes->get('', 'EstatisticaController::index');
-
-            // Funcionalidades
-            $routes->post('backendCall/(:alphanum)', 'EstatisticaController::backendCall/$1');
-        });
-
-        // Rotas de Estoque
-        $routes->group('estoque', function ($routes) {
-            // Páginas
-            $routes->get('', 'EstoqueController::index');
-            $routes->get('adicionar', 'EstoqueController::adicionar');
-            $routes->get('baixar', 'EstoqueController::baixar');
-            $routes->get('transferir', 'EstoqueController::transferir');
-            $routes->get('devolver', 'EstoqueController::devolver');
-            $routes->get('entradas', 'EstoqueController::indexEntrada');
-            $routes->get('baixas', 'EstoqueController::indexBaixa');
-            $routes->get('historico', 'EstoqueController::indexHistorico');
-            $routes->get('historicoItem/(:any)', 'EstoqueController::indexHistoricoItem/$1');
-            $routes->get('historicoItem/(:any)/(:any)', 'EstoqueController::indexHistoricoItem/$1/$2');
-            $routes->get('recibo/(:any)/(:hash)', 'EstoqueController::recibo/$1/$2');
-
-            // Funcionalidades
-            $routes->post('realizarEntrada', 'EstoqueController::realizarEntrada');
-            $routes->post('realizarBaixa', 'EstoqueController::realizarBaixa');
-            $routes->post('realizarTransferencia', 'EstoqueController::realizarTransferencia');
-            $routes->post('realizarDevolucao', 'EstoqueController::realizarDevolucao');
-            $routes->post('getDataGrid/(:num)', 'EstoqueController::getDataGrid/$1');
-            $routes->post('getDataGridEntrada', 'EstoqueController::getDataGridEntrada');
-            $routes->post('getDataGridBaixa', 'EstoqueController::getDataGridBaixa');
-            $routes->post('getDataGridHistorico', 'EstoqueController::getDataGridHistorico');
-            $routes->post('getDataGridHistoricoItem/(:hash)/(:hash)', 'EstoqueController::getDataGridHistoricoItem/$1/$2');
-            $routes->post('backendCall/(:alphanum)', 'EstoqueController::backendCall/$1');
-        });
-
-        // Rotas de Faturamento
-        $routes->group('faturamento', function ($routes) {
-            // Páginas
-            $routes->get('', 'FaturamentoController::index');
-            $routes->get('adicionar', 'FaturamentoController::create');
-
-            // Funcionalidades
-            $routes->get('gerarPdf/(:hash)', 'FaturamentoController::gerarPdf/$1');
-            $routes->post('store', 'FaturamentoController::store');
-            $routes->post('update/(:hash)', 'FaturamentoController::update/$1');
-            $routes->post('desativar/(:hash)', 'FaturamentoController::disable/$1');
-            $routes->post('getDataGrid', 'FaturamentoController::getDataGrid');
-            $routes->post('backendCall/(:alphanum)', 'FaturamentoController::backendCall/$1');
-        });
-
-        // Rotas de Financeiro
-        $routes->group('financeiro', function ($routes) {
-            // Páginas
-            $routes->get('', 'FinanceiroController::index');
-            $routes->get('adicionar', 'FinanceiroController::create');
-            $routes->get('alterar/(:hash)', 'FinanceiroController::edit/$1');
-            $routes->get('recibo/(:hash)', 'FinanceiroController::recibo/$1');
-            $routes->get('comprovante/(:hash)', 'FinanceiroController::comprovante/$1');
-
-            // Funcionalidades
-            $routes->get('getGraficoResumo', 'FinanceiroController::getGraficoResumo');
-            $routes->post('store', 'FinanceiroController::store');
-            $routes->post('update/(:hash)', 'FinanceiroController::update/$1');
-            $routes->post('abaterValores', 'FinanceiroController::abaterValores');
-            $routes->post('marcarPago/(:hash)', 'FinanceiroController::marcarPago/$1');
-            $routes->post('marcarPendente/(:hash)', 'FinanceiroController::marcarPendente/$1');
-            $routes->post('pagarParcial/(:hash)', 'FinanceiroController::pagarParcial/$1');
-            $routes->post('removerPagamentoParcial/(:hash)', 'FinanceiroController::removerPagamentoParcial/$1');
-            $routes->post('ativar/(:hash)', 'FinanceiroController::enable/$1');
-            $routes->post('desativar/(:hash)', 'FinanceiroController::disable/$1');
-            $routes->post('getDataGrid/(:num)', 'FinanceiroController::getDataGrid/$1');
-            $routes->post('getDataGridResumo/(:num)', 'FinanceiroController::getDataGridResumo/$1');
-            $routes->post('backendCall/(:alphanum)', 'FinanceiroController::backendCall/$1');
-        });
-
-        // Rotas de Fornecedor
-        $routes->group('fornecedor', function ($routes) {
-            // Páginas
-            $routes->get('', 'FornecedorController::index');
-            $routes->get('adicionar', 'FornecedorController::create');
-            $routes->get('alterar/(:hash)', 'FornecedorController::edit/$1');
-
-            // Funcionalidades
-            $routes->post('store', 'FornecedorController::store');
-            $routes->post('update/(:hash)', 'FornecedorController::update/$1');
-            $routes->post('ativar/(:hash)', 'FornecedorController::enable/$1');
-            $routes->post('desativar/(:hash)', 'FornecedorController::disable/$1');
-            $routes->post('getDataGrid/(:num)', 'FornecedorController::getDataGrid/$1');
-            $routes->post('backendCall/(:alphanum)', 'FornecedorController::backendCall/$1');
-        });
-
         // Rotas de Grupo
         $routes->group('grupo', function ($routes) {
             // Páginas
@@ -252,16 +148,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('desativar/(:hash)', 'GrupoController::disable/$1');
             $routes->post('getDataGrid/(:num)', 'GrupoController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'GrupoController::backendCall/$1');
-        });
-
-        // Rotas do PDV
-        $routes->group('pdv', function ($routes) {
-            // Páginas
-            $routes->get('', 'PdvController::index');
-
-            // Funcionalidades
-            $routes->post('store', 'PdvController::store');
-            $routes->post('backendCall/(:alphanum)', 'PdvController::backendCall/$1');
         });
 
         // Rotas de Produto
@@ -303,44 +189,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('desativar/(:hash)', 'UsuarioController::disable/$1');
             $routes->post('getDataGrid/(:num)', 'UsuarioController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'UsuarioController::backendCall/$1');
-        });
-
-        // Rotas de Vendas
-        $routes->group('venda', function ($routes) {
-            // Páginas
-            $routes->get('', 'VendaController::index');
-            $routes->get('adicionar', 'VendaController::create');
-            $routes->get('alterar/(:hash)', 'VendaController::edit/$1');
-            $routes->get('comprovante/(:hash)', 'VendaController::comprovante/$1');
-
-            // Funcionalidades
-            $routes->post('store', 'VendaController::store');
-            $routes->post('update/(:hash)', 'VendaController::update/$1');
-            $routes->post('ativar/(:hash)', 'VendaController::enable/$1');
-            $routes->post('desativar/(:hash)', 'VendaController::disable/$1');
-            $routes->post('estorno/(:hash)', 'VendaController::estornarVenda/$1');
-            $routes->post('getDataGrid/(:num)', 'VendaController::getDataGrid/$1');
-            $routes->post('backendCall/(:alphanum)', 'VendaController::backendCall/$1');
-        });
-
-        // Rotas de Vendedor
-        $routes->group('vendedor', function ($routes) {
-            // Páginas
-            $routes->get('', 'VendedorController::index');
-            $routes->get('adicionar', 'VendedorController::create');
-            $routes->get('alterar/(:hash)', 'VendedorController::edit/$1');
-            $routes->get('visualizar/(:hash)', 'VendedorController::view/$1');
-
-            // Funcionalidades
-            $routes->post('store', 'VendedorController::store');
-            $routes->post('update/(:hash)', 'VendedorController::update/$1');
-            $routes->post('ativar/(:hash)', 'VendedorController::enable/$1');
-            $routes->post('desativar/(:hash)', 'VendedorController::disable/$1');
-            $routes->post('getDataGrid/(:num)', 'VendedorController::getDataGrid/$1');
-            $routes->post('getDataGridEstoque', 'VendedorController::getDataGridEstoque');
-            $routes->post('getDataGridHistoricoVenda', 'VendedorController::getDataGridHistoricoVenda');
-            $routes->post('getDataGridHistoricoFinanceiro', 'VendedorController::getDataGridHistoricoFinanceiro');
-            $routes->post('backendCall/(:alphanum)', 'VendedorController::backendCall/$1');
         });
     });
 });
