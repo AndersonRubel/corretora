@@ -1,0 +1,37 @@
+# name: Deploy
+
+# on:
+#   push:
+#     branches: [production2]
+#   pull_request:
+#     branches: [production2]
+
+# jobs:
+#   build:
+#     name: Deploy da Aplicação
+
+#     runs-on: ${{ matrix.os }}
+
+#     strategy:
+#       matrix:
+#         php_version: ["8.0"]
+#         os: [ubuntu-latest]
+#         slack_url: ["https://hooks.slack.com/services/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"]
+#         slack_channel: ["#software"]
+#         slack_text: ["[PRODUÇÃO] Sistema Porta Jóias Atualizado"]
+
+#     steps:
+#       - name: Executando Deploy no ambiente de Produção
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: ${{ secrets.USERNAME }}
+#           password: ${{ secrets.KEY }}
+#           port: ${{ secrets.PORT }}
+#           script: |
+#             cd app.portajoias.iluminareweb.com.br/www/portajoias
+#             git pull https://${{ secrets.USERNAME_GIT }}:${{ secrets.PERSONAL_TOKEN }}@github.com/Iluminare-Web/portajoias.git production
+#             rm -f composer.lock
+#             rm -Rf vendor
+#             git pull
+#             composer i

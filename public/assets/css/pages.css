@@ -1,0 +1,109 @@
+/******************/
+/*   DASHBOARD    */
+/******************/
+
+#dashboard .app-card-actions i {
+  line-height: 1.8rem !important;
+}
+
+#dashboard .app-card-thumb-holder {
+  background: var(--primarycolor);
+}
+
+#dashboard .icon-holder i {
+  color: var(--secondarycolor);
+}
+
+/******************/
+/*     GRUPOS     */
+/******************/
+
+.grupo thead th span,
+.grupo tbody td span {
+  font-size: 9px;
+  cursor: pointer;
+}
+
+/****************/
+/*  FINANCEIRO  */
+/****************/
+
+#financeiro-fluxo #sumario .form-control {
+  min-height: 0.5em;
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  border-radius: 0.4rem;
+  text-align: end;
+  height: 1.7rem;
+}
+
+#financeiro-fluxo #sumario button {
+  line-height: 1;
+}
+
+#financeiro-fluxo #graficoMes {
+  margin-top: -3rem;
+  max-height: 430px;
+}
+
+/****************/
+/* FATURAMENTO  */
+/****************/
+
+#faturamento #tableFaturamentos .form-control {
+  min-height: 0.5em;
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  border-radius: 0.4rem;
+  text-align: end;
+  height: 1.7rem;
+}
+
+/****************/
+/* ESTATISTICAS */
+/****************/
+
+#estatistica tbody {
+  min-height: 206px;
+  height: 206px;
+  vertical-align: middle;
+  overflow: scroll;
+}
+
+#estatistica span.title-one {
+  font-size: 22px;
+  margin-top: -5px;
+  color: var(--secondarycolor);
+}
+
+#estatistica span.value-one {
+  font-size: 36px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  color: var(--secondarycolor);
+}
+
+#estatistica span.title-two {
+  font-size: 16px;
+  color: var(--secondarycolor);
+}
+
+#estatistica span.value-two {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: var(--secondarycolor);
+}
+
+#estatistica .descricao {
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+#estatistica .progress {
+  height: 12px;
+}
+
+#estatistica .progress-bar {
+  background-color: var(--secondarycolor);
+}

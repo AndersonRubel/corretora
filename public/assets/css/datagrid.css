@@ -1,0 +1,88 @@
+ /* CSS DA BOX DE BOTÕES PERSONALIZADA */
+ .dt-buttons {
+    float: right !important;
+    margin: 1rem !important;
+}
+
+ .dt-button-collection{ overflow: visible !important; width: 268px !important; left: -198px !important; }
+ .dt-button-background{ z-index: 1000!important;background: rgba(255, 255, 255, 0) !important; }
+ .dt-button.buttons-columnVisibility{ height: 28px !important; line-height: 13px !important; box-shadow: 0 0 0 rgba(0,0,0,0) !important; background: #f5f5f5 !important; color: #424242 !important; border: 1px solid #cccccc !important; padding-left: 25px !important; width: 100% !important; text-align: left !important; }
+ .dt-button.buttons-columnVisibility:hover{ background: #d0d0d0 !important; }
+ .dt-button.buttons-columnVisibility.active{ box-shadow: 0 0 0 rgba(0,0,0,0) !important; background: #e8e8e8 !important; color: #424242 !important; border: 1px solid #afafaf !important; padding-left: 25px !important; }
+ .dt-button.buttons-columnVisibility.active:hover{ background: #d0d0d0 !important; }
+ button.dt-button.buttons-columnVisibility:before { content: "\f00d"; font-family: "Font Awesome 5 Free"; font-weight: 900; display: block; width: 10px; height: 10px; position: absolute; left: 10px; display: inline-block; font: normal normal normal 14px/1; font-size: inherit; text-rendering: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; top: 7px; }
+ button.dt-button.buttons-columnVisibility.active:before { content: "\f00c"; font-family: "Font Awesome 5 Free"; font-weight: 900; display: block; width: 10px; height: 10px; position: absolute; left: 10px; display: inline-block; font: normal normal normal 14px/1; font-size: inherit; text-rendering: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; top: 7px; }
+
+.btnOpcoes {
+    background: var(--primarycolor) !important;
+    color: var(--whitecolor) !important;
+    border-color: var(--primarycolor) !important;
+}
+
+.btnOpcoes:hover {
+    background: var(--secondarycolor) !important;
+    border-color: var(--secondarycolor) !important;
+}
+
+ .boxOpcoes-separador { width: 100% !important; margin-top: 10px !important; margin-bottom: 10px !important; border: 1px solid #eaeaea !important; }
+ .btnExports { width: 50px !important; height: 50px !important; float: left !important; margin-right: 16px !important; margin-bottom: 16px !important; background: var(--primarycolor) !important; color: var(--whitecolor) !important; border: 1px solid transparent !important; border-radius: var(--borderradius) !important; text-align: center; }
+ .btnExports:hover { background: var(--secondarycolor) !important; font-size: 1rem; }
+ .btnImprimir { float: none !important; background: var(--primarycolor) !important; color: var(--whitecolor) !important; border: 1px solid transparent !important; width: 100% !important; border-radius: var(--borderradius) !important;}
+ .btnImprimir:hover { background: var(--secondarycolor) !important; }
+ .btnRefresh { float: none !important; background: var(--primarycolor) !important; color: var(--whitecolor) !important; border: 1px solid transparent !important; width: 100% !important; border-radius: var(--borderradius) !important;}
+ .btnRefresh:hover { background: var(--secondarycolor) !important; }
+ .btn-pag-select-all { width: 50% !important; float: left !important; }
+ .btn-pag-export span { position: relative; font-size: 16px; }
+ .btnsBoxExportar { width:280px!important;; height: 50px; }
+ .btnsBoxExportar:last-child { margin-right: 0 !important; }
+
+ /**/
+.dataTables_wrapper table.dataTable {
+    width: 100% !important;
+}
+
+.dataTables_wrapper .dataTables_info {
+    margin-left: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.dataTables_wrapper .dataTables_length {
+    margin-left: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    margin-left: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    margin-right: 1rem !important;
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.dataTables_wrapper .dataTables_paginate span .paginate_button.current:not(.disabled) {
+  background: var(--primarycolor) !important;
+  color: var(--whitecolor) !important;
+  border-color: var(--primarycolor) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate span .paginate_button:not(.disabled):hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--secondarycolor) !important;
+  color: var(--whitecolor) !important;
+  border-color: var(--secondarycolor) !important;
+}
+
+ .tab-content > .active{display: block !important;height: auto !important;visibility: visible !important;}
+ .tab-content > .tab-pane{overflow: initial !important;display: none;visibility: hidden;}
+ .dataTables_wrapper input[type="search"] { -webkit-border-radius: var(--borderradius) !important; -moz-border-radius: var(--borderradius) !important; border-radius: var(--borderradius) !important; height: 30px; margin-right: 10px; }
+ input[type=search] {padding: 6px 12px;font-size: 14px;line-height: 1.42857;color: #555;background-color: var(--whitecolor);background-image: none;border: 1px solid #CCC;}
+ .boxOpcoes-titulo { text-align: center; font-weight: 600; margin-bottom: 7px;}
+ .selectorBtnCol { text-align: center }
+
+.app-card .app-card-body .table-responsive {
+  overflow-x: inherit !important;
+  -webkit-overflow-scrolling: touch;
+}
