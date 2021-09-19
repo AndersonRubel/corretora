@@ -99,7 +99,7 @@ $className = $base->getControllerName();
         /*****************************/
         :root {
             --primarycolor: #0E2D39;
-            --secondarycolor: #41B095;
+            --secondarycolor: #0593ff;
             --tertiarycolor: #232732;
             --whitecolor: #FFFFFF;
 

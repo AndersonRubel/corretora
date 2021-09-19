@@ -15,6 +15,7 @@ class CadastroGrupoSeeder extends DatabaseSeeder
             'slug' => 'superadmin',
         ]);
 
+
         $this->saveOnce('cadastro_grupo', [
             'nome' => 'Administrador',
             'slug' => 'admin',

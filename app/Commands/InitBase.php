@@ -32,15 +32,6 @@ class InitBase extends BaseCommand
             echo command('db:seed DatabaseSeeder');
             CLI::newLine();
 
-            // Pergunta se quer importar os dados
-            $respostaImportacao = CLI::prompt('Deseja importar os dados?', ['S', 'N']);
-
-            // Se veio o parametro, roda a importacao
-            if (strtoupper($respostaImportacao) == 'S') {
-                echo command('importa:start');
-                CLI::newLine();
-            }
-
             CLI::write('Finalizado com sucesso...', 'blue');
         } catch (Exception $e) {
             CLI::error($e->getMessage());

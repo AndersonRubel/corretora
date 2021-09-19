@@ -39,15 +39,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('CadastroFluxoTipoSeeder');
         $this->call('CadastroGrupoSeeder');
         $this->call('CadastroMenuSeeder');
-        $this->call('CadastroMetodoPagamentoSeeder');
-        $this->call('CadastroMovimentacaoTipoSeeder');
-        $this->call('EmpresaSituacaoSeeder');
+        // $this->call('EmpresaSituacaoSeeder');
         $this->call('UsuarioSeeder');
         $this->call('EmpresaUsuarioSeeder');
         $this->call('CadastroRelatorioSeeder');
-        $this->call('VendedorSeeder');
+        $this->call('CadastroEmpresaSeeder');
     }
 }
+
