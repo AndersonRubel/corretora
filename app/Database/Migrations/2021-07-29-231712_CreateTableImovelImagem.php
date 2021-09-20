@@ -4,11 +4,11 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTableProdutoImagem extends Migration
+class CreateTableImovelImagem extends Migration
 {
-    protected $table = 'produto_imagem';
-    protected $primaryKey = 'codigo_produto_imagem';
-    protected $uuidColumn = 'uuid_produto_imagem';
+    protected $table = 'imovel_imagem';
+    protected $primaryKey = 'codigo_imovel_imagem';
+    protected $uuidColumn = 'uuid_imovel_imagem';
 
     public function up()
     {
@@ -22,8 +22,9 @@ class CreateTableProdutoImagem extends Migration
             'alterado_em'         => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'codigo_empresa'      => ['type' => 'BIGINT'],
-            'codigo_produto'      => ['type' => 'BIGINT'],
+            'codigo_imovel'       => ['type' => 'BIGINT'],
             'diretorio_imagem'    => ['type' => 'VARCHAR'],
+            'capa'                => ['type' => 'BOOLEAN', 'default' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

@@ -22,7 +22,6 @@ class CreateTableUsuario extends Migration
             'alterado_em'           => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'          => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'codigo_empresa_padrao' => ['type' => 'BIGINT', 'null' => true],
-            'codigo_vendedor'       => ['type' => 'BIGINT', 'null' => true],
             'email'                 => ['type' => 'VARCHAR', 'unique' => true],
             'senha'                 => ['type' => 'VARCHAR'],
             'nome'                  => ['type' => 'VARCHAR', 'null' => true],

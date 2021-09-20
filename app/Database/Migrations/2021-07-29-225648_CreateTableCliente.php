@@ -22,7 +22,6 @@ class CreateTableCliente extends Migration
             'alterado_em'         => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'codigo_empresa'      => ['type' => 'BIGINT'],
-            'codigo_vendedor'     => ['type' => 'BIGINT', 'null' => true],
             'tipo_pessoa'         => ['type' => 'INT', 'default' => 1],
             'razao_social'        => ['type' => 'VARCHAR', 'null' => true],
             'nome_fantasia'       => ['type' => 'VARCHAR', 'null' => true],
@@ -32,7 +31,6 @@ class CreateTableCliente extends Migration
             'telefone'            => ['type' => 'VARCHAR', 'null' => true],
             'celular'             => ['type' => 'VARCHAR', 'null' => true],
             'observacao'          => ['type' => 'TEXT', 'null' => true],
-            'saldo'               => ['type' => 'BIGINT', 'null' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

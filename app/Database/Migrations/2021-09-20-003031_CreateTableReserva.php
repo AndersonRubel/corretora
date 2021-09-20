@@ -26,7 +26,7 @@ class CreateTableReserva extends Migration
             'codigo_cliente'      => ['type' => 'BIGINT'],
             'data_inicio'         => ['type' => 'TIMESTAMPTZ'],
             'data_fim'            => ['type' => 'TIMESTAMPTZ'],
-            'descricao'             => ['type' => 'VARCHAR', 'null' => true],
+            'descricao'           => ['type' => 'VARCHAR', 'null' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

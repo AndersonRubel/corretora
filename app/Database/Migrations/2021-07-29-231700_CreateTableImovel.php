@@ -4,11 +4,11 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTableProdutoCategoria extends Migration
+class CreateTableImovel extends Migration
 {
-	protected $table = 'imovel_categoria';
-    protected $primaryKey = 'codigo_imovel_categoria';
-    protected $uuidColumn = 'uuid_imovel_categoria';
+    protected $table = 'imovel';
+    protected $primaryKey = 'codigo_imovel';
+    protected $uuidColumn = 'uuid_imovel';
 
     public function up()
     {
@@ -22,8 +22,21 @@ class CreateTableProdutoCategoria extends Migration
             'alterado_em'              => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'             => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'codigo_empresa'           => ['type' => 'BIGINT'],
-            'codigo_imovel'            => ['type' => 'BIGINT'],
+            'codigo_endereco'          => ['type' => 'BIGINT'],
+            'codigo_proprietario'      => ['type' => 'BIGINT'],
             'codigo_empresa_categoria' => ['type' => 'BIGINT'],
+            'codigo_referencia'        => ['type' => 'VARCHAR', 'null' => true],
+            'quarto'                   => ['type' => 'VARCHAR', 'null' => true],
+            'suite'                    => ['type' => 'VARCHAR', 'null' => true],
+            'banheiro'                 => ['type' => 'VARCHAR', 'null' => true],
+            'area_util'                => ['type' => 'VARCHAR', 'null' => true],
+            'area_construida'          => ['type' => 'VARCHAR', 'null' => true],
+            'edicula'                  => ['type' => 'BOOLEAN', 'default' => true],
+            'mobilia'                  => ['type' => 'BOOLEAN', 'default' => true],
+            'condominio'               => ['type' => 'BOOLEAN', 'default' => true],
+            'descricao'                => ['type' => 'VARCHAR', 'null' => true],
+            'destaque'                 => ['type' => 'BOOLEAN', 'default' => true],
+            'publicado'                => ['type' => 'BOOLEAN', 'default' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);
