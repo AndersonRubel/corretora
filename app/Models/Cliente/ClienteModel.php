@@ -36,7 +36,6 @@ class ClienteModel extends BaseModel
         'alterado_em',
         'inativado_em',
         'codigo_empresa',
-        'codigo_vendedor',
         'tipo_pessoa',
         'razao_social',
         'nome_fantasia',
@@ -46,7 +45,6 @@ class ClienteModel extends BaseModel
         'telefone',
         'celular',
         'observacao',
-        'saldo'
     ];
 
     /**
@@ -68,7 +66,6 @@ class ClienteModel extends BaseModel
           , cpf_cnpj
           , telefone
           , celular
-          , COALESCE(saldo, 0) AS saldo
           , TO_CHAR(criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR(alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR(inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
@@ -78,10 +75,6 @@ class ClienteModel extends BaseModel
         ", FALSE);
 
         $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
-
-        // Filtra apenas os clientes de cada vendedor
-        $this->where("{$this->table}.codigo_vendedor", $dadosUsuario['codigo_vendedor']);
-
 
         // Filtra o Tipo de Dados
         switch ($dadosDataGrid['status']) {

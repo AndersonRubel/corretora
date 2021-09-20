@@ -6,7 +6,7 @@ use Exception;
 
 use App\Models\Cadastro\CadastroMenuModel;
 use App\Models\Empresa\EmpresaModel;
-use App\Models\Produto\ProdutoModel;
+use App\Models\Imovel\ImovelModel;
 use App\Models\Log\LogLoginModel;
 use App\Models\Usuario\UsuarioModel;
 
@@ -49,7 +49,7 @@ class LoginController extends BaseController
         $empresaModel = new EmpresaModel;
         $cadastroMenuModel = new CadastroMenuModel;
         $usuarioModel = new UsuarioModel;
-        $produtoModel = new ProdutoModel;
+        $imovelModel = new ImovelModel;
         $dadosRequest = $this->request->getVar();
         $erros = $this->validarRequisicao($this->request, [
             'email' => 'required|valid_email',
@@ -80,7 +80,6 @@ class LoginController extends BaseController
             'codigo_usuario',
             'uuid_usuario',
             'codigo_empresa_padrao',
-            'COALESCE(codigo_vendedor, codigo_empresa_padrao) AS codigo_vendedor',
             'senha',
             'nome',
             'email',
@@ -122,11 +121,11 @@ class LoginController extends BaseController
         }
 
         // Busca os dados da Empresa
-        $produto = $produtoModel->get(['codigo_empresa' => $empresa['codigo_empresa']]);
+        $imovel = $imovelModel->get(['codigo_empresa' => $empresa['codigo_empresa']]);
 
         // Monta um Array com os dados que ficarão na Sessão
         $dadosSessao['usuario']                   = $usuario;
-        $dadosSessao['usuario']['codigo_produto'] = !empty($produto['codigo_produto']) ? $produto['codigo_produto'] : null;
+        $dadosSessao['usuario']['codigo_imovel'] = !empty($imovel['codigo_produto']) ? $imovel['codigo_produto'] : null;
         $dadosSessao['usuario']['avatar_base64']  = $this->getFileImagem($usuario['diretorio_avatar']);
         $dadosSessao['usuario']['data_login']     = date('Y-m-d H:i');
         $dadosSessao['empresa']                   = $empresa;

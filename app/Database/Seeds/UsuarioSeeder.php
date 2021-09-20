@@ -15,7 +15,6 @@ class UsuarioSeeder extends DatabaseSeeder
             'email'                 => 'implantacao@corretora.com.br',
             'senha'                 => password_hash('corretora', PASSWORD_BCRYPT),
             'codigo_empresa_padrao' => 1,
-            'codigo_vendedor'       => 1,
         ]);
     }
 }

@@ -71,8 +71,8 @@ class ClienteController extends BaseController
         $clienteModel = new ClienteModel;
         $clienteEnderecoModel = new ClienteEnderecoModel;
         $dados['cliente'] = $clienteModel->get([$clienteModel->uuidColumn => $uuid], [], true);
-        $dados['cliente']['endereco'] = $clienteEnderecoModel->get(['codigo_cliente' => $dados['cliente']['codigo_cliente']], [], false);
-        $dados['indicadores'] = $clienteModel->getIndicadores($dados['cliente']['codigo_cliente']);
+        $dados['cliente']['endereco'] = [];
+        $dados['indicadores'] = [];
 
         return $this->template('cliente', ['view', 'modal', 'functions'], $dados);
     }
@@ -179,7 +179,6 @@ class ClienteController extends BaseController
             'razao_social' => 'permit_empty|string|min_length[3]|max_length[255]',
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
             'cpf_cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
-            'codigo_vendedor' => 'permit_empty|integer',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
             'data_nascimento' => 'permit_empty|valid_date',
@@ -201,7 +200,6 @@ class ClienteController extends BaseController
         $cliente = [
             'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
             'usuario_criacao' => $dadosUsuario['codigo_usuario'],
-            'codigo_vendedor' => !empty($dadosUsuario['codigo_vendedor']) ? $dadosUsuario['codigo_vendedor'] : null,
             'tipo_pessoa'     => onlyNumber($dadosRequest['tipo_pessoa']),
             'nome_fantasia'   => $dadosRequest['nome_fantasia'],
             'razao_social'    => $dadosRequest['razao_social'],
@@ -284,7 +282,6 @@ class ClienteController extends BaseController
         $cliente = [
             'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
             'usuario_criacao' => $dadosUsuario['codigo_usuario'],
-            'codigo_vendedor' => $dadosUsuario['codigo_vendedor'],
             'tipo_pessoa'     => strlen($dadosRequest['cpf_cnpj']) == 14 ? 2 : 1,
             'nome_fantasia'   => $dadosRequest['nome_fantasia'],
             'razao_social'    => $dadosRequest['nome_fantasia'],

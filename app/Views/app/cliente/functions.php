@@ -497,12 +497,6 @@
                     "render": (data) => convertFunctions.intToPhone(data)
                 },
                 {
-                    "data": "saldo",
-                    "title": "Saldo",
-                    "className": "text-end",
-                    "render": (data) => `R$ ${convertFunctions.intToReal(data)}`
-                },
-                {
                     "data": "criado_em",
                     "visible": false,
                     "title": "Criado em"
@@ -572,12 +566,6 @@
                     "title": "Celular",
                     "isreplace": true,
                     "render": (data) => convertFunctions.intToPhone(data)
-                },
-                {
-                    "data": "saldo",
-                    "title": "Saldo",
-                    "className": "text-end",
-                    "render": (data) => `R$ ${convertFunctions.intToReal(data)}`
                 },
                 {
                     "data": "criado_em",

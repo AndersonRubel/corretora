@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Produto;
+namespace App\Models\imovel;
 
 use App\Models\BaseModel;
 use App\Libraries\NativeSession;
 
-class ProdutoModel extends BaseModel
+class imovelModel extends BaseModel
 {
-    protected $table = 'produto';
-    protected $primaryKey = 'codigo_produto';
-    protected $uuidColumn = 'uuid_produto';
+    protected $table = 'imovel';
+    protected $primaryKey = 'codigo_imovel';
+    protected $uuidColumn = 'uuid_imovel';
 
     protected $useAutoIncrement = true;
 
@@ -27,8 +27,8 @@ class ProdutoModel extends BaseModel
     protected $skipValidation = false;
 
     protected $allowedFields = [
-        'codigo_produto',
-        'uuid_produto',
+        'codigo_imovel',
+        'uuid_imovel',
         'usuario_criacao',
         'usuario_alteracao',
         'usuario_inativacao',
@@ -36,16 +36,21 @@ class ProdutoModel extends BaseModel
         'alterado_em',
         'inativado_em',
         'codigo_empresa',
-        'codigo_fornecedor',
-        'referencia_fornecedor',
-        'codigo_barras',
-        'nome',
+        'codigo_endereco',
+        'codigo_proprietario',
+        'codigo_empresa_categoria',
+        'codigo_referencia',
+        'quarto',
+        'suite',
+        'banheiro',
+        'area_util',
+        'area_construida',
+        'edicula',
+        'mobilia',
+        'condominio',
         'descricao',
-        'diretorio_imagem',
-        'sku',
-        'ncm',
-        'cest',
-        'controla_estoque'
+        'destaque',
+        'publicado',
     ];
 
     /**
@@ -61,20 +66,18 @@ class ProdutoModel extends BaseModel
 
         /**
          *  , (SELECT array_to_string(array_agg(ec.nome), ', ')
-         *      FROM produto_categoria pc
+         *      FROM imovel_categoria pc
          *     INNER JOIN empresa_categoria ec
          *        ON ec.codigo_empresa_categoria = pc.codigo_empresa_categoria
-         *     WHERE pc.codigo_produto = {$this->table}.codigo_produto
+         *     WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
          *       AND pc.inativado_em IS NULL
          *   ) AS categorias
          */
 
         $this->select("
-            {$this->table}.uuid_produto
-          , {$this->table}.codigo_produto
-          , {$this->table}.codigo_barras
-          , {$this->table}.nome
-          , {$this->table}.referencia_fornecedor
+            {$this->table}.uuid_imovel
+          , {$this->table}.codigo_imovel
+          , {$this->table}.referencia
           , '' AS categorias
           , TO_CHAR({$this->table}.criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR({$this->table}.alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
@@ -99,20 +102,16 @@ class ProdutoModel extends BaseModel
                 break;
         }
 
-        if (!empty($configDataGrid->filtros['codigo_produto'])) {
-            $this->where("{$this->table}.codigo_produto", $configDataGrid->filtros['codigo_produto']);
-        }
-
-        if (!empty($configDataGrid->filtros['codigo_fornecedor'])) {
-            $this->where("{$this->table}.codigo_fornecedor", $configDataGrid->filtros['codigo_fornecedor']);
+        if (!empty($configDataGrid->filtros['codigo_imovel'])) {
+            $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
         }
 
         if (!empty($configDataGrid->filtros['categorias'])) {
             $categorias = $configDataGrid->filtros['categorias'];
             foreach (explode(',', $categorias) as $key => $value) {
                 $this->where("{$value} IN (SELECT pc.codigo_empresa_categoria
-                                             FROM produto_categoria pc
-                                            WHERE pc.codigo_produto = {$this->table}.codigo_produto
+                                             FROM imovel_categoria pc
+                                            WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
                                               AND pc.inativado_em IS NULL
                                         )
                 ");
@@ -132,10 +131,10 @@ class ProdutoModel extends BaseModel
     }
 
     /**
-     * Busca os produtos para o Select2
+     * Busca os imovels para o Select2
      * @param array $filtros Filtros para a Busca
      */
-    public function selectProduto(array $filtros)
+    public function selectImovel(array $filtros)
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
 
@@ -143,33 +142,33 @@ class ProdutoModel extends BaseModel
         $fieldEstoqueAtual = "0 AS estoque_atual";
         if (!empty($filtros)) {
             if (!empty($filtros['codEstoque'])) {
-                $fieldEstoqueAtual = "(SELECT SUM(COALESCE(estoque_produto.estoque_atual, 0))
-                                         FROM estoque_produto
-                                        WHERE estoque_produto.codigo_produto = produto.codigo_produto
-                                          AND estoque_produto.inativado_em IS NULL
+                $fieldEstoqueAtual = "(SELECT SUM(COALESCE(estoque_imovel.estoque_atual, 0))
+                                         FROM estoque_imovel
+                                        WHERE estoque_imovel.codigo_imovel = imovel.codigo_imovel
+                                          AND estoque_imovel.inativado_em IS NULL
                                     ) AS estoque_atual";
             }
         }
 
         $this->select("
-            codigo_produto AS id
+            codigo_imovel AS id
           , nome AS text
           , codigo_barras
           , COALESCE(fornecedor.nome_fantasia, fornecedor.razao_social) AS fornecedor
           , {$fieldEstoqueAtual}
         ", FALSE);
 
-        $this->join('fornecedor', 'fornecedor.codigo_fornecedor = produto.codigo_fornecedor');
-        $this->where('produto.codigo_empresa', $dadosEmpresa['codigo_empresa']);
+        $this->join('fornecedor', 'fornecedor.codigo_fornecedor = imovel.codigo_fornecedor');
+        $this->where('imovel.codigo_empresa', $dadosEmpresa['codigo_empresa']);
 
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {
                 if (is_numeric($filtros['termo'])) {
-                    $this->where("produto.codigo_produto", $filtros['termo']);
+                    $this->where("imovel.codigo_imovel", $filtros['termo']);
                 } else {
                     $termo = explode(' ', $filtros['termo']);
                     foreach ($termo as $key => $value) {
-                        $this->where("produto.nome ILIKE '%{$value}%'");
+                        $this->where("imovel.nome ILIKE '%{$value}%'");
                     }
                 }
             }

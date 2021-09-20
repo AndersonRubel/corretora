@@ -41,10 +41,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('CadastroGrupoSeeder');
         $this->call('CadastroMenuSeeder');
-        // $this->call('EmpresaSituacaoSeeder');
         $this->call('UsuarioSeeder');
         $this->call('EmpresaUsuarioSeeder');
-        $this->call('CadastroRelatorioSeeder');
         $this->call('CadastroEmpresaSeeder');
     }
 }

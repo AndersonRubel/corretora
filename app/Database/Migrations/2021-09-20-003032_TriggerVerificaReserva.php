@@ -8,7 +8,7 @@ class TriggerVerificaReserva extends Migration
 {
 	public function up()
 	{
-		$this->db->query("CREATE TRIGGER verifica_reserva()
+		$this->db->query("CREATE TRIGGER verifica_reserva
                           BEFORE INSERT OR UPDATE ON reserva FOR EACH ROW
                           EXECUTE PROCEDURE verifica_reserva();");
 	}

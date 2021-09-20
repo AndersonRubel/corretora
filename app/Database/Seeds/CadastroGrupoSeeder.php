@@ -20,15 +20,5 @@ class CadastroGrupoSeeder extends DatabaseSeeder
             'nome' => 'Administrador',
             'slug' => 'admin',
         ]);
-
-        $this->saveOnce('cadastro_grupo', [
-            'nome' => 'Vendedor',
-            'slug' => 'vendedor',
-        ]);
-
-        $this->saveOnce('cadastro_grupo', [
-            'nome' => 'Gerente',
-            'slug' => 'gerente',
-        ]);
     }
 }
