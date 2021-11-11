@@ -28,9 +28,6 @@ class CadastroMenuModel extends BaseModel
     protected $allowedFields = [
         'codigo_cadastro_menu',
         'uuid_cadastro_menu',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
         'criado_em',
         'alterado_em',
         'inativado_em',

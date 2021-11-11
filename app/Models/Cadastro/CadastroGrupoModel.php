@@ -29,9 +29,6 @@ class CadastroGrupoModel extends BaseModel
     protected $allowedFields = [
         'codigo_cadastro_grupo',
         'uuid_cadastro_grupo',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
         'criado_em',
         'alterado_em',
         'inativado_em',
@@ -54,19 +51,12 @@ class CadastroGrupoModel extends BaseModel
         $this->select("
             codigo_cadastro_grupo
           , uuid_cadastro_grupo
-          , codigo_empresa
+          , COALESCE(codigo_empresa, 'Grupo Padrão') AS codigo_empresa
           , nome
           , slug
           , TO_CHAR(criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR(alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR(inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
-          , obter_nome_usuario(usuario_criacao) AS usuario_criacao
-          , obter_nome_usuario(usuario_alteracao) AS usuario_alteracao
-          , obter_nome_usuario(usuario_inativacao) AS usuario_inativacao
-          , (SELECT COUNT(usuario_grupo_relatorio.codigo_cadastro_relatorio)
-               FROM usuario_grupo_relatorio
-              WHERE usuario_grupo_relatorio.codigo_cadastro_grupo = cadastro_grupo.codigo_cadastro_grupo
-            ) AS relatorios
           , (SELECT COUNT(empresa_usuario.codigo_cadastro_grupo)
                FROM empresa_usuario
               WHERE empresa_usuario.codigo_cadastro_grupo = cadastro_grupo.codigo_cadastro_grupo

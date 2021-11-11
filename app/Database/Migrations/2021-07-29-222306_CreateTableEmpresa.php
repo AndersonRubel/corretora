@@ -15,9 +15,6 @@ class CreateTableEmpresa extends Migration
         $this->forge->addField([
             "{$this->primaryKey}" => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true, 'unique' => true],
             "{$this->uuidColumn}" => ['type' => 'UUID', 'unique' => true],
-            'usuario_criacao'     => ['type' => 'BIGINT', 'null' => true],
-            'usuario_alteracao'   => ['type' => 'BIGINT', 'null' => true],
-            'usuario_inativacao'  => ['type' => 'BIGINT', 'null' => true],
             'criado_em'           => ['type' => 'TIMESTAMPTZ', 'default' => 'NOW()'],
             'alterado_em'         => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],

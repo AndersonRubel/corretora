@@ -54,11 +54,11 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-sm-12 mb-2">
                                     <label class="form-label">Grupo de Acesso</label>
-                                    <input type="text" class="form-control" name="grupo_acesso" data-select="buscarGrupo" value="<?= old('grupo_acesso'); ?>">
+                                    <input type="text" class="form-control" name="codigo_cadastro_grupo" data-select="buscarGrupo" value="<?= old('codigo_cadastro_grupo'); ?>">
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-sm-12 mb-2">
                                     <label class="form-label">Empresa Padrão</label>
-                                    <input type="text" class="form-control" name="codigo_empresa_padrao" data-select="buscarEmpresa" disabled value="<?= old('codigo_empresa_padrao'); ?>">
+                                    <input type="text" class="form-control" name="codigo_empresa_padrao" data-select="buscarEmpresa"  value="<?= old('codigo_empresa_padrao'); ?>">
                                 </div>
                             </div>
                         </div>

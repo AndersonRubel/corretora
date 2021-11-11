@@ -4,11 +4,11 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTableCadastroGrupo extends Migration
+class CreateTableTipoImovel extends Migration
 {
-    protected $table = 'cadastro_grupo';
-    protected $primaryKey = 'codigo_cadastro_grupo';
-    protected $uuidColumn = 'uuid_cadastro_grupo';
+    protected $table = 'tipo_imovel';
+    protected $primaryKey = 'codigo_tipo_imovel';
+    protected $uuidColumn = 'uuid_tipo_imovel';
 
     public function up()
     {
@@ -18,9 +18,8 @@ class CreateTableCadastroGrupo extends Migration
             'criado_em'           => ['type' => 'TIMESTAMPTZ', 'default' => 'NOW()'],
             'alterado_em'         => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],
-            'codigo_empresa'      => ['type' => 'BIGINT', 'null' => true],
+            'codigo_empresa'      => ['type' => 'BIGINT'],
             'nome'                => ['type' => 'VARCHAR'],
-            'slug'                => ['type' => 'VARCHAR'],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

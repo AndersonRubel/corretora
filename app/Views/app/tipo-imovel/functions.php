@@ -1,8 +1,7 @@
 <script>
-    const select2UsuarioFunctions = {
+    const select2TipoImovelFunctions = {
         init: () => {
-            select2UsuarioFunctions.buscarGrupo();
-            select2UsuarioFunctions.buscarEmpresa();
+            // select2TipoImovelFunctions.buscarGrupo();
         },
         buscarGrupo: (caller) => {
             let elementSelect2 = $("[data-select='buscarGrupo']");
@@ -51,62 +50,15 @@
                 formatSelection: (data) => data.text
             });
         },
-        buscarEmpresa: (caller) => {
-            let elementSelect2 = $("[data-select='buscarEmpresa']");
-            let url = `${BASEURL}/empresa/backendCall/selectEmpresa`;
-            elementSelect2.select2({
-                placeholder: "Selecione...",
-                allowClear: false,
-                multiple: false,
-                quietMillis: 2000,
-                initSelection: function(element, callback) {
-                    $.ajax({
-                        url: url,
-                        dataType: "json",
-                        type: 'POST',
-                        params: {
-                            contentType: "application/json; charset=utf-8",
-                        },
-                        data: {
-                            termo: $(element).val(),
-                            page: 1
-                        },
-                        success: (data) => callback(data.itens[0])
-                    })
-                },
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    type: 'POST',
-                    data: (term, page) => {
-                        return {
-                            termo: term,
-                            page: page,
-                        };
-                    },
-                    results: (data, page) => {
-                        if (page == 1) {
-                            $(elementSelect2).data('count', data.count);
-                        }
-                        return {
-                            results: data.itens,
-                            more: (page * 30) < $(elementSelect2).data('count')
-                        };
-                    }
-                },
-                formatResult: (data) => data.text,
-                formatSelection: (data) => data.text
-            });
-        }
     };
 
-    const usuarioFunctions = {
+    const TipoImovelFunctions = {
         init: () => {},
     };
 
-    const usuarioPerfilFunctions = {
+    const TipoImovelPerfilFunctions = {
         init: () => {
-            usuarioPerfilFunctions.listenerUploadAvatar();
+            TipoImovelPerfilFunctions.listenerUploadAvatar();
         },
         listenerUploadAvatar: () => {
             //Ativa o Plugin
@@ -131,38 +83,32 @@
         }
     };
 
-    const dataGridUsuarioFunctions = {
+    const dataGridTipoImovelFunctions = {
         init: () => {
-            dataGridUsuarioFunctions.mapeamentoUsuario();
+            dataGridTipoImovelFunctions.mapeamentoTipoImovel();
 
             if (METODO == 'index') {
                 $('#tableAtivos').DataTable(dataGridGlobalFunctions.getSettings(0));
                 $('#tableInativos').DataTable(dataGridGlobalFunctions.getSettings(1));
             }
         },
-        mapeamentoUsuario: () => {
+        mapeamentoTipoImovel: () => {
             // Ativos
             mapeamento[0] = [];
             mapeamento[0][ROUTE] = [];
-            mapeamento[0][ROUTE]['id_column'] = `uuid_usuario`;
-            mapeamento[0][ROUTE]['ajax_url'] = `${BASEURL}/usuario/getDataGrid/1`;
+            mapeamento[0][ROUTE]['id_column'] = `uuid_tipo_imovel`;
+            mapeamento[0][ROUTE]['ajax_url'] = `${BASEURL}/tipoImovel/getDataGrid/1`;
             mapeamento[0][ROUTE]['order_by'] = [{
                 "coluna": 0,
                 "metodo": "ASC"
             }];
             mapeamento[0][ROUTE]['columns'] = [{
+                    "data": "codigo_tipo_imovel",
+                    "title": "Código"
+                },
+                {
                     "data": "nome",
                     "title": "Nome"
-                },
-                {
-                    "data": "email",
-                    "title": "Email"
-                },
-                {
-                    "data": "celular",
-                    "title": "Celular",
-                    "isreplace": true,
-                    "render": (data) => convertFunctions.intToPhone(data)
                 },
                 {
                     "data": "criado_em",
@@ -175,7 +121,7 @@
                     "title": "Alterado em"
                 },
                 {
-                    "data": "uuid_usuario",
+                    "data": "uuid_tipo_imovel",
                     "title": "Ações",
                     "className": "text-center"
                 }
@@ -196,25 +142,19 @@
             // Inativos
             mapeamento[1] = [];
             mapeamento[1][ROUTE] = [];
-            mapeamento[1][ROUTE]['id_column'] = `uuid_usuario`;
-            mapeamento[1][ROUTE]['ajax_url'] = `${BASEURL}/usuario/getDataGrid/0`;
+            mapeamento[1][ROUTE]['id_column'] = `uuid_tipo_imovel`;
+            mapeamento[1][ROUTE]['ajax_url'] = `${BASEURL}/tipoImovel/getDataGrid/0`;
             mapeamento[1][ROUTE]['order_by'] = [{
                 "coluna": 0,
                 "metodo": "ASC"
             }];
             mapeamento[1][ROUTE]['columns'] = [{
+                    "data": "codigo_tipo_imovel",
+                    "title": "Código"
+                },
+                {
                     "data": "nome",
                     "title": "Nome"
-                },
-                {
-                    "data": "email",
-                    "title": "Email"
-                },
-                {
-                    "data": "celular",
-                    "title": "Celular",
-                    "isreplace": true,
-                    "render": (data) => convertFunctions.intToPhone(data)
                 },
                 {
                     "data": "criado_em",
@@ -227,7 +167,7 @@
                     "title": "Alterado em"
                 },
                 {
-                    "data": "uuid_usuario",
+                    "data": "uuid_tipo_imovel",
                     "title": "Ações",
                     "className": "text-center"
                 }
@@ -242,12 +182,12 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-        usuarioFunctions.init();
-        select2UsuarioFunctions.init();
-        dataGridUsuarioFunctions.init();
+        TipoImovelFunctions.init();
+        select2TipoImovelFunctions.init();
+        dataGridTipoImovelFunctions.init();
 
         if (METODO == 'indexPerfil') {
-            usuarioPerfilFunctions.init();
+            // TipoImovelPerfilFunctions.init();
         }
     });
 </script>

@@ -2,7 +2,6 @@
     const select2UsuarioFunctions = {
         init: () => {
             select2UsuarioFunctions.buscarEmpresa();
-            select2UsuarioFunctions.buscarRelatorio();
         },
         buscarEmpresa: (caller) => {
             let elementSelect2 = $("[data-select='buscarEmpresa']");
@@ -52,54 +51,6 @@
                 formatSelection: (data) => data.text
             });
         },
-        buscarRelatorio: (caller) => {
-            let elementSelect2 = $("[data-select='buscarRelatorio']");
-            let url = `${BASEURL}/grupo/backendCall/selectRelatorio`;
-            elementSelect2.select2({
-                placeholder: "Selecione...",
-                allowClear: false,
-                multiple: false,
-                quietMillis: 2000,
-                minimumInputLength: 3,
-                initSelection: function(element, callback) {
-                    $.ajax({
-                        url: url,
-                        dataType: "json",
-                        type: 'POST',
-                        params: {
-                            contentType: "application/json; charset=utf-8",
-                        },
-                        data: {
-                            termo: $(element).val(),
-                            page: 1
-                        },
-                        success: (data) => callback(data.itens[0])
-                    })
-                },
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    type: 'POST',
-                    data: (term, page) => {
-                        return {
-                            termo: term,
-                            page: page,
-                        };
-                    },
-                    results: (data, page) => {
-                        if (page == 1) {
-                            $(elementSelect2).data('count', data.count);
-                        }
-                        return {
-                            results: data.itens,
-                            more: (page * 30) < $(elementSelect2).data('count')
-                        };
-                    }
-                },
-                formatResult: (data) => data.text,
-                formatSelection: (data) => data.text
-            });
-        }
     };
 
     const grupoFunctions = {

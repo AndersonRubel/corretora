@@ -82,16 +82,11 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
 
             // Telas de Crud
             $routes->add('configuracao(:any)', 'CadastroController::configuracao$1$2');
-            $routes->add('empresaCategoria(:any)', 'CadastroController::empresaCategoria$1$2');
-            $routes->add('empresaCentroCusto(:any)', 'CadastroController::empresaCentroCusto$1$2');
-            $routes->add('empresaComissao(:any)', 'CadastroController::empresaComissao$1$2');
-            $routes->add('empresaSituacao(:any)', 'CadastroController::empresaSituacao$1$2');
-            $routes->add('fluxoTipo(:any)', 'CadastroController::fluxoTipo$1$2');
             $routes->add('grupo(:any)', 'CadastroController::grupo$1$2');
             $routes->add('menu(:any)', 'CadastroController::menu$1$2');
-            $routes->add('metodoPagamento(:any)', 'CadastroController::metodoPagamento$1$2');
-            $routes->add('movimentacaoTipo(:any)', 'CadastroController::movimentacaoTipo$1$2');
-            $routes->add('relatorio(:any)', 'CadastroController::relatorio$1$2');
+            $routes->add('tipoImovel(:any)', 'CadastroController::tipoImovel$1$2');
+            $routes->add('categoriaImovel(:any)', 'CadastroController::categoriaImovel$1$2');
+
         });
 
         // Rotas de Cliente
@@ -100,21 +95,14 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->get('', 'ClienteController::index');
             $routes->get('adicionar', 'ClienteController::create');
             $routes->get('alterar/(:hash)', 'ClienteController::edit/$1');
-            $routes->get('visualizar/(:hash)', 'ClienteController::view/$1');
 
             // Funcionalidades
             $routes->post('store', 'ClienteController::store');
-            $routes->post('storeSimplificado', 'ClienteController::storeSimplificado');
-            $routes->post('adicionarSaldo', 'ClienteController::adicionarSaldo');
             $routes->post('update/(:hash)', 'ClienteController::update/$1');
             $routes->post('ativar/(:hash)', 'ClienteController::enable/$1');
             $routes->post('desativar/(:hash)', 'ClienteController::disable/$1');
             $routes->post('desativarEndereco/(:hash)', 'ClienteController::disableEndereco/$1');
             $routes->post('getDataGrid/(:num)', 'ClienteController::getDataGrid/$1');
-            $routes->post('getDataGridExtrato/(:num)', 'ClienteController::getDataGridExtrato/$1');
-            $routes->post('getDataGridHistoricoProduto', 'ClienteController::getDataGridHistoricoProduto');
-            $routes->post('getDataGridHistoricoFinanceiro', 'ClienteController::getDataGridHistoricoFinanceiro');
-            $routes->post('getDataGridHistoricoSaldo', 'ClienteController::getDataGridHistoricoSaldo');
             $routes->post('backendCall/(:alphanum)', 'ClienteController::backendCall/$1');
         });
 
@@ -173,6 +161,22 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->add('(:any)', 'RelatorioController::$1');
             $routes->add('', 'RelatorioController::index');
         });
+        // Rotas de tipo de imovel
+        $routes->group('tipoImovel', function ($routes) {
+          // Páginas
+          $routes->get('', 'TipoImovelController::index');
+          $routes->get('adicionar', 'TipoImovelController::create');
+          $routes->get('alterar/(:hash)', 'TipoImovelController::edit/$1');
+
+          // Funcionalidades
+          $routes->post('store', 'TipoImovelController::store');
+          $routes->post('update/(:hash)', 'TipoImovelController::update/$1');
+          $routes->post('updateProfile', 'TipoImovelController::updateProfile');
+          $routes->post('ativar/(:hash)', 'TipoImovelController::enable/$1');
+          $routes->post('desativar/(:hash)', 'TipoImovelController::disable/$1');
+          $routes->post('getDataGrid/(:num)', 'TipoImovelController::getDataGrid/$1');
+          $routes->post('backendCall/(:alphanum)', 'TipoImovelController::backendCall/$1');
+           });
 
         // Rotas de Usuario
         $routes->group('usuario', function ($routes) {

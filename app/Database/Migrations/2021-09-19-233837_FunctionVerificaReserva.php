@@ -23,7 +23,7 @@ class FunctionVerificaReserva extends Migration
                  IF EXISTS (
                      SELECT 1
                        FROM reserva
-                      WHERE codigo_imovel = NEW.codigo_imovel
+                      WHERE uuid_imovel = NEW.uuid_imovel
                         AND ((data_inicio, data_fim) OVERLAPS
                             (NEW.data_inicio, NEW.data_fim))
                  )

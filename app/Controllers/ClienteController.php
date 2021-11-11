@@ -57,27 +57,6 @@ class ClienteController extends BaseController
     }
 
     /**
-     * Exibe a Tela de Visualizar o Registro
-     * @param string $uuid UUID do Registro
-     * @return html
-     */
-    public function view(string $uuid)
-    {
-        if (!$this->verificarUuid($uuid)) {
-            $this->nativeSession->setFlashData('error', lang('Errors.geral.validaUuid'));
-            return redirect()->to(base_url("cliente"));
-        }
-
-        $clienteModel = new ClienteModel;
-        $clienteEnderecoModel = new ClienteEnderecoModel;
-        $dados['cliente'] = $clienteModel->get([$clienteModel->uuidColumn => $uuid], [], true);
-        $dados['cliente']['endereco'] = [];
-        $dados['indicadores'] = [];
-
-        return $this->template('cliente', ['view', 'modal', 'functions'], $dados);
-    }
-
-    /**
      * Busca os registros para o Datagrid
      * @param int $status Verifica se a informação está ativa (1 ou 0)
      */
@@ -88,68 +67,6 @@ class ClienteController extends BaseController
             $dadosRequest = $this->request->getVar();
             $dadosRequest['status'] = $status;
             $data = $clienteModel->getDataGrid($dadosRequest);
-            return $this->responseDataGrid($data, $dadosRequest);
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-    }
-
-    /**
-     * Busca os registros para o DatagridExtrato
-     * @param int $status Verifica se a informação está ativa (1 ou 0)
-     */
-    public function getDataGridExtrato(int $status)
-    {
-        try {
-            $clienteModel = new ClienteModel;
-            $dadosRequest = $this->request->getVar();
-            $dadosRequest['status'] = $status;
-            $data = $clienteModel->getDataGridExtrato($dadosRequest);
-            return $this->responseDataGrid($data, $dadosRequest);
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-    }
-
-    /**
-     * Busca os registros para o DatagridExtrato
-     */
-    public function getDataGridHistoricoProduto()
-    {
-        try {
-            $clienteModel = new ClienteModel;
-            $dadosRequest = $this->request->getVar();
-            $data = $clienteModel->getDataGridHistoricoProduto($dadosRequest);
-            return $this->responseDataGrid($data, $dadosRequest);
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-    }
-
-    /**
-     * Busca os registros para o DatagridExtrato
-     */
-    public function getDataGridHistoricoFinanceiro()
-    {
-        try {
-            $clienteModel = new ClienteModel;
-            $dadosRequest = $this->request->getVar();
-            $data = $clienteModel->getDataGridHistoricoFinanceiro($dadosRequest);
-            return $this->responseDataGrid($data, $dadosRequest);
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-    }
-
-    /**
-     * Busca os registros para o DatagridExtrato
-     */
-    public function getDataGridHistoricoSaldo()
-    {
-        try {
-            $clienteModel = new ClienteModel;
-            $dadosRequest = $this->request->getVar();
-            $data = $clienteModel->getDataGridHistoricoSaldo($dadosRequest);
             return $this->responseDataGrid($data, $dadosRequest);
         } catch (Exception $e) {
             var_dump($e);
@@ -196,10 +113,8 @@ class ClienteController extends BaseController
             $this->nativeSession->setFlashData('error', formataErros($erros));
             return redirect()->back()->withInput();
         }
-
         $cliente = [
             'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
-            'usuario_criacao' => $dadosUsuario['codigo_usuario'],
             'tipo_pessoa'     => onlyNumber($dadosRequest['tipo_pessoa']),
             'nome_fantasia'   => $dadosRequest['nome_fantasia'],
             'razao_social'    => $dadosRequest['razao_social'],
@@ -222,7 +137,6 @@ class ClienteController extends BaseController
                 foreach ($dadosRequest['endereco']['cep'] as $key => $value) {
                     $clienteEndereco = [
                         'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
-                        'usuario_criacao' => $dadosUsuario['codigo_usuario'],
                         'codigo_cliente'  => $clienteId,
                         'cep'             => onlyNumber($dadosRequest['endereco']['cep'][$key]),
                         'rua'             => $dadosRequest['endereco']['rua'][$key],
@@ -246,148 +160,6 @@ class ClienteController extends BaseController
 
         return redirect()->to(base_url("cliente"));
     }
-
-    /**
-     * Realiza o Cadastro do Registro
-     * @return \CodeIgniter\HTTP\RedirectResponse
-     */
-    public function storeSimplificado(): RedirectResponse
-    {
-        $clienteModel = new ClienteModel;
-        $clienteEnderecoModel = new ClienteEnderecoModel;
-        $dadosRequest = convertEmptyToNull($this->request->getVar());
-        $dadosUsuario = $this->nativeSession->get("usuario");
-        $dadosEmpresa = $this->nativeSession->get("empresa");
-
-        $erros = $this->validarRequisicao($this->request, [
-            'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
-            'cpf_cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
-            'email' => 'permit_empty|valid_email|max_length[255]',
-            'data_nascimento' => 'permit_empty|valid_date',
-            'telefone' => [
-                'rules' => 'permit_empty|checkTelefone',
-                'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
-            ],
-            'celular' => [
-                'rules' => 'permit_empty|checkTelefone',
-                'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
-            ]
-        ]);
-
-        if (!empty($erros)) {
-            $this->nativeSession->setFlashData('error', formataErros($erros));
-            return redirect()->back()->withInput();
-        }
-
-        $cliente = [
-            'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
-            'usuario_criacao' => $dadosUsuario['codigo_usuario'],
-            'tipo_pessoa'     => strlen($dadosRequest['cpf_cnpj']) == 14 ? 2 : 1,
-            'nome_fantasia'   => $dadosRequest['nome_fantasia'],
-            'razao_social'    => $dadosRequest['nome_fantasia'],
-            'cpf_cnpj'        => onlyNumber($dadosRequest['cpf_cnpj']),
-            'telefone'        => onlyNumber($dadosRequest['telefone']),
-            'celular'         => onlyNumber($dadosRequest['celular']),
-            'email'           => $dadosRequest['email'],
-            'data_nascimento' => $dadosRequest['data_nascimento'],
-        ];
-
-        //Inicia as operações de DB
-        $this->db->transStart();
-        try {
-            $clienteModel->save($cliente);
-            $clienteId = $clienteModel->insertID('cliente_codigo_cliente_seq');
-
-            if (!empty($dadosRequest['endereco']) && !empty($dadosRequest['endereco']['cep'])) {
-                // Percorre os endereços preenchidos e salva
-                foreach ($dadosRequest['endereco']['cep'] as $key => $value) {
-                    $clienteEndereco = [
-                        'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
-                        'usuario_criacao' => $dadosUsuario['codigo_usuario'],
-                        'codigo_cliente'  => $clienteId,
-                        'cep'             => onlyNumber($dadosRequest['endereco']['cep'][$key]),
-                        'rua'             => $dadosRequest['endereco']['rua'][$key],
-                        'numero'          => onlyNumber($dadosRequest['endereco']['numero'][$key]),
-                        'bairro'          => $dadosRequest['endereco']['bairro'][$key],
-                        'complemento'     => $dadosRequest['endereco']['complemento'][$key],
-                        'cidade'          => $dadosRequest['endereco']['cidade'][$key],
-                        'uf'              => $dadosRequest['endereco']['uf'][$key]
-                    ];
-
-                    $clienteEnderecoModel->save($clienteEndereco);
-                }
-            }
-
-            $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Cliente']));
-        } catch (Exception $e) {
-            $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
-            return redirect()->back()->withInput();
-        }
-
-        return redirect()->to(base_url("pdv"));
-    }
-
-    /**
-     * Realiza o Cadastro do Registro
-     * @return \CodeIgniter\HTTP\RedirectResponse
-     */
-    public function adicionarSaldo(): RedirectResponse
-    {
-        $clienteModel = new ClienteModel;
-        $clienteExtratoModel = new ClienteExtratoModel;
-        $dadosRequest = convertEmptyToNull($this->request->getVar());
-        $dadosUsuario = $this->nativeSession->get("usuario");
-        $dadosEmpresa = $this->nativeSession->get("empresa");
-
-        $erros = $this->validarRequisicao($this->request, [
-            'uuid_cliente' => 'required|string',
-            'nome' => 'required|string|min_length[3]|max_length[255]',
-            'valor' => 'required|string',
-        ]);
-
-        if (!empty($erros)) {
-            $this->nativeSession->setFlashData('error', formataErros($erros));
-            return redirect()->back()->withInput();
-        }
-
-        //Inicia as operações de DB
-        $this->db->transStart();
-        try {
-
-            // Busca o Cliente
-            $cliente = $clienteModel->get([$clienteModel->uuidColumn => $dadosRequest['uuid_cliente']], ['codigo_cliente', 'saldo'], true);
-
-            if (empty($cliente)) {
-                $this->nativeSession->setFlashData('error', lang('Errors.geral.registroNaoEncontrado'));
-                return redirect()->to(base_url("cliente"));
-            }
-
-            // Adiciona o Saldo
-            $clienteSaldo = [
-                'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
-                'usuario_criacao' => $dadosUsuario['codigo_usuario'],
-                'codigo_cliente'  => $cliente['codigo_cliente'],
-                'descricao'       => $dadosRequest['nome'],
-                'tipo_transacao'  => "C", // Crédito
-                'valor'           => onlyNumber($dadosRequest['valor']),
-            ];
-
-            $clienteExtratoModel->save($clienteSaldo);
-
-            // Atualiza o Saldo no Cliente
-            $clienteModel->save(['codigo_cliente' => $cliente['codigo_cliente'], 'saldo' => ($cliente['saldo'] + $clienteSaldo['valor'])]);
-
-            $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Saldo']));
-        } catch (Exception $e) {
-            $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
-            return redirect()->back()->withInput();
-        }
-
-        return redirect()->to(base_url("cliente"));
-    }
-
 
     /**
      * Altera o Registro
@@ -411,7 +183,6 @@ class ClienteController extends BaseController
             'razao_social' => 'permit_empty|string|min_length[3]|max_length[255]',
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
             'cpf_cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
-            'codigo_vendedor' => 'permit_empty|integer',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
             'data_nascimento' => 'permit_empty|valid_date',
@@ -431,9 +202,7 @@ class ClienteController extends BaseController
         }
 
         $clienteUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
             'alterado_em'       => "NOW()",
-            'codigo_vendedor'   => !empty($dadosUsuario['codigo_vendedor']) ? $dadosUsuario['codigo_vendedor'] : null,
             'nome_fantasia'     => $dadosRequest['nome_fantasia'],
             'razao_social'      => !empty($dadosRequest['razao_social']) ? $dadosRequest['razao_social'] : $dadosRequest['nome_fantasia'],
             'cpf_cnpj'          => onlyNumber($dadosRequest['cpf_cnpj']),
@@ -473,12 +242,10 @@ class ClienteController extends BaseController
                         // Busca o Código
                         $endereco = $clienteEnderecoModel->get([$clienteEnderecoModel->uuidColumn => $dadosRequest['endereco']['uuid_cliente_endereco'][$key]], ['codigo_cliente_endereco'], true);
                         $clienteEndereco['codigo_cliente_endereco'] = $endereco['codigo_cliente_endereco'];
-                        $clienteEndereco['usuario_alteracao']       = $dadosUsuario['codigo_usuario'];
                         $clienteEndereco['alterado_em']             = "NOW()";
                         $clienteEnderecoModel->save($clienteEndereco);
                     } else {
                         // Cria o registro
-                        $clienteEndereco['usuario_criacao'] = $dadosUsuario['codigo_usuario'];
                         $clienteEnderecoModel->save($clienteEndereco);
                     }
                 }
@@ -512,9 +279,7 @@ class ClienteController extends BaseController
 
         $dadosCliente = [
             'alterado_em'        => "NOW()",
-            'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
             'inativado_em'       => null,
-            'usuario_inativacao' => null
         ];
 
         try {

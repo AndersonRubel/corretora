@@ -82,5 +82,14 @@ class CadastroMenuSeeder extends DatabaseSeeder
             'localizacao' => 'cadastro',
             'icone'       => 'fas fa-edit'
         ]);
+
+        $this->saveOnce('cadastro_menu', [
+            'nome'        => 'Menus',
+            'descricao'   => 'Cadastro de Menus de Acesso',
+            'path'        => 'cadastro/menu',
+            'agrupamento' => 'cadastro',
+            'localizacao' => 'cadastro',
+            'icone'       => 'fas fa-edit'
+        ]);
     }
 }

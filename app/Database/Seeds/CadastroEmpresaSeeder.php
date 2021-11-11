@@ -9,7 +9,6 @@ class CadastroEmpresaSeeder extends DatabaseSeeder
 	public function run()
 	{
         $this->saveOnce('empresa',[
-            'usuario_criacao'          => 1,
             'tipo_pessoa'              => 1,
             'razao_social'             => "SM CORRETORA",
             'nome_fantasia'            => "Sueli imóveis",

@@ -89,12 +89,12 @@ class BaseModel extends Model
      * @param int codigoUsuario Código do usuário que deletou o registro
      * @param bool byUuid Verifica se a chave primaria deve ser ID ou UUID
      */
-    public function customSoftDelete(int|string $id, string $codigoUsuario = null, bool $byUuid = false)
+    public function customSoftDelete(int|string $id, bool $byUuid = false)
     {
         if ($byUuid) {
-            return $this->where($this->uuidColumn, $id)->set(['usuario_inativacao' => $codigoUsuario, 'inativado_em' => 'NOW()'])->update();
+            return $this->where($this->uuidColumn, $id)->set(['inativado_em' => 'NOW()'])->update();
         } else {
-            return $this->update($id, ['usuario_inativacao' => $codigoUsuario, 'inativado_em' => 'NOW()']);
+            return $this->update($id, ['inativado_em' => 'NOW()']);
         }
     }
 

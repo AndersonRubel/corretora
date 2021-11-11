@@ -37,30 +37,30 @@ class CadastroController extends BaseController
     /**
      * Responsável por devolver os dados do Select de Tipos de Fluxo
      */
-    public function selectCadastroFluxoTipo()
-    {
-        try {
-            $request = $this->request->getVar();
-            $cadastroFluxoTipoModel = new CadastroFluxoTipoModel;
-            return $this->response->setJSON($cadastroFluxoTipoModel->selectCadastroFluxoTipo($request));
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-    }
+    // public function selectCadastroFluxoTipo()
+    // {
+    //     try {
+    //         $request = $this->request->getVar();
+    //         $cadastroFluxoTipoModel = new CadastroFluxoTipoModel;
+    //         return $this->response->setJSON($cadastroFluxoTipoModel->selectCadastroFluxoTipo($request));
+    //     } catch (Exception $e) {
+    //         var_dump($e);
+    //     }
+    // }
 
-    /**
-     * Responsável por devolver os dados do Select de Metodos de Pagamento
-     */
-    public function selectCadastroMetodoPagamento()
-    {
-        try {
-            $request = $this->request->getVar();
-            $cadastroMetodoPagamentoModel = new CadastroMetodoPagamentoModel;
-            return $this->response->setJSON($cadastroMetodoPagamentoModel->selectCadastroMetodoPagamento($request));
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-    }
+    // /**
+    //  * Responsável por devolver os dados do Select de Metodos de Pagamento
+    //  */
+    // public function selectCadastroMetodoPagamento()
+    // {
+    //     try {
+    //         $request = $this->request->getVar();
+    //         $cadastroMetodoPagamentoModel = new CadastroMetodoPagamentoModel;
+    //         return $this->response->setJSON($cadastroMetodoPagamentoModel->selectCadastroMetodoPagamento($request));
+    //     } catch (Exception $e) {
+    //         var_dump($e);
+    //     }
+    // }
 
     //////////////////////////////////////
     //                                  //
@@ -545,16 +545,16 @@ class CadastroController extends BaseController
      * @param string $function Nome da Função desejada (lista, adicionar, alterar)
      * @param string $primaryKeyValue UUID do Registro
      */
-    public function movimentacaoTipo($function = 'lista', $primaryKeyValue = null)
+    public function tipoImovel($function = 'lista', $primaryKeyValue = null)
     {
         ////////// NÃO MUDAR - Configurações das Váriaveis //////////
         $config['return']              = __FUNCTION__;
         $config['function']            = $function;
 
         ////////// Configurações das Váriaveis //////////
-        $config['nomeCrud']          = 'Tipos de Movimentação';
-        $config['table']             = 'cadastro_movimentacao_tipo';
-        $config['primaryKey']        = "{$config['table']}.uuid_cadastro_movimentacao_tipo";
+        $config['nomeCrud']          = 'Tipos de Imóveis';
+        $config['table']             = 'tipo_imovel';
+        $config['primaryKey']        = "{$config['table']}.uuid_tipo_imovel";
         $config['primaryKeyValue']   = $primaryKeyValue;
         $config['btnAdicionarLabel'] = 'Adicionar';
         $config['paginadorMaximo']   = 50;
@@ -584,7 +584,7 @@ class CadastroController extends BaseController
             [
                 'tab_name' => 'Ativos',
                 'fields'   => [
-                    "{$config['table']}.uuid_cadastro_movimentacao_tipo" => 'Código',
+                    "{$config['table']}.uuid_tipo_imovel"                => 'Código',
                     "{$config['table']}.nome"                            => 'Nome',
                     "{$config['table']}.criado_em"                       => 'Criado em'
                 ],
@@ -596,7 +596,7 @@ class CadastroController extends BaseController
             [
                 'tab_name' => 'Inativos',
                 'fields'   => [
-                    "{$config['table']}.uuid_cadastro_movimentacao_tipo" => 'Código',
+                    "{$config['table']}.uuid_tipo_imovel"                => 'Código',
                     "{$config['table']}.nome"                            => 'Nome',
                     "{$config['table']}.criado_em"                       => 'Criado em'
                 ],
@@ -618,6 +618,83 @@ class CadastroController extends BaseController
         }
     }
 
+     /**
+     * Crud de movimentacao tipo - cadastro_movimentacao_tipo
+     * @param string $function Nome da Função desejada (lista, adicionar, alterar)
+     * @param string $primaryKeyValue UUID do Registro
+     */
+    public function categoriaImovel($function = 'lista', $primaryKeyValue = null)
+    {
+        ////////// NÃO MUDAR - Configurações das Váriaveis //////////
+        $config['return']              = __FUNCTION__;
+        $config['function']            = $function;
+
+        ////////// Configurações das Váriaveis //////////
+        $config['nomeCrud']          = 'Categorias de Imóvel';
+        $config['table']             = 'categoria_imovel';
+        $config['primaryKey']        = "{$config['table']}.uuid_categoria_imovel";
+        $config['primaryKeyValue']   = $primaryKeyValue;
+        $config['btnAdicionarLabel'] = 'Adicionar';
+        $config['paginadorMaximo']   = 50;
+
+        ////////// Inicio :: Formulário //////////
+
+        $config['formFields'][0][] = [
+            'grid'  => 6,
+            'type'  => 'input',
+            'label' => ['enabled' => true, 'text' => 'Nome'],
+            'data'  => [
+                'name'              => 'nome',
+                'id'                => 'nome',
+                'type'              => 'text',
+                'class'             => 'form-control',
+                'required'          => 'required',
+                'data-verify'       => 'true',
+                'data-verify-clear' => 'true'
+            ],
+            'select2' => null
+        ];
+
+        ////////// Fim :: Formulário //////////
+
+        ////////// Inicio :: Listagem //////////
+        $config['dataGrid'] = [
+            [
+                'tab_name' => 'Ativos',
+                'fields'   => [
+                    "{$config['table']}.uuid_categoria_imovel"           => 'Código',
+                    "{$config['table']}.nome"                            => 'Nome',
+                    "{$config['table']}.criado_em"                       => 'Criado em'
+                ],
+                'where'    => ["{$config['table']}.inativado_em IS NULL"],
+                'joins'    => null,
+                'order_by' => ['field' => "{$config['table']}.nome", 'method' => 'ASC'],
+                'options'  => ['enabled' => true, 'edit' => true, 'desativar' => true]
+            ],
+            [
+                'tab_name' => 'Inativos',
+                'fields'   => [
+                    "{$config['table']}.uuid_categoria_imovel"           => 'Código',
+                    "{$config['table']}.nome"                            => 'Nome',
+                    "{$config['table']}.criado_em"                       => 'Criado em'
+                ],
+                'where'    => ["{$config['table']}.inativado_em IS NOT NULL"],
+                'joins'    => null,
+                'order_by' => ['field' => "{$config['table']}.nome", 'method' => 'ASC'],
+                'options'  => ['enabled' => true, 'ativar' => true]
+            ]
+        ];
+        ////////// Fim :: Listagem //////////
+
+        $crudDinamico = new CrudDinamico();
+        $returnData = $crudDinamico->createPage($config);
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON($returnData);
+        } else {
+            return $this->template('cadastro', ['index', 'functions'], $returnData);
+        }
+    }
     /**
      * Crud de  metodo pagamento - cadastro_metodo_pagamento
      * @param string $function Nome da Função desejada (lista, adicionar, alterar)

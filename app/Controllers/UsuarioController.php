@@ -115,7 +115,7 @@ class UsuarioController extends BaseController
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosUsuario = $this->nativeSession->get("usuario");
         $dadosSessaoEmpresa = $this->nativeSession->get("empresa");
-
+// dd($dadosRequest);
         $erros = $this->validarRequisicao($this->request, [
             'nome' => 'required|string|min_length[3]|max_length[255]',
             'email' => 'required|valid_email|max_length[255]|is_unique[usuario.email]',
@@ -141,7 +141,6 @@ class UsuarioController extends BaseController
         }
 
         $empresa = [
-            'usuario_criacao'       => $dadosUsuario['codigo_usuario'],
             'codigo_empresa_padrao' => !empty($dadosRequest['codigo_empresa_padrao']) ? $dadosRequest['codigo_empresa_padrao'] : $dadosSessaoEmpresa['codigo_empresa'],
             'nome'                  => $dadosRequest['nome'],
             'email'                 => $dadosRequest['email'],
@@ -157,7 +156,6 @@ class UsuarioController extends BaseController
 
             // Cria o vinculo do usuario com a Empresa
             $empresaUsuario = [
-                'usuario_criacao'       => $dadosUsuario['codigo_usuario'],
                 'codigo_empresa'        => $dadosRequest['codigo_empresa_padrao'],
                 'codigo_usuario'        => $usuarioId,
                 'codigo_cadastro_grupo' => $dadosRequest['codigo_cadastro_grupo'],
@@ -221,7 +219,6 @@ class UsuarioController extends BaseController
         }
 
         $usuarioUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
             'alterado_em'       => "NOW()",
             'nome'              => $dadosRequest['nome'],
             'email'             => $dadosRequest['email'],
@@ -235,7 +232,6 @@ class UsuarioController extends BaseController
 
             // Altera o vinculo do usuario com a Empresa
             $empresaUsuario = [
-                'usuario_alteracao'     => $dadosUsuario['codigo_usuario'],
                 'alterado_em'           => "NOW()",
                 'codigo_usuario'        => $usuario['codigo_usuario'],
                 'codigo_cadastro_grupo' => $dadosRequest['codigo_cadastro_grupo'],
@@ -314,7 +310,6 @@ class UsuarioController extends BaseController
         }
 
         $usuarioUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
             'alterado_em'       => "NOW()",
             'nome'              => $dadosRequest['nome'],
             'email'             => $dadosRequest['email']
@@ -395,9 +390,7 @@ class UsuarioController extends BaseController
 
         $usuario = [
             'alterado_em'        => "NOW()",
-            'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
-            'inativado_em'       => null,
-            'usuario_inativacao' => null
+            'inativado_em'       => null
         ];
 
         try {
