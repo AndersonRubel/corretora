@@ -26,6 +26,7 @@ class CreateTableProprietario extends Migration
             'data_nascimento'     => ['type' => 'DATE', 'null' => true],
             'email'               => ['type' => 'VARCHAR', 'null' => true],
             'telefone'            => ['type' => 'VARCHAR', 'null' => true],
+            'endereco'            => ['type' => 'JSONB', 'null' => true],
             'celular'             => ['type' => 'VARCHAR', 'null' => true],
             'observacao'          => ['type' => 'TEXT', 'null' => true],
         ]);

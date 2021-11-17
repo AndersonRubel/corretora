@@ -3,10 +3,10 @@
         init: () => {}
     };
 
-    const fornecedorFunctions = {
+    const proprietarioFunctions = {
         init: () => {
-            fornecedorFunctions.listenerTipoPessoa();
-            fornecedorFunctions.listenerBuscarCep();
+            proprietarioFunctions.listenerTipoPessoa();
+            proprietarioFunctions.listenerBuscarCep();
 
             // Atualiza os campos conforme a o tipo de pessoa
             $("#tipoPessoa").trigger('change');
@@ -85,8 +85,8 @@
             // Ativos
             mapeamento[0] = [];
             mapeamento[0][ROUTE] = [];
-            mapeamento[0][ROUTE]['id_column'] = `uuid_fornecedor`;
-            mapeamento[0][ROUTE]['ajax_url'] = `${BASEURL}/fornecedor/getDataGrid/1`;
+            mapeamento[0][ROUTE]['id_column'] = `uuid_proprietario`;
+            mapeamento[0][ROUTE]['ajax_url'] = `${BASEURL}/proprietario/getDataGrid/1`;
             mapeamento[0][ROUTE]['order_by'] = [{
                 "coluna": 0,
                 "metodo": "ASC"
@@ -111,22 +111,12 @@
                     "title": "Criado em"
                 },
                 {
-                    "data": "usuario_criacao",
-                    "visible": false,
-                    "title": "Criado por"
-                },
-                {
                     "data": "alterado_em",
                     "visible": false,
                     "title": "Alterado em"
                 },
                 {
-                    "data": "usuario_alteracao",
-                    "visible": false,
-                    "title": "Alterado por"
-                },
-                {
-                    "data": "uuid_fornecedor",
+                    "data": "uuid_proprietario",
                     "title": "Ações",
                     "className": "text-center"
                 }
@@ -147,8 +137,8 @@
             // Inativos
             mapeamento[1] = [];
             mapeamento[1][ROUTE] = [];
-            mapeamento[1][ROUTE]['id_column'] = `uuid_fornecedor`;
-            mapeamento[1][ROUTE]['ajax_url'] = `${BASEURL}/fornecedor/getDataGrid/0`;
+            mapeamento[1][ROUTE]['id_column'] = `uuid_proprietario`;
+            mapeamento[1][ROUTE]['ajax_url'] = `${BASEURL}/proprietario/getDataGrid/0`;
             mapeamento[1][ROUTE]['order_by'] = [{
                 "coluna": 0,
                 "metodo": "ASC"
@@ -173,19 +163,9 @@
                     "title": "Criado em"
                 },
                 {
-                    "data": "usuario_criacao",
-                    "visible": false,
-                    "title": "Criado por"
-                },
-                {
                     "data": "alterado_em",
                     "visible": false,
                     "title": "Alterado em"
-                },
-                {
-                    "data": "usuario_alteracao",
-                    "visible": false,
-                    "title": "Alterado por"
                 },
                 {
                     "data": "inativado_em",
@@ -193,12 +173,7 @@
                     "title": "Inativado em"
                 },
                 {
-                    "data": "usuario_inativacao",
-                    "visible": false,
-                    "title": "Inativado por"
-                },
-                {
-                    "data": "uuid_fornecedor",
+                    "data": "uuid_proprietario",
                     "title": "Ações",
                     "className": "text-center"
                 }
@@ -213,7 +188,7 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-        fornecedorFunctions.init();
+        proprietarioFunctions.init();
         select2FornecedorFunctions.init();
         dataGridFornecedorFunctions.init();
     });

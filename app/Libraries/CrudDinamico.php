@@ -683,6 +683,7 @@ class CrudDinamico
      */
     public function delete(string $table, $primaryKey, $primaryKeyValue)
     {
+        dd('teste');
         // Valida se a Tabela contem alias
         if (strpos($table, '%20') === true) {
             $table = explode('%20', $table)[0];

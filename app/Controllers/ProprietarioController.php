@@ -6,9 +6,9 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\RedirectResponse;
 use Exception;
 
-use App\Models\Fornecedor\FornecedorModel;
+use App\Models\Proprietario\ProprietarioModel;
 
-class FornecedorController extends BaseController
+class ProprietarioController extends BaseController
 {
     //////////////////////////////////
     //                              //
@@ -17,12 +17,12 @@ class FornecedorController extends BaseController
     //////////////////////////////////
 
     /**
-     * Exibe a Tela de Fornecedor
+     * Exibe a Tela de proprietario
      * @return html
      */
     public function index()
     {
-        return $this->template('fornecedor', ['index', 'functions']);
+        return $this->template('proprietario', ['index', 'functions']);
     }
 
     /**
@@ -31,7 +31,7 @@ class FornecedorController extends BaseController
      */
     public function create()
     {
-        return $this->template('fornecedor', ['create', 'functions']);
+        return $this->template('proprietario', ['create', 'functions']);
     }
 
     /**
@@ -43,16 +43,16 @@ class FornecedorController extends BaseController
     {
         if (!$this->verificarUuid($uuid)) {
             $this->nativeSession->setFlashData('error', lang('Errors.geral.validaUuid'));
-            return redirect()->to(base_url("fornecedor"));
+            return redirect()->to(base_url("proprietario"));
         }
 
-        $fornecedorModel = new FornecedorModel;
-        $dados['fornecedor'] = $fornecedorModel->get([$fornecedorModel->uuidColumn => $uuid], [], true);
+        $proprietarioModel = new ProprietarioModel;
+        $dados['proprietario'] = $proprietarioModel->get([$proprietarioModel->uuidColumn => $uuid], [], true);
 
         // Desestrutura os JSONB para preencher os campos no formulário
-        $dados['fornecedor']['endereco'] = json_decode($dados['fornecedor']['endereco'], true);
+        $dados['proprietario']['endereco'] = json_decode($dados['proprietario']['endereco'], true);
 
-        return $this->template('fornecedor', ['edit', 'functions'], $dados);
+        return $this->template('proprietario', ['edit', 'functions'], $dados);
     }
 
     /**
@@ -61,10 +61,10 @@ class FornecedorController extends BaseController
      */
     public function getDataGrid(int $status)
     {
-        $fornecedorModel = new FornecedorModel;
+        $proprietarioModel = new ProprietarioModel;
         $dadosRequest = $this->request->getVar();
         $dadosRequest['status'] = $status;
-        $data = $fornecedorModel->getDataGrid($dadosRequest);
+        $data = $proprietarioModel->getDataGrid($dadosRequest);
         return $this->responseDataGrid($data, $dadosRequest);
     }
 
@@ -80,7 +80,7 @@ class FornecedorController extends BaseController
      */
     public function store(): RedirectResponse
     {
-        $fornecedorModel = new FornecedorModel;
+        $proprietarioModel = new ProprietarioModel;
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosUsuario = $this->nativeSession->get("usuario");
         $dadosEmpresa = $this->nativeSession->get("empresa");
@@ -119,7 +119,7 @@ class FornecedorController extends BaseController
         }
 
         // JSONB de Dados do Endereço
-        $fornecedorEndereco = [
+        $proprietarioEndereco = [
             'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
             'rua'         => !empty($dadosRequest['rua'])         ? $dadosRequest['rua']                : '',
             'numero'      => !empty($dadosRequest['numero'])      ? onlyNumber($dadosRequest['numero']) : '',
@@ -129,7 +129,7 @@ class FornecedorController extends BaseController
             'uf'          => !empty($dadosRequest['uf'])          ? $dadosRequest['uf']                 : ''
         ];
 
-        $fornecedor = [
+        $proprietario = [
             'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
             'usuario_criacao' => $dadosUsuario['codigo_usuario'],
             'tipo_pessoa'     => onlyNumber($dadosRequest['tipo_pessoa']),
@@ -141,21 +141,21 @@ class FornecedorController extends BaseController
             'email'           => $dadosRequest['email'],
             'observacao'      => $dadosRequest['observacao'],
             'data_nascimento' => $dadosRequest['data_nascimento'],
-            'endereco'        => !empty($fornecedorEndereco) ? json_encode($fornecedorEndereco) : null,
+            'endereco'        => !empty($proprietarioEndereco) ? json_encode($proprietarioEndereco) : null,
         ];
 
         //Inicia as operações de DB
         $this->db->transStart();
         try {
-            $fornecedorModel->save($fornecedor);
+            $proprietarioModel->save($proprietario);
             $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Fornecedor']));
+            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Proprietário']));
         } catch (Exception $e) {
             $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
             return redirect()->back()->withInput();
         }
 
-        return redirect()->to(base_url("fornecedor"));
+        return redirect()->to(base_url("proprietario"));
     }
 
     /**
@@ -167,10 +167,10 @@ class FornecedorController extends BaseController
     {
         if (!$this->verificarUuid($uuid)) {
             $this->nativeSession->setFlashData('error', lang('Errors.geral.validaUuid'));
-            return redirect()->to(base_url("fornecedor"));
+            return redirect()->to(base_url("proprietario"));
         }
 
-        $fornecedorModel = new FornecedorModel;
+        $proprietarioModel = new ProprietarioModel;
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosUsuario = $this->nativeSession->get("usuario");
 
@@ -207,7 +207,7 @@ class FornecedorController extends BaseController
         }
 
         // JSONB de Dados do Endereço
-        $fornecedorEndereco = [
+        $proprietarioEndereco = [
             'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
             'rua'         => !empty($dadosRequest['rua'])         ? $dadosRequest['rua']                : '',
             'numero'      => !empty($dadosRequest['numero'])      ? onlyNumber($dadosRequest['numero']) : '',
@@ -217,7 +217,7 @@ class FornecedorController extends BaseController
             'uf'          => !empty($dadosRequest['uf'])          ? $dadosRequest['uf']                 : ''
         ];
 
-        $fornecedorUpdate = [
+        $proprietarioUpdate = [
             'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
             'data_alteracao'    => "NOW()",
             'nome_fantasia'     => $dadosRequest['nome_fantasia'],
@@ -228,21 +228,21 @@ class FornecedorController extends BaseController
             'email'             => $dadosRequest['email'],
             'observacao'        => $dadosRequest['observacao'],
             'data_nascimento'   => $dadosRequest['data_nascimento'],
-            'endereco'          => !empty($fornecedorEndereco) ? json_encode($fornecedorEndereco) : null,
+            'endereco'          => !empty($proprietarioEndereco) ? json_encode($proprietarioEndereco) : null,
         ];
 
         //Inicia as operações de DB
         $this->db->transStart();
         try {
-            $fornecedorModel->where($fornecedorModel->uuidColumn, $uuid)->set($fornecedorUpdate)->update();
+            $proprietarioModel->where($proprietarioModel->uuidColumn, $uuid)->set($proprietarioUpdate)->update();
             $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.atualizado', ['Fornecedor']));
+            $this->nativeSession->setFlashData('success', lang('Success.default.atualizado', ['Proprietario']));
         } catch (Exception $e) {
             $this->nativeSession->setFlashData('error', lang('Errors.banco.validaUpdate'));
             return redirect()->back()->withInput();
         }
 
-        return redirect()->to(base_url("fornecedor"));
+        return redirect()->to(base_url("proprietario"));
     }
 
     /**
@@ -257,9 +257,9 @@ class FornecedorController extends BaseController
         }
 
         $dadosUsuario = $this->nativeSession->get("usuario");
-        $fornecedorModel = new FornecedorModel;
+        $proprietarioModel = new ProprietarioModel;
 
-        $dadosFornecedor = [
+        $dadosProprietario = [
             'alterado_em'        => "NOW()",
             'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
             'inativado_em'       => null,
@@ -267,12 +267,12 @@ class FornecedorController extends BaseController
         ];
 
         try {
-            $fornecedorModel->where($fornecedorModel->uuidColumn, $uuid)->set($dadosFornecedor)->update();
+            $proprietarioModel->where($proprietarioModel->uuidColumn, $uuid)->set($dadosProprietario)->update();
         } catch (Exception $e) {
             return $this->response->setJSON(['mensagem' => lang('Errors.banco.validaUpdate')], 422);
         }
 
-        return $this->response->setJSON(['mensagem' => lang('Success.default.ativado', ['Fornecedor'])], 202);
+        return $this->response->setJSON(['mensagem' => lang('Success.default.ativado', ['Proprietário'])], 202);
     }
 
     /**
@@ -287,15 +287,15 @@ class FornecedorController extends BaseController
         }
 
         $dadosUsuario = $this->nativeSession->get("usuario");
-        $fornecedorModel = new FornecedorModel;
+        $proprietarioModel = new ProprietarioModel;
 
         try {
-            $fornecedorModel->customSoftDelete($uuid, $dadosUsuario['codigo_usuario'], true);
+            $proprietarioModel->customSoftDelete($uuid, $dadosUsuario['codigo_usuario'], true);
         } catch (Exception $e) {
             return $this->response->setJSON(['mensagem' => lang('Errors.banco.validaUpdate')], 422);
         }
 
-        return $this->response->setJSON(['mensagem' => lang('Success.default.inativado', ['Fornecedor'])], 202);
+        return $this->response->setJSON(['mensagem' => lang('Success.default.inativado', ['Proprietário'])], 202);
     }
 
     /**
@@ -306,7 +306,7 @@ class FornecedorController extends BaseController
     {
         try {
             $request = $this->request->getVar();
-            return $this->response->setJSON((new FornecedorModel)->$function($request));
+            return $this->response->setJSON((new ProprietarioModel)->$function($request));
         } catch (Exception $e) {
             var_dump($e);
         }

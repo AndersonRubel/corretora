@@ -29,9 +29,6 @@ class imovelModel extends BaseModel
     protected $allowedFields = [
         'codigo_imovel',
         'uuid_imovel',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
         'criado_em',
         'alterado_em',
         'inativado_em',

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Fornecedor;
+namespace App\Models\Proprietario;
 
 use App\Models\BaseModel;
 use App\Libraries\NativeSession;
 
-class FornecedorModel extends BaseModel
+class ProprietarioModel extends BaseModel
 {
-    protected $table = 'fornecedor';
-    protected $primaryKey = 'codigo_fornecedor';
-    protected $uuidColumn = 'uuid_fornecedor';
+    protected $table = 'proprietario';
+    protected $primaryKey = 'codigo_proprietario';
+    protected $uuidColumn = 'uuid_proprietario';
 
     protected $useAutoIncrement = true;
 
@@ -27,11 +27,8 @@ class FornecedorModel extends BaseModel
     protected $skipValidation = false;
 
     protected $allowedFields = [
-        'codigo_fornecedor',
-        'uuid_fornecedor',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
+        'codigo_proprietario',
+        'uuid_proprietario',
         'criado_em',
         'alterado_em',
         'inativado_em',
@@ -60,7 +57,7 @@ class FornecedorModel extends BaseModel
         $condicoes = "{$condicoes} {$configDataGrid->whereSearch}";
 
         $this->select("
-            uuid_fornecedor
+            uuid_proprietario
           , COALESCE(razao_social, nome_fantasia) AS nome
           , cpf_cnpj
           , email
@@ -69,9 +66,6 @@ class FornecedorModel extends BaseModel
           , TO_CHAR(criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR(alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR(inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
-          , obter_nome_usuario(usuario_criacao) AS usuario_criacao
-          , obter_nome_usuario(usuario_alteracao) AS usuario_alteracao
-          , obter_nome_usuario(usuario_inativacao) AS usuario_inativacao
         ", FALSE);
 
         $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
@@ -102,12 +96,12 @@ class FornecedorModel extends BaseModel
      * Busca os Fornecedores para o Select2
      * @param array $filtros Filtros para a Busca
      */
-    public function selectFornecedor(array $filtros)
+    public function selectProprietario(array $filtros)
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
 
         $this->select("
-            codigo_fornecedor AS id
+            codigo_proprietario AS id
           , COALESCE(razao_social, nome_fantasia) AS text
         ", FALSE);
 
@@ -118,7 +112,7 @@ class FornecedorModel extends BaseModel
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {
                 if (is_numeric($filtros['termo'])) {
-                    $this->where("codigo_fornecedor", $filtros['termo']);
+                    $this->where("codigo_proprietario", $filtros['termo']);
                 } else {
                     $termo = explode(' ', $filtros['termo']);
                     foreach ($termo as $key => $value) {

@@ -77,8 +77,8 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->add('toggle-status(:any)', 'CadastroController::toggleStatus$1$2$3');
 
             // Select2
-            $routes->post('selectCadastroFluxoTipo', 'CadastroController::selectCadastroFluxoTipo');
-            $routes->post('selectCadastroMetodoPagamento', 'CadastroController::selectCadastroMetodoPagamento');
+            $routes->post('selectCategoriaImovel', 'CadastroController::selectCategoriaImovel');
+            $routes->post('selectTipoImovel', 'CadastroController::selectTipoImovel');
 
             // Telas de Crud
             $routes->add('configuracao(:any)', 'CadastroController::configuracao$1$2');
@@ -138,28 +138,38 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('backendCall/(:alphanum)', 'GrupoController::backendCall/$1');
         });
 
-        // Rotas de Produto
-        $routes->group('produto', function ($routes) {
+        // Rotas de Imóvel
+        $routes->group('imovel', function ($routes) {
             // Páginas
-            $routes->get('', 'ProdutoController::index');
-            $routes->get('adicionar', 'ProdutoController::create');
-            $routes->get('alterar/(:hash)', 'ProdutoController::edit/$1');
+            $routes->get('', 'ImovelController::index');
+            $routes->get('adicionar', 'ImovelController::create');
+            $routes->get('alterar/(:hash)', 'ImovelController::edit/$1');
 
             // Funcionalidades
-            $routes->get('gerarCodigoBarras/(:hash)', 'ProdutoController::gerarCodigoBarras/$1');
-            $routes->post('store', 'ProdutoController::store');
-            $routes->post('update/(:hash)', 'ProdutoController::update/$1');
-            $routes->post('alterarPreco/(:hash)', 'ProdutoController::alterarPreco/$1');
-            $routes->post('ativar/(:hash)', 'ProdutoController::enable/$1');
-            $routes->post('desativar/(:hash)', 'ProdutoController::disable/$1');
-            $routes->post('getDataGrid/(:num)', 'ProdutoController::getDataGrid/$1');
-            $routes->post('backendCall/(:alphanum)', 'ProdutoController::backendCall/$1');
+            $routes->post('store', 'ImovelController::store');
+            $routes->post('update/(:hash)', 'ImovelController::update/$1');
+            $routes->post('ativar/(:hash)', 'ImovelController::enable/$1');
+            $routes->post('desativar/(:hash)', 'ImovelController::disable/$1');
+            $routes->post('getDataGrid/(:num)', 'ImovelController::getDataGrid/$1');
+            $routes->post('backendCall/(:alphanum)', 'ImovelController::backendCall/$1');
         });
 
-        // Rotas de relatórios
-        $routes->group('relatorios', function ($routes) {
-            $routes->add('(:any)', 'RelatorioController::$1');
-            $routes->add('', 'RelatorioController::index');
+        // Rotas de Proprietario
+        $routes->group('proprietario', function ($routes) {
+            // Páginas
+            $routes->get('', 'ProprietarioController::index');
+            $routes->get('adicionar', 'ProprietarioController::create');
+            $routes->get('alterar/(:hash)', 'ProprietarioController::edit/$1');
+
+            // Funcionalidades
+            $routes->get('converter-pf/(:hash)', 'ProprietarioController::converterPf/$1');
+            $routes->get('converter-pj/(:hash)', 'ProprietarioController::converterPj/$1');
+            $routes->post('store', 'ProprietarioController::store');
+            $routes->post('update/(:hash)', 'ProprietarioController::update/$1');
+            $routes->post('ativar/(:hash)', 'ProprietarioController::enable/$1');
+            $routes->post('desativar/(:hash)', 'ProprietarioController::disable/$1');
+            $routes->post('getDataGrid/(:num)', 'ProprietarioController::getDataGrid/$1');
+            $routes->post('backendCall/(:alphanum)', 'ProprietarioController::backendCall/$1');
         });
         // Rotas de tipo de imovel
         $routes->group('tipoImovel', function ($routes) {

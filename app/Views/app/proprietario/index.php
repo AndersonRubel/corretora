@@ -5,14 +5,14 @@
         <div class="row g-3 align-items-center justify-content-between">
 
             <div class="col-auto">
-                <h1 class="app-page-title mb-0">Fornecedores</h1>
+                <h1 class="app-page-title mb-0">Proprietários</h1>
             </div>
 
             <div class="col-auto">
                 <div class="page-utilities">
                     <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                         <div class="col-auto">
-                            <a class="btn btn-primary success text-white" href="<?= base_url("fornecedor/adicionar"); ?>">Adicionar</a>
+                            <a class="btn btn-primary success text-white" href="<?= base_url("proprietario/adicionar"); ?>">Adicionar</a>
                         </div>
                     </div>
                 </div>
