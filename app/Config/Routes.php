@@ -171,23 +171,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('getDataGrid/(:num)', 'ProprietarioController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'ProprietarioController::backendCall/$1');
         });
-        // Rotas de tipo de imovel
-        $routes->group('tipoImovel', function ($routes) {
-          // Páginas
-          $routes->get('', 'TipoImovelController::index');
-          $routes->get('adicionar', 'TipoImovelController::create');
-          $routes->get('alterar/(:hash)', 'TipoImovelController::edit/$1');
-
-          // Funcionalidades
-          $routes->post('store', 'TipoImovelController::store');
-          $routes->post('update/(:hash)', 'TipoImovelController::update/$1');
-          $routes->post('updateProfile', 'TipoImovelController::updateProfile');
-          $routes->post('ativar/(:hash)', 'TipoImovelController::enable/$1');
-          $routes->post('desativar/(:hash)', 'TipoImovelController::disable/$1');
-          $routes->post('getDataGrid/(:num)', 'TipoImovelController::getDataGrid/$1');
-          $routes->post('backendCall/(:alphanum)', 'TipoImovelController::backendCall/$1');
-           });
-
         // Rotas de Usuario
         $routes->group('usuario', function ($routes) {
             // Páginas

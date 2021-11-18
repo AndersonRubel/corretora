@@ -33,9 +33,9 @@ class imovelModel extends BaseModel
         'alterado_em',
         'inativado_em',
         'codigo_empresa',
-        'codigo_endereco',
         'codigo_proprietario',
-        'codigo_empresa_categoria',
+        'codigo_categoria_imovel',
+        'codigo_tipo_imovel',
         'codigo_referencia',
         'quarto',
         'suite',
@@ -48,6 +48,8 @@ class imovelModel extends BaseModel
         'descricao',
         'destaque',
         'publicado',
+        'diretorio_imagem',
+        'valor'
     ];
 
     /**
@@ -61,27 +63,33 @@ class imovelModel extends BaseModel
         $configDataGrid = $this->configDataGrid($dadosDataGrid);
         $condicoes = "{$condicoes} {$configDataGrid->whereSearch}";
 
-        /**
-         *  , (SELECT array_to_string(array_agg(ec.nome), ', ')
-         *      FROM imovel_categoria pc
-         *     INNER JOIN empresa_categoria ec
-         *        ON ec.codigo_empresa_categoria = pc.codigo_empresa_categoria
-         *     WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
-         *       AND pc.inativado_em IS NULL
-         *   ) AS categorias
-         */
-
         $this->select("
             {$this->table}.uuid_imovel
           , {$this->table}.codigo_imovel
           , {$this->table}.referencia
-          , '' AS categorias
+          , {$this->table}.quarto
+          , {$this->table}.suite
+          , {$this->table}.banheiro
+          , {$this->table}.area_util
+          , {$this->table}.area_construida
+          , {$this->table}.edicula
+          , {$this->table}.mobilia
+          , {$this->table}.condominio
+          , {$this->table}.publicado
+          , {$this->table}.valor
+          , (SELECT array_to_string(array_agg(ci.nome), ', ')
+               FROM categoria_imovel ci
+              WHERE ci.codigo_categoria_imovel = {$this->table}.codigo_categoria_imovel
+                AND ci.inativado_em IS NULL
+            ) AS categoria
+             , (SELECT array_to_string(array_agg(ci.nome), ', ')
+               FROM tipo_imovel ci
+              WHERE ci.codigo_tipo_imovel = {$this->table}.codigo_tipo_imovel
+                AND ci.inativado_em IS NULL
+            ) AS tipo
           , TO_CHAR({$this->table}.criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR({$this->table}.alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR({$this->table}.inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
-          , obter_nome_usuario({$this->table}.usuario_criacao) AS usuario_criacao
-          , obter_nome_usuario({$this->table}.usuario_alteracao) AS usuario_alteracao
-          , obter_nome_usuario({$this->table}.usuario_inativacao) AS usuario_inativacao
         ", FALSE);
 
         /////// Inicio :: Filtros ///////
@@ -99,21 +107,19 @@ class imovelModel extends BaseModel
                 break;
         }
 
-        if (!empty($configDataGrid->filtros['codigo_imovel'])) {
-            $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
-        }
+        // if (!empty($configDataGrid->filtros['codigo_imovel'])) {
+        //     $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
+        // }
 
-        if (!empty($configDataGrid->filtros['categorias'])) {
-            $categorias = $configDataGrid->filtros['categorias'];
-            foreach (explode(',', $categorias) as $key => $value) {
-                $this->where("{$value} IN (SELECT pc.codigo_empresa_categoria
-                                             FROM imovel_categoria pc
-                                            WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
-                                              AND pc.inativado_em IS NULL
-                                        )
-                ");
-            }
-        }
+        // if (!empty($configDataGrid->filtros['categoria'])) {
+        //     $categoria = $configDataGrid->filtros['categoria'];
+        //     $this->where("{$categoria} IN (SELECT i.codigo_categoria_imovel
+        //                                      FROM imovel i
+        //                                     WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
+        //                                       AND pc.inativado_em IS NULL
+        //                                 )
+        //         ");
+        // }
 
         /////// Fim :: Filtros ///////
 
@@ -121,9 +127,13 @@ class imovelModel extends BaseModel
 
         // Retorno do DataGrid
         $queryStringSelect = "SELECT * FROM ({$queryCompiled}) AS x WHERE 1 = 1 {$configDataGrid->whereSearch} ORDER BY {$configDataGrid->fieldOrder} {$configDataGrid->orderDir} LIMIT {$configDataGrid->limit} OFFSET {$configDataGrid->offset}";
+
         $queryStringTotal = "SELECT COUNT(1) AS total FROM ({$queryCompiled}) AS x WHERE 1 = 1 {$configDataGrid->whereSearch}";
+        // print_r($data['data']);
         $data['data'] = $this->query($queryStringSelect)->getResultArray();
         $data['count']['total'] = $this->query($queryStringTotal)->getResultArray()[0]['total'];
+
+
         return $data;
     }
 

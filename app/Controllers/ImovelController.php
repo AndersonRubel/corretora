@@ -6,8 +6,9 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\RedirectResponse;
 use Exception;
 
-use App\Models\imovel\imovelModel;
-use App\Models\imovel\imovelCategoriaModel;
+use App\Models\imovel\ImovelModel;
+use App\Models\imovel\EnderecoImovelModel;
+use App\Models\imovel\ImagemImovelModel;
 
 class ImovelController extends BaseController
 {
@@ -47,7 +48,7 @@ class ImovelController extends BaseController
             return redirect()->to(base_url("imovel"));
         }
 
-        $imovelModel = new imovelModel;
+        $imovelModel = new ImovelModel;
         $colunas = [
             "imovel.uuid_imovel",
             "imovel.codigo_referencia",
@@ -84,7 +85,9 @@ class ImovelController extends BaseController
     public function getDataGrid(int $status): Response
     {
         $imovelModel = new imovelModel;
+
         $dadosRequest = $this->request->getVar();
+
         $dadosRequest['status'] = $status;
         $data = $imovelModel->getDataGrid($dadosRequest);
 
@@ -113,26 +116,38 @@ class ImovelController extends BaseController
         helper("file");
 
         $imovelModel = new imovelModel;
-        // $imovelCategoriaModel = new imovelCategoriaModel;
+        $imagemImovelModel = new ImagemImovelModel;
+        $enderecoImovelModel = new EnderecoImovelModel;
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosEmpresa = $this->nativeSession->get("empresa");
 
         $erros = $this->validarRequisicao($this->request, [
             'codigo_referencia' => 'permit_empty|string|max_length[255]',
-            'codigo_empresa' => 'required|integer',
-            'codigo_empresa_categoria' => 'required|integer',
+            'codigo_categoria_imovel' => 'required|integer',
             'codigo_tipo_imovel' => 'required|integer',
             'codigo_proprietario' => 'permit_empty|integer',
             'quarto' => 'required|integer',
-            'suite' => 'required|integer',
+            'suite' => 'permit_empty|integer',
             'banheiro' => 'required|integer',
-            'area_construida' => 'required|integer',
-            'area_util' => 'required|integer',
-            'edicula' => 'required|integer',
-            'destaque' => 'required|integer',
-            'publicado' => 'required|integer',
+            'area_construida' => 'permit_empty|integer',
+            'area_util' => 'permit_empty|integer',
+            'edicula' => 'permit_empty|string',
+            'destaque' => 'permit_empty|string',
+            'publicado' => 'permit_empty|string',
             'descricao' => 'permit_empty|string',
+            'valor' => 'required|string',
+            'cep' => [
+                'rules' => 'required|checkCep',
+                'errors' => ['checkCep' => 'Errors.geral.cepInvalido'],
+            ],
+            'rua' => 'required|string|max_length[255]',
+            'numero' => 'required|integer|max_length[255]',
+            'bairro' => 'required|string|max_length[255]',
+            'complemento' => 'permit_empty|string|max_length[255]',
+            'cidade' => 'required|string|max_length[255]',
+            'uf' => 'required|string|max_length[255]',
         ]);
+
 
         if (!empty($erros)) {
             $this->nativeSession->setFlashData('error', formataErros($erros));
@@ -147,22 +162,26 @@ class ImovelController extends BaseController
         }
 
         $imovel = [
-            'codigo_empresa'      => $dadosEmpresa['codigo_empresa'],
-            'codigo_referencia'   => $dadosRequest['codigo_referencia'],
-            'codigo_endereco'     => $dadosRequest['codigo_endereco'],
-            'codigo_proprietario' => $dadosRequest['codigo_proprietario'],
-            'quarto'              => $dadosRequest['quarto'],
-            'suite'               => $dadosRequest['suite'],
-            'banheiro'            => $dadosRequest['banheiro'],
-            'area_construida'     => $dadosRequest['area_construida'],
-            'area_util'           => $dadosRequest['area_util'],
-            'edicula'             => $dadosRequest['edicula'],
-            'destaque'            => $dadosRequest['destaque'],
-            'publicado'           => $dadosRequest['publicado'],
-            'descricao'           => $dadosRequest['descricao'],
+            'codigo_empresa'           => $dadosEmpresa['codigo_empresa'],
+            'codigo_referencia'        => $dadosRequest['codigo_referencia'],
+            'codigo_categoria_imovel'  => onlyNumber($dadosRequest['codigo_categoria_imovel']),
+            'codigo_tipo_imovel'       => $dadosRequest['codigo_tipo_imovel'],
+            'codigo_proprietario'      => $dadosRequest['codigo_proprietario'],
+            'quarto'                   => $dadosRequest['quarto'],
+            'suite'                    => $dadosRequest['suite'],
+            'banheiro'                 => $dadosRequest['banheiro'],
+            'area_construida'          => onlyNumber($dadosRequest['area_construida']),
+            'area_util'                => onlyNumber($dadosRequest['area_util']),
+            'edicula'                  => $dadosRequest['edicula'],
+            'destaque'                 => $dadosRequest['destaque'],
+            'publicado'                => $dadosRequest['publicado'],
+            'descricao'                => $dadosRequest['descricao'],
+            'valor'                    => onlyNumber($dadosRequest['valor']),
+
         ];
 
-        //Faz upload de imagem se existir
+
+        //Faz upload de imagem de destaque se existir
         if (!empty($dadosRequest['imagem'])) {
             $fileStats = verificaDocumento($dadosRequest['imagem'], true);
 
@@ -172,7 +191,7 @@ class ImovelController extends BaseController
             }
 
             // Realiza o Upload do arquivo
-            $nomeDocumento = "{$dadosEmpresa['codigo_empresa']}/imovels/" . encryptFileName($dadosRequest['imagem_nome']);
+            $nomeDocumento = "{$dadosEmpresa['codigo_empresa']}/imoveis/" . encryptFileName($dadosRequest['imagem_nome']);
             $retornoEnvio = $this->putFileObject($nomeDocumento, $dadosRequest['imagem']);
 
             if (empty($retornoEnvio)) {
@@ -183,28 +202,77 @@ class ImovelController extends BaseController
             $imovel['diretorio_imagem'] = $nomeDocumento;
         }
 
-        $categorias = explode(",", $dadosRequest['categorias']);
+        //Faz upload de imagens do imovel se existir
+        if ($dadosRequest['filepond'][0] != '') {
+            $files = [];
 
+            foreach ($dadosRequest['filepond'] as $key => $value) {
+
+                array_push($files, json_decode($value));
+
+                //normaliza para o padrão do helper
+                $files[$key]->data = "data: " . $files[$key]->type . ";base64," . $files[$key]->data;
+                $fileStats = verificaDocumento($files[$key]->data, true);
+
+                if (empty($fileStats) || !$fileStats['size']) {
+                    $this->nativeSession->setFlashData('error', lang("Errors.imovel.imagemInvalida"));
+                    return redirect()->back()->withInput();
+                }
+            }
+
+            $imagens = [];
+            foreach ($files as $key => $file) {
+
+                // Realiza o Upload do arquivo
+                $nomeDocumento = "{$dadosEmpresa['codigo_empresa']}/imoveis/" . encryptFileName($file->name);
+                $retornoEnvio = $this->putFileObject($nomeDocumento, $file->data);
+
+                if (empty($retornoEnvio)) {
+                    $this->nativeSession->setFlashData('error', lang("Errors.geral.erroUpload"));
+                    return redirect()->back()->withInput();
+                }
+                $imovelImagem = [
+                    'usuario_criacao'       => $imovel['usuario_criacao'],
+                    'codigo_empresa'        => $imovel['codigo_empresa'],
+                    'diretorio_imagem'      => $nomeDocumento,
+                ];
+                array_push($imagens, $imovelImagem);
+            }
+        }
+
+        // dd($imovel);
+        $imovelModel->save($imovel);
         //Inicia as operações de DB
         $this->db->transStart();
         try {
-            $imovelModel->save($imovel);
-            $codigoimovel = $imovelModel->getInsertID('imovel_codigo_imovel_seq');
 
-            //Insere a relação entre imovel e categoria
-            // foreach ($categorias as $key => $value) {
+            $codigoImovel = $imovelModel->getInsertID('imovel_codigo_imovel_seq');
+            // dd($imovel);
+            //Insere as Imagens do imovel
+            if (!empty($imagens)) {
+                foreach ($imagens as $key => $img) {
 
-            //     $imovelCategoria = [
-            //         'codigo_empresa'           => $dadosEmpresa['codigo_empresa'],
-            //         'usuario_criacao'          => $dadosUsuario['codigo_usuario'],
-            //         'codigo_imovel'           => $codigoimovel,
-            //         'codigo_empresa_categoria' => $value,
-            //     ];
-            //     $imovelCategoriaModel->save($imovelCategoria);
-            // }|
+                    $img['codigo_imovel'] = $codigoImovel;
+                    $imagemImovelModel->save($img);
+                }
+            }
+            //Insere o Endereço do Imóvel
+            if (!empty($imagens)) {
+                $empresaEndereco = [
+                    'codigo_imovel' => $codigoImovel,
+                    'cep'           => onlyNumber($dadosRequest['cep']),
+                    'rua'           => $dadosRequest['rua'],
+                    'numero'        => onlyNumber($dadosRequest['numero']),
+                    'bairro'        => $dadosRequest['bairro'],
+                    'complemento'   => $dadosRequest['complemento'],
+                    'cidade'        => $dadosRequest['cidade'],
+                    'uf'            => $dadosRequest['uf']
+                ];
+                $enderecoImovelModel->save($empresaEndereco);
+            }
 
             $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['imovel']));
+            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Produto']));
         } catch (Exception $e) {
             $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
             return redirect()->back()->withInput();

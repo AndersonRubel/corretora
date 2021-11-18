@@ -38,6 +38,14 @@ class CadastroMenuSeeder extends DatabaseSeeder
         ]);
 
         $this->saveOnce('cadastro_menu', [
+            'nome'        => 'Gerenciar Imóvel',
+            'descricao'   => 'Gerenciamento dos Imóveis',
+            'path'        => 'imovel',
+            'agrupamento' => '#',
+            'icone'       => 'fas fa-box'
+        ]);
+
+        $this->saveOnce('cadastro_menu', [
             'nome'        => 'Empresa',
             'descricao'   => 'Gestão de Empresas',
             'path'        => 'empresa',
@@ -48,7 +56,7 @@ class CadastroMenuSeeder extends DatabaseSeeder
 
         $this->saveOnce('cadastro_menu', [
             'nome'        => 'Usuários',
-            'descricao'   => 'Gerenciamentos dos Usuários',
+            'descricao'   => 'Gerenciamento dos Usuários',
             'path'        => 'usuario',
             'agrupamento' => 'gestao',
             'localizacao' => 'sidebar_gestao',
@@ -63,15 +71,34 @@ class CadastroMenuSeeder extends DatabaseSeeder
             'localizacao' => 'sidebar_gestao',
             'icone'       => 'fas fa-user'
         ]);
+        $this->saveOnce('cadastro_menu', [
+            'nome'        => 'Proprietários',
+            'descricao'   => 'Gerenciamento dos Proprietários',
+            'path'        => 'proprietario',
+            'agrupamento' => 'gestao',
+            'localizacao' => 'sidebar_gestao',
+            'icone'       => 'fas fa-user'
+        ]);
 
         /////// Inicio :: Menus de Cadastro ///////
         $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Configurações',
-            'descricao'   => 'Cadastro de Configurações',
-            'path'        => 'cadastro/configuracao',
+            'nome'        => 'Tipo Imóvel',
+            'descricao'   => 'Cadastro de Tipo de Imóvel',
+            'path'        => 'cadastro/tipoImovel',
             'agrupamento' => 'cadastro',
             'localizacao' => 'cadastro',
-            'icone'       => 'fas fa-edit'
+            'icone'       => 'fas fa-edit',
+            'ordenacao'   => '1'
+        ]);
+
+        $this->saveOnce('cadastro_menu', [
+            'nome'        => 'Categoria Imóvel',
+            'descricao'   => 'Cadastro de Categoria de Imóvel',
+            'path'        => 'cadastro/categoriaImovel',
+            'agrupamento' => 'cadastro',
+            'localizacao' => 'cadastro',
+            'icone'       => 'fas fa-edit',
+            'ordenacao'   => '2'
         ]);
 
         $this->saveOnce('cadastro_menu', [

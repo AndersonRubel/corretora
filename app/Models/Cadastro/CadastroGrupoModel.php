@@ -57,13 +57,9 @@ class CadastroGrupoModel extends BaseModel
           , TO_CHAR(criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR(alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR(inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
-          , (SELECT COUNT(empresa_usuario.codigo_cadastro_grupo)
-               FROM empresa_usuario
-              WHERE empresa_usuario.codigo_cadastro_grupo = cadastro_grupo.codigo_cadastro_grupo
-            ) AS usuarios
         ", FALSE);
 
-        // $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
+        $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
 
         // Filtra o Tipo de Dados
         switch ($dadosDataGrid['status']) {

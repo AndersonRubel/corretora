@@ -37,7 +37,7 @@ class CadastroController extends BaseController
     /**
      * Responsável por devolver os dados do Select de Tipos de Fluxo
      */
-     public function selectCategoriaImovel()
+    public function selectCategoriaImovel()
     {
         try {
             $request = $this->request->getVar();
@@ -48,7 +48,7 @@ class CadastroController extends BaseController
         }
     }
 
-       /**
+    /**
      * Responsável por devolver os dados do Select de Tipos de Fluxo
      */
     public function selectTipoImovel()
@@ -131,7 +131,7 @@ class CadastroController extends BaseController
      * @return bool Status da Transação
      */
     public function toggleStatus(string $table, string $primaryKey, string $primaryKeyValue)
-    {print_r('teste');
+    {
         try {
             $crudDinamico = new CrudDinamico();
             $crudDinamico->toggleStatus($table, $primaryKey, $primaryKeyValue);
@@ -253,8 +253,8 @@ class CadastroController extends BaseController
         ////////// Fim :: Listagem //////////
 
         $crudDinamico = new CrudDinamico();
-        $returnData = $crudDinamico->createPage($config);
 
+        $returnData = $crudDinamico->createPage($config);
         if ($this->request->isAJAX()) {
             return $this->response->setJSON($returnData);
         } else {
@@ -498,7 +498,7 @@ class CadastroController extends BaseController
         }
     }
 
-     /**
+    /**
      * Crud de movimentacao tipo - cadastro_movimentacao_tipo
      * @param string $function Nome da Função desejada (lista, adicionar, alterar)
      * @param string $primaryKeyValue UUID do Registro
@@ -575,6 +575,4 @@ class CadastroController extends BaseController
             return $this->template('cadastro', ['index', 'functions'], $returnData);
         }
     }
-
-
 }

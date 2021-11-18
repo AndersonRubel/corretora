@@ -7,18 +7,18 @@ use CodeIgniter\Database\Migration;
 class FunctionVerificaImovel extends Migration
 {
     public function up()
-	{
-		$this->db->query("CREATE OR REPLACE FUNCTION verifica_imovel() RETURNS pg_catalog.trigger AS $$
+    {
+        $this->db->query("CREATE OR REPLACE FUNCTION verifica_imovel() RETURNS pg_catalog.trigger AS $$
             BEGIN
 
                  IF NEW.area_util IS NOT NULL THEN
-                    IF NEW.area_util <= 0 THEN
+                    IF NEW.area_util :: integer  <= 0 THEN
                        RAISE EXCEPTION 'A area util tem que ser maior que 0';
                     END IF;
                  END IF;
 
                  IF NEW.area_construida IS NOT NULL THEN
-                    IF NEW.area_construida <= 0 THEN
+                    IF NEW.area_construida :: integer <= 0 THEN
                        RAISE EXCEPTION 'A area construida tem que ser maior que 0';
                     END IF;
                  END IF;
@@ -34,8 +34,8 @@ class FunctionVerificaImovel extends Migration
         ");
     }
 
-	public function down()
-	{
-		$this->db->query("DROP FUNCTION verifica_imovel");
-	}
+    public function down()
+    {
+        $this->db->query("DROP FUNCTION verifica_imovel");
+    }
 }

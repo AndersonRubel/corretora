@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models\Produto;
+namespace App\Models\Imovel;
 
 use App\Models\BaseModel;
 
-class ProdutoCategoriaModel extends BaseModel
+class ImagemImovelModel extends BaseModel
 {
-    protected $table = 'imovel_categoria';
-    protected $primaryKey = 'codigo_imovel_categoria';
-    protected $uuidColumn = 'uuid_imovel_categoria';
+    protected $table = 'imagem_imovel';
+    protected $primaryKey = 'codigo_imagem_imovel';
+    protected $uuidColumn = 'uuid_imagem_imovel';
 
     protected $useAutoIncrement = true;
 
@@ -26,14 +26,14 @@ class ProdutoCategoriaModel extends BaseModel
     protected $skipValidation = false;
 
     protected $allowedFields = [
-        'codigo_imovel_categoria',
-        'uuid_imovel_categoria',
+        'codigo_produto_imagem',
+        'uuid_produto_imagem',
         'criado_em',
         'alterado_em',
         'inativado_em',
         'codigo_empresa',
         'codigo_imovel',
-        'codigo_categoria',
+        'diretorio_imagem',
 
     ];
 }
