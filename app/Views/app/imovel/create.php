@@ -40,7 +40,7 @@
                                             <div class="item-data">
                                                 <input type="hidden" name="imagem">
                                                 <input type="hidden" name="imagem_nome">
-                                                <input type="file" id="imagem_imovel" data-max-file-size="5MB"
+                                                <input type="file" id="imagemImovel" data-max-file-size="5MB"
                                                     data-max-files="1">
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                                             <input type="text" class="form-control" name="codigo_tipo_imovel"
                                                 data-select="buscarTipoImovel"
                                                 data-tippy-content="Selecione o Tipo de Imóvel" required
-                                                value="<?= old('codigo_tipo_imóvel'); ?>">
+                                                value="<?= old('codigo_tipo_imovel'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Quarto</label>
@@ -206,6 +206,9 @@
 
                                         <option value="t">Sim</option>
 
+
+
+
       
                               </select></div>
                             </div>
@@ -223,7 +226,7 @@
                         <div class="form-group col-12">
                             <div class="row justify-content-between align-items-center">
                                 <div class="col">
-                                    <input type="file" id="imagens_imovel" name="filepond[]" data-max-file-size="5MB"
+                                    <input type="file" id="imagensImovel" name="filepond[]" data-max-file-size="5MB"
                                         data-max-files="10" multiple>
                                 </div>
                             </div>

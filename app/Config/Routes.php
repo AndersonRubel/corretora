@@ -86,7 +86,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->add('menu(:any)', 'CadastroController::menu$1$2');
             $routes->add('tipoImovel(:any)', 'CadastroController::tipoImovel$1$2');
             $routes->add('categoriaImovel(:any)', 'CadastroController::categoriaImovel$1$2');
-
         });
 
         // Rotas de Cliente
@@ -152,6 +151,7 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('desativar/(:hash)', 'ImovelController::disable/$1');
             $routes->post('getDataGrid/(:num)', 'ImovelController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'ImovelController::backendCall/$1');
+            $routes->post('desativarImagem/(:hash)', 'ImovelController::disableImagem/$1');
         });
 
         // Rotas de Proprietario

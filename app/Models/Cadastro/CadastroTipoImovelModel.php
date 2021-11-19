@@ -98,7 +98,7 @@ class CadastroTipoImovelModel extends BaseModel
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {
                 if (is_numeric($filtros['termo'])) {
-                    $this->where("codigo_cadastro_grupo", $filtros['termo']);
+                    $this->where("codigo_tipo_imovel", $filtros['termo']);
                 } else {
                     $termo = explode(' ', $filtros['termo']);
                     foreach ($termo as $key => $value) {

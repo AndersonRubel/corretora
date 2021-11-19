@@ -1,9 +1,9 @@
 <script>
-const select2imovelFunctions = {
+const select2ImovelFunctions = {
     init: () => {
-        select2imovelFunctions.buscarProprietario();
-        select2imovelFunctions.buscarCategoriaImovel();
-        select2imovelFunctions.buscarTipoImovel();
+        select2ImovelFunctions.buscarProprietario();
+        select2ImovelFunctions.buscarCategoriaImovel();
+        select2ImovelFunctions.buscarTipoImovel();
     },
     buscarProprietario: (caller) => {
         let elementSelect2 = $("[data-select='buscarProprietario']");
@@ -158,10 +158,7 @@ const imovelFunctions = {
         imovelFunctions.listenerFiltros();
         imovelFunctions.listenerUploadImagemDestaque();
         imovelFunctions.listenerUploadImagens();
-        imovelFunctions.listenerGerarCodigoBarras();
-        imovelFunctions.listenerAlterarPreco();
         imovelFunctions.listenerAlterarImagemDestaque();
-        imovelFunctions.listenerVisualizarEstoque();
         imovelFunctions.confirmDesativar();
         imovelFunctions.listenerBuscarCepImovel();
 
@@ -189,7 +186,7 @@ const imovelFunctions = {
     },
     listenerUploadImagemDestaque: () => {
         //Ativa o Plugin
-        const pondImgDestaque = FilePond.create(document.getElementById("imagem_imovel"), {
+        const pondImgDestaque = FilePond.create(document.getElementById("imagemImovel"), {
             labelIdle: `Arraste e solte sua imagem aqui ou <span class="filepond--label-action">escolha</span>`,
             imagePreviewHeight: 170,
             imageCropAspectRatio: '1:1',
@@ -212,7 +209,7 @@ const imovelFunctions = {
     },
     listenerUploadImagens: () => {
         //Ativa o Plugin
-        const pondImgDestaque = FilePond.create(document.getElementById("imagens_imovel"), {
+        const pondImgDestaque = FilePond.create(document.getElementById("imagensImovel"), {
             labelIdle: `Arraste e solte sua imagem aqui ou <span class="filepond--label-action">escolha</span>`,
             imagePreviewHeight: 170,
             imageCropAspectRatio: '1:1',
@@ -258,61 +255,6 @@ const imovelFunctions = {
             $('#tableInativos').DataTable(dataGridGlobalFunctions.getSettings(1));
         })
     },
-    listenerGerarCodigoBarras: () => {
-        $(document).on('click', "[data-action='gerarCodigo']", async function() {
-            await appFunctions.backendCall('GET',
-                    `imovel/gerarCodigoBarras/${$(this).data('tipo')}`)
-                .then(res => $("input[name='codigo_barras']").val(res))
-                .catch(err => notificationFunctions.toastSmall(err.textStatus, err.mensagem));
-        });
-    },
-    listenerAlterarPreco: () => {
-        // Abre a Modal de Alterar Preço
-        $(document).on('click', "[data-action='imovelAlterarPreco']", async function() {
-            await appFunctions.backendCall('POST', `estoque/backendCall/selectEstoqueimovel`, {
-                uuid_imovel: $(this).data('id'),
-                page: 1,
-                orderBy: 'quantidade'
-            }).then(
-                (res) => {
-                    if (res && res.itens) {
-                        let prod = res.itens[0];
-                        $("#modalimovelAlterarPreco input[name='nome']").val(prod.nome);
-                        $("#modalimovelAlterarPreco input[name='valor_fabrica']").val(
-                            convertFunctions.intToReal(prod.valor_fabrica));
-                        $("#modalimovelAlterarPreco input[name='valor_venda']").val(
-                            convertFunctions.intToReal(prod.valor_venda));
-                        $("#modalimovelAlterarPreco input[name='valor_ecommerce']").val(
-                            convertFunctions.intToReal(prod.valor_ecommerce));
-                        $("#modalimovelAlterarPreco input[name='valor_atacado']").val(
-                            convertFunctions.intToReal(prod.valor_atacado));
-
-                        $("#modalimovelAlterarPreco form").attr('action',
-                            `${BASEURL}/imovel/alterarPreco/${$(this).data('id')}`)
-                        $("#modalimovelAlterarPreco").modal('show');
-                    }
-                }
-            ).catch(err => notificationFunctions.toastSmall(err.textStatus, err.mensagem));
-        });
-
-        // Realiza a alteracao de preco
-        $(document).on('click', "[data-action='realizarAlteracaoPreco']", async function(e) {
-            // Realiza Validações antes de realizar o Submit do formulário
-
-            if ($("#modalimovelAlterarPreco input[name='valor_fabrica']").val() == '0,00') {
-                e.preventDefault();
-                notificationFunctions.toastSmall('error', 'O preço de custo não pode ser vazio.');
-                return;
-            }
-
-            if ($("#modalimovelAlterarPreco input[name='valor_venda']").val() == '0,00') {
-                e.preventDefault();
-                notificationFunctions.toastSmall('error', 'O preço de venda não pode ser vazio.');
-                return;
-            }
-
-        });
-    },
     doOperation: (handler) => {
 
         // Realiza a Requisição das Operações
@@ -344,7 +286,6 @@ const imovelFunctions = {
                 'warning').then(
                 (result) => {
                     if (result.value) {
-                        // imovelFunctions.listenerRemoverImagem();
                         imovelFunctions.doOperation(_this);
                         e.preventDefault();
                     } else {
@@ -375,25 +316,18 @@ const imovelFunctions = {
             $("[data-action='cancelarAlterarImagemDestaque']").addClass('d-none');
         });
     },
-    listenerVisualizarEstoque: () => {
-        // Abre a Modal de Visualizar Estoque do imovel
-        $(document).on('click', "[data-action='imovelVisualizarEstoque']", function() {
-            $("#modalConsultarimovel").modal('show');
-            $("[data-select='buscarimovelModal']").select2('val', $(this).data('id')).change();
-        });
-    },
 };
 
-const dataGridimovelFunctions = {
+const dataGridImovelFunctions = {
     init: () => {
-        dataGridimovelFunctions.mapeamentoimovel();
+        dataGridImovelFunctions.mapeamentoImovel();
 
         if (METODO == 'index') {
             $('#tableAtivos').DataTable(dataGridGlobalFunctions.getSettings(0));
             $('#tableInativos').DataTable(dataGridGlobalFunctions.getSettings(1));
         }
     },
-    mapeamentoimovel: () => {
+    mapeamentoImovel: () => {
         // Ativos
         mapeamento[0] = [];
         mapeamento[0][ROUTE] = [];
@@ -404,8 +338,10 @@ const dataGridimovelFunctions = {
             "metodo": "ASC"
         }];
         mapeamento[0][ROUTE]['columns'] = [{
-                "data": "referencia",
-                "visible": true,
+                "data": "codigo_imovel",
+                "title": "Código"
+            }, {
+                "data": "codigo_referencia",
                 "title": "Referência"
             },
             {
@@ -460,7 +396,11 @@ const dataGridimovelFunctions = {
             "metodo": "ASC"
         }];
         mapeamento[1][ROUTE]['columns'] = [{
-                "data": "referencia",
+                "data": "codigo_imovel",
+                "visible": true,
+                "title": "Código"
+            }, {
+                "data": "codigo_referencia",
                 "visible": true,
                 "title": "Referência"
             },
@@ -495,7 +435,7 @@ const dataGridimovelFunctions = {
         ];
         mapeamento[1][ROUTE]['btn_montar'] = true;
         mapeamento[1][ROUTE]['btn'] = [{
-            "funcao": "desativar",
+            "funcao": "ativar",
             "metodo": "",
             "compare": null
         }, ];
@@ -503,9 +443,9 @@ const dataGridimovelFunctions = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    dataGridimovelFunctions.init();
+    dataGridImovelFunctions.init();
     imovelFunctions.init();
-    select2imovelFunctions.init();
+    select2ImovelFunctions.init();
 
 });
 </script>

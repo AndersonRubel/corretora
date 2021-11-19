@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\imovel;
+namespace App\Models\Imovel;
 
 use App\Models\BaseModel;
 use App\Libraries\NativeSession;
 
-class imovelModel extends BaseModel
+class ImovelModel extends BaseModel
 {
     protected $table = 'imovel';
     protected $primaryKey = 'codigo_imovel';
@@ -66,7 +66,7 @@ class imovelModel extends BaseModel
         $this->select("
             {$this->table}.uuid_imovel
           , {$this->table}.codigo_imovel
-          , {$this->table}.referencia
+          , {$this->table}.codigo_referencia
           , {$this->table}.quarto
           , {$this->table}.suite
           , {$this->table}.banheiro
@@ -129,13 +129,14 @@ class imovelModel extends BaseModel
         $queryStringSelect = "SELECT * FROM ({$queryCompiled}) AS x WHERE 1 = 1 {$configDataGrid->whereSearch} ORDER BY {$configDataGrid->fieldOrder} {$configDataGrid->orderDir} LIMIT {$configDataGrid->limit} OFFSET {$configDataGrid->offset}";
 
         $queryStringTotal = "SELECT COUNT(1) AS total FROM ({$queryCompiled}) AS x WHERE 1 = 1 {$configDataGrid->whereSearch}";
-        // print_r($data['data']);
+
         $data['data'] = $this->query($queryStringSelect)->getResultArray();
         $data['count']['total'] = $this->query($queryStringTotal)->getResultArray()[0]['total'];
 
 
         return $data;
     }
+
 
     /**
      * Busca os imovels para o Select2
