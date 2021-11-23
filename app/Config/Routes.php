@@ -171,6 +171,23 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('getDataGrid/(:num)', 'ProprietarioController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'ProprietarioController::backendCall/$1');
         });
+
+
+        // Rotas de Reserva
+        $routes->group('reserva', function ($routes) {
+            // Páginas
+            $routes->get('', 'ReservaController::index');
+            $routes->get('adicionar', 'ReservaController::create');
+            $routes->get('alterar/(:hash)', 'ReservaController::edit/$1');
+
+            // Funcionalidades
+            $routes->post('store', 'ReservaController::store');
+            $routes->post('update/(:hash)', 'ReservaController::update/$1');
+            $routes->post('ativar/(:hash)', 'ReservaController::enable/$1');
+            $routes->post('desativar/(:hash)', 'ReservaController::disable/$1');
+            $routes->post('getDataGrid/(:num)', 'ReservaController::getDataGrid/$1');
+            $routes->post('backendCall/(:alphanum)', 'ReservaController::backendCall/$1');
+        });
         // Rotas de Usuario
         $routes->group('usuario', function ($routes) {
             // Páginas
