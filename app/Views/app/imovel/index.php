@@ -5,7 +5,7 @@
         <div class="row g-3 align-items-center justify-content-between">
 
             <div class="col-auto">
-                <h1 class="app-page-title mb-0">imovels</h1>
+                <h1 class="app-page-title mb-0">Imóvel</h1>
             </div>
 
             <div class="col-auto">
@@ -13,7 +13,8 @@
                     <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                         <div class="col-auto">
 
-                                <a class="btn btn-primary success text-white" href="<?= base_url("imovel/adicionar"); ?>">Adicionar</a>
+                            <a class="btn btn-primary success text-white"
+                                href="<?= base_url("imovel/adicionar"); ?>">Adicionar</a>
 
                         </div>
                     </div>
@@ -26,7 +27,8 @@
 
         <!-- Inicio :: Filtros de imovel -->
         <div class="card mb-4">
-            <div class="card-header fw-bold change-icon" data-bs-toggle="collapse" data-bs-target="#collapseFiltros" aria-expanded="false" aria-controls="collapseFiltros">
+            <div class="card-header fw-bold change-icon" data-bs-toggle="collapse" data-bs-target="#collapseFiltros"
+                aria-expanded="false" aria-controls="collapseFiltros">
                 Filtros
             </div>
             <div class="collapse" id="collapseFiltros">
@@ -34,25 +36,24 @@
                     <div class="app-card-body">
                         <div class="row">
 
-                            <div class=" col-sm-12 col-md-6 col-lg-3" data-filtro="filtro_fornecedor">
-                                <label>Fornecedor</label>
-                                <input type="text" class="form-control" data-select="buscarFornecedor" name="codigo_fornecedor" data-tippy-content="Selecione o Fornecedor"/>
-                            </div>
-
                             <div class=" col-sm-12 col-md-6 col-lg-3" data-filtro="filtro_imovel">
-                                <label>imovel</label>
-                                <input type="text" class="form-control" data-select="buscarimovel" name="codigo_imovel" data-tippy-content="Selecione o imovel"/>
+                                <label>Imóvel</label>
+                                <input type="text" class="form-control" data-select="buscarimovel" name="codigo_imovel"
+                                    data-tippy-content="Selecione o imovel" />
                             </div>
 
                             <div class=" col-sm-12 col-md-6 col-lg-6" data-filtro="filtro_categoria">
                                 <label>Categorias</label>
-                                <input type="text" class="form-control" data-select="buscarCategoria" name="categorias" data-tippy-content="Selecione a Categoria do imovel"/>
+                                <input type="text" class="form-control" data-select="buscarCategoria" name="categorias"
+                                    data-tippy-content="Selecione a Categoria do imovel" />
                             </div>
 
                             <!-- Inicio :: Botão Filtrar e Limpar -->
                             <div class="col mt-1 d-flex align-items-end justify-content-end">
-                                <button type="button" class="btn btn-danger text-white mx-1" data-action="btnLimpar">Limpar</button>
-                                <button type="submit" class="btn btn-success text-white" data-action="btnFiltrar">Filtrar</button>
+                                <button type="button" class="btn btn-danger text-white mx-1"
+                                    data-action="btnLimpar">Limpar</button>
+                                <button type="submit" class="btn btn-success text-white"
+                                    data-action="btnFiltrar">Filtrar</button>
                             </div>
                             <!-- Fim :: Botão Filtrar e Limpar -->
                         </div>
@@ -63,11 +64,13 @@
         <!-- Fim :: Filtros de imovel -->
 
         <nav class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-            <a class="flex-sm-fill text-center nav-link active" id="ativos-tab" data-bs-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">
+            <a class="flex-sm-fill text-center nav-link active" id="ativos-tab" data-bs-toggle="tab" href="#ativos"
+                role="tab" aria-controls="ativos" aria-selected="true">
                 Ativos
                 <span class="count-tableAtivos">(0)</span>
             </a>
-            <a class="flex-sm-fill text-center nav-link" id="inativos-tab" data-bs-toggle="tab" href="#inativos" role="tab" aria-controls="inativos" aria-selected="false">
+            <a class="flex-sm-fill text-center nav-link" id="inativos-tab" data-bs-toggle="tab" href="#inativos"
+                role="tab" aria-controls="inativos" aria-selected="false">
                 Inativos
                 <span class="count-tableInativos">(0)</span>
             </a>
@@ -93,9 +96,15 @@
                     <div class="app-card app-card-orders-table mb-5">
                         <div class="app-card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover table-striped mb-0 text-left" id="tableInativos"></table>
+                                <table class="table table-hover table-striped mb-0 text-left" id="tableInativos">
+                                </table>
+
                             </div>
-                        </div>
+
+
+
+      
+                  </div>
                     </div>
                 </div>
                 <!-- Fim :: Registros Inativos -->
