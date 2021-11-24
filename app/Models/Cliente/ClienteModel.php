@@ -99,8 +99,6 @@ class ClienteModel extends BaseModel
     public function selectCliente(array $filtros)
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
-        $dadosUsuario = (new NativeSession(true))->get('usuario');
-
         $this->select("
             codigo_cliente AS id
           , nome_fantasia || ' (' || COALESCE(razao_social, '') || ')' AS text
@@ -108,9 +106,6 @@ class ClienteModel extends BaseModel
         ", FALSE);
 
         $this->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
-
-        // Filtra apenas os clientes de cada vendedor
-        // $this->where("codigo_vendedor", $dadosUsuario['codigo_vendedor']);
 
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {

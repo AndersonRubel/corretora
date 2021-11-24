@@ -1,17 +1,64 @@
 <script>
-const select2UsuarioFunctions = {
+const select2ReservaFunctions = {
     init: () => {
-        select2UsuarioFunctions.buscarEmpresa();
+        select2ReservaFunctions.buscarCliente();
+        select2ReservaFunctions.buscarImovel();
     },
-    buscarEmpresa: (caller) => {
-        let elementSelect2 = $("[data-select='buscarEmpresa']");
-        let url = `${BASEURL}/empresa/backendCall/selectEmpresa`;
+    buscarCliente: (caller) => {
+        let elementSelect2 = $("[data-select='buscarCliente']");
+        let url = `${BASEURL}/cliente/backendCall/selectCliente`;
         elementSelect2.select2({
             placeholder: "Selecione...",
             allowClear: false,
             multiple: false,
             quietMillis: 2000,
-            minimumInputLength: 3,
+            initSelection: function(element, callback) {
+                $.ajax({
+                    url: url,
+                    dataType: "json",
+                    type: 'POST',
+                    params: {
+                        contentType: "application/json; charset=utf-8",
+                    },
+                    data: {
+                        termo: $(element).val(),
+                        page: 1
+                    },
+                    success: (data) => callback(data.itens[0])
+                })
+            },
+            ajax: {
+                url: url,
+                dataType: 'json',
+                type: 'POST',
+                data: (term, page) => {
+                    return {
+                        termo: term,
+                        page: page,
+                    };
+                },
+                results: (data, page) => {
+                    if (page == 1) {
+                        $(elementSelect2).data('count', data.count);
+                    }
+                    return {
+                        results: data.itens,
+                        more: (page * 30) < $(elementSelect2).data('count')
+                    };
+                }
+            },
+            formatResult: (data) => data.text,
+            formatSelection: (data) => data.text
+        });
+    },
+    buscarImovel: (caller) => {
+        let elementSelect2 = $("[data-select='buscarImovel']");
+        let url = `${BASEURL}/imovel/backendCall/selectImovel`;
+        elementSelect2.select2({
+            placeholder: "Selecione...",
+            allowClear: false,
+            multiple: false,
+            quietMillis: 2000,
             initSelection: function(element, callback) {
                 $.ajax({
                     url: url,
@@ -121,24 +168,20 @@ const dataGridGrupoFunctions = {
             "metodo": "ASC"
         }];
         mapeamento[0][ROUTE]['columns'] = [{
-                "data": "codigo_cadastro_reserva",
+                "data": "codigo_reserva",
                 "title": "Código"
             },
             {
-                "data": "nome",
-                "title": "Nome"
+                "data": "codigo_referencia",
+                "title": "Referência"
             },
             {
-                "data": "slug",
-                "title": "Slug"
+                "data": "data_inicio",
+                "title": "Data Início"
             },
             {
-                "data": "usuarios",
-                "title": "Quantidade de Usuários"
-            },
-            {
-                "data": "relatorios",
-                "title": "Quantidade de Relatórios"
+                "data": "data_fim",
+                "title": "Data Fim"
             },
             {
                 "data": "criado_em",
@@ -146,19 +189,9 @@ const dataGridGrupoFunctions = {
                 "title": "Criado em"
             },
             {
-                "data": "usuario_criacao",
-                "visible": false,
-                "title": "Criado por"
-            },
-            {
                 "data": "alterado_em",
                 "visible": false,
                 "title": "Alterado em"
-            },
-            {
-                "data": "usuario_alteracao",
-                "visible": false,
-                "title": "Alterado por"
             },
             {
                 "data": "uuid_reserva",
@@ -189,24 +222,20 @@ const dataGridGrupoFunctions = {
             "metodo": "ASC"
         }];
         mapeamento[1][ROUTE]['columns'] = [{
-                "data": "codigo_cadastro_reserva",
+                "data": "codigo_reserva",
                 "title": "Código"
             },
             {
-                "data": "nome",
-                "title": "Nome"
+                "data": "codigo_referencia",
+                "title": "Referência"
             },
             {
-                "data": "slug",
-                "title": "Slug"
+                "data": "data_inicio",
+                "title": "Data Início"
             },
             {
-                "data": "usuarios",
-                "title": "Quantidade de Usuários"
-            },
-            {
-                "data": "relatorios",
-                "title": "Quantidade de Relatórios"
+                "data": "data_fim",
+                "title": "Data Fim"
             },
             {
                 "data": "criado_em",
@@ -214,29 +243,14 @@ const dataGridGrupoFunctions = {
                 "title": "Criado em"
             },
             {
-                "data": "usuario_criacao",
-                "visible": false,
-                "title": "Criado por"
-            },
-            {
                 "data": "alterado_em",
                 "visible": false,
                 "title": "Alterado em"
             },
             {
-                "data": "usuario_alteracao",
-                "visible": false,
-                "title": "Alterado por"
-            },
-            {
                 "data": "inativado_em",
                 "visible": false,
                 "title": "Inativado em"
-            },
-            {
-                "data": "usuario_inativacao",
-                "visible": false,
-                "title": "Inativado por"
             },
             {
                 "data": "uuid_reserva",
@@ -254,7 +268,7 @@ const dataGridGrupoFunctions = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    select2UsuarioFunctions.init();
+    select2ReservaFunctions.init();
     reservaFunctions.init();
     dataGridGrupoFunctions.init();
 });

@@ -6,11 +6,7 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\RedirectResponse;
 use Exception;
 
-use App\Models\Cadastro\CadastroGrupoModel;
-use App\Models\Cadastro\CadastroMenuModel;
-use App\Models\Empresa\EmpresaModel;
-use App\Models\Usuario\UsuarioGrupoMenuModel;
-use App\Models\Usuario\UsuarioGrupoRelatorioModel;
+use App\Models\Reserva\ReservaModel;
 
 class ReservaController extends BaseController
 {
@@ -35,9 +31,7 @@ class ReservaController extends BaseController
      */
     public function create()
     {
-        $cadastroMenuModel = new CadastroMenuModel;
-        $dados['menu'] = $cadastroMenuModel->get([], [], false, ['nome' => 'ASC']);
-        return $this->template('reserva', ['create', 'functions'], $dados);
+        return $this->template('reserva', ['create', 'functions']);
     }
 
     /**
@@ -52,9 +46,7 @@ class ReservaController extends BaseController
             return redirect()->to(base_url("reserva"));
         }
 
-        $cadastroGrupoModel = new CadastroGrupoModel;
-        $cadastroMenuModel = new CadastroMenuModel;
-        $usuarioGrupoMenuModel = new UsuarioGrupoMenuModel;
+        $reservaModel = new ReservaModel;
 
         $colunasGrupo = [
             "codigo_reserva",
@@ -81,10 +73,10 @@ class ReservaController extends BaseController
      */
     public function getDataGrid(int $status)
     {
-        $cadastroGrupoModel = new CadastroGrupoModel;
+        $reservaModel = new ReservaModel;
         $dadosRequest = $this->request->getVar();
         $dadosRequest['status'] = $status;
-        $data = $cadastroGrupoModel->getDataGrid($dadosRequest);
+        $data = $reservaModel->getDataGrid($dadosRequest);
         return $this->responseDataGrid($data, $dadosRequest);
     }
 
@@ -100,16 +92,17 @@ class ReservaController extends BaseController
      */
     public function store(): RedirectResponse
     {
-        $cadastroGrupoModel = new CadastroGrupoModel;
-        $usuarioGrupoMenuModel = new UsuarioGrupoMenuModel;
-        $usuarioGrupoRelatorioModel = new UsuarioGrupoRelatorioModel;
+        $reservaModel = new ReservaModel;
         $dadosRequest = convertEmptyToNull($this->request->getVar());
-        $dadosUsuario = $this->nativeSession->get("usuario");
+        $dadosEmpresa = $this->nativeSession->get("empresa");
 
         $erros = $this->validarRequisicao($this->request, [
-            'nome' => 'required|string|min_length[3]|max_length[255]|is_unique[reserva.nome]',
-            'slug' => 'required|string|min_length[3]|max_length[255]',
-            'codigo_empresa' => 'permit_empty|integer',
+            'codigo_imovel' => 'permit_empty|integer',
+            'codigo_cliente' => 'permit_empty|integer',
+            'data_inicio' => 'required|valid_date',
+            'data_fim' => 'required|valid_date',
+            'data_fim' => 'required|valid_date',
+            'descricao' => 'permit_empty|string',
         ]);
 
         if (!empty($erros)) {
@@ -118,54 +111,27 @@ class ReservaController extends BaseController
         }
 
         $reserva = [
-            'usuario_criacao' => $dadosUsuario['codigo_usuario'],
-            'nome'            => $dadosRequest['nome'],
-            'slug'            => snakeCase($dadosRequest['slug'], true)
-        ];
+            'codigo_empresa' => $dadosEmpresa['codigo_empresa'],
+            'codigo_imovel'  => $dadosRequest['codigo_imovel'],
+            'codigo_cliente' => $dadosRequest['codigo_cliente'],
+            'data_inicio'    => $dadosRequest['data_inicio'],
+            'data_fim'       => $dadosRequest['data_fim'],
+            'descricao'      => $dadosRequest['descricao'],
 
-        // Verifica se foi passado uma empresa
-        if (!empty($dadosRequest['codigo_empresa'])) {
-            $reserva['codigo_empresa'] = $dadosRequest['codigo_empresa'];
-        }
+
+        ];
 
         //Inicia as operações de DB
         $this->db->transStart();
         try {
-            $cadastroGrupoModel->save($reserva);
-            $codigoGrupo = $cadastroGrupoModel->insertID('reserva_codigo_reserva_seq');
-
-            // Percorre os menus desejados para gravar a permissão
-            if ($codigoGrupo) {
-                if (!empty($dadosRequest['permissao'])) {
-                    foreach ($dadosRequest['permissao'] as $keyCodigoMenu => $valuePermissao) {
-                        $permissoes = [
-                            'usuario_criacao'       => $dadosUsuario['codigo_usuario'],
-                            'codigo_reserva' => $codigoGrupo,
-                            'codigo_cadastro_menu'  => $keyCodigoMenu,
-                            'consultar'             => !empty($valuePermissao['consultar']) ? $valuePermissao['consultar'] : 0,
-                            'inserir'               => !empty($valuePermissao['inserir'])   ? $valuePermissao['inserir']   : 0,
-                            'modificar'             => !empty($valuePermissao['modificar']) ? $valuePermissao['modificar'] : 0,
-                            'deletar'               => !empty($valuePermissao['deletar'])   ? $valuePermissao['deletar']   : 0
-                        ];
-                        $usuarioGrupoMenuModel->save($permissoes);
-                    }
-                }
-
-                // Insere as permissões de relatórios
-                if (!empty($dadosRequest['relatorio'])) {
-                    foreach (explode(',', $dadosRequest['relatorio']) as $id) {
-                        if (!empty($id)) {
-                            $dadosRel = ['codigo_reserva' => $codigoGrupo, 'codigo_cadastro_relatorio' => $id];
-                            $usuarioGrupoRelatorioModel->save($dadosRel);
-                        }
-                    }
-                }
-            }
-
+            $reservaModel->save($reserva);
             $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Grupo']));
+            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Reserva']));
         } catch (Exception $e) {
-            $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
+
+            $error = $e->getMessage();
+            $error = explode('|',  $error);
+            $this->nativeSession->setFlashData('error', lang($error[1], ['Reserva']));
             return redirect()->back()->withInput();
         }
 

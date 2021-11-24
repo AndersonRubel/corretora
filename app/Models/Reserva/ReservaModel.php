@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Imovel;
+namespace App\Models\Reserva;
 
 use App\Models\BaseModel;
 use App\Libraries\NativeSession;
 
-class ImovelModel extends BaseModel
+class ReservaModel extends BaseModel
 {
-    protected $table = 'imovel';
-    protected $primaryKey = 'codigo_imovel';
-    protected $uuidColumn = 'uuid_imovel';
+    protected $table = 'reserva';
+    protected $primaryKey = 'codigo_reserva';
+    protected $uuidColumn = 'uuid_reserva';
 
     protected $useAutoIncrement = true;
 
@@ -27,29 +27,16 @@ class ImovelModel extends BaseModel
     protected $skipValidation = false;
 
     protected $allowedFields = [
-        'codigo_imovel',
-        'uuid_imovel',
+        'codigo_reserva',
+        'uuid_reserva',
         'criado_em',
         'alterado_em',
         'inativado_em',
+        'codigo_imovel',
+        'codigo_cliente',
         'codigo_empresa',
-        'codigo_proprietario',
-        'codigo_categoria_imovel',
-        'codigo_tipo_imovel',
-        'codigo_referencia',
-        'quarto',
-        'suite',
-        'banheiro',
-        'area_util',
-        'area_construida',
-        'edicula',
-        'mobilia',
-        'condominio',
-        'descricao',
-        'destaque',
-        'publicado',
-        'diretorio_imagem',
-        'valor'
+        'data_inicio',
+        'data_fim',
     ];
 
     /**
@@ -64,34 +51,16 @@ class ImovelModel extends BaseModel
         $condicoes = "{$condicoes} {$configDataGrid->whereSearch}";
 
         $this->select("
-            {$this->table}.uuid_imovel
-          , {$this->table}.codigo_imovel
-          , {$this->table}.codigo_referencia
-          , {$this->table}.quarto
-          , {$this->table}.suite
-          , {$this->table}.banheiro
-          , {$this->table}.area_util
-          , {$this->table}.area_construida
-          , {$this->table}.edicula
-          , {$this->table}.mobilia
-          , {$this->table}.condominio
-          , {$this->table}.publicado
-          , {$this->table}.valor
-          , (SELECT array_to_string(array_agg(ci.nome), ', ')
-               FROM categoria_imovel ci
-              WHERE ci.codigo_categoria_imovel = {$this->table}.codigo_categoria_imovel
-                AND ci.inativado_em IS NULL
-            ) AS categoria
-             , (SELECT array_to_string(array_agg(ci.nome), ', ')
-               FROM tipo_imovel ci
-              WHERE ci.codigo_tipo_imovel = {$this->table}.codigo_tipo_imovel
-                AND ci.inativado_em IS NULL
-            ) AS tipo
+            {$this->table}.uuid_reserva
+          , {$this->table}.codigo_reserva
+          , imovel.codigo_referencia
+          , TO_CHAR({$this->table}.data_inicio, 'DD/MM/YYYY HH24:MI') AS data_inicio
+          , TO_CHAR({$this->table}.data_fim, 'DD/MM/YYYY HH24:MI') AS data_fim
           , TO_CHAR({$this->table}.criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR({$this->table}.alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR({$this->table}.inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
         ", FALSE);
-
+        $this->join("imovel", "imovel.codigo_imovel = {$this->table}.codigo_imovel");
         /////// Inicio :: Filtros ///////
         $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
 
@@ -107,15 +76,15 @@ class ImovelModel extends BaseModel
                 break;
         }
 
-        // if (!empty($configDataGrid->filtros['codigo_imovel'])) {
-        //     $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
+        // if (!empty($configDataGrid->filtros['codigo_reserva'])) {
+        //     $this->where("{$this->table}.codigo_reserva", $configDataGrid->filtros['codigo_reserva']);
         // }
 
         // if (!empty($configDataGrid->filtros['categoria'])) {
         //     $categoria = $configDataGrid->filtros['categoria'];
-        //     $this->where("{$categoria} IN (SELECT i.codigo_categoria_imovel
-        //                                      FROM imovel i
-        //                                     WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
+        //     $this->where("{$categoria} IN (SELECT i.codigo_categoria_reserva
+        //                                      FROM reserva i
+        //                                     WHERE pc.codigo_reserva = {$this->table}.codigo_reserva
         //                                       AND pc.inativado_em IS NULL
         //                                 )
         //         ");
@@ -147,18 +116,18 @@ class ImovelModel extends BaseModel
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
 
         $this->select("
-            codigo_imovel AS id
+            codigo_reserva AS id
           , codigo_referencia AS text
         ", FALSE);
 
-        $this->where('imovel.codigo_empresa', $dadosEmpresa['codigo_empresa']);
+        $this->where('reserva.codigo_empresa', $dadosEmpresa['codigo_empresa']);
 
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {
                 if (is_numeric($filtros['termo'])) {
                     $termo = explode(' ', $filtros['termo']);
                     foreach ($termo as $key => $value) {
-                        $this->where("imovel.codigo_referencia ILIKE '%{$value}%'");
+                        $this->where("reserva.codigo_referencia ILIKE '%{$value}%'");
                     }
                 }
             }
