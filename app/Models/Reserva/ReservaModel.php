@@ -76,20 +76,6 @@ class ReservaModel extends BaseModel
                 break;
         }
 
-        // if (!empty($configDataGrid->filtros['codigo_reserva'])) {
-        //     $this->where("{$this->table}.codigo_reserva", $configDataGrid->filtros['codigo_reserva']);
-        // }
-
-        // if (!empty($configDataGrid->filtros['categoria'])) {
-        //     $categoria = $configDataGrid->filtros['categoria'];
-        //     $this->where("{$categoria} IN (SELECT i.codigo_categoria_reserva
-        //                                      FROM reserva i
-        //                                     WHERE pc.codigo_reserva = {$this->table}.codigo_reserva
-        //                                       AND pc.inativado_em IS NULL
-        //                                 )
-        //         ");
-        // }
-
         /////// Fim :: Filtros ///////
 
         $queryCompiled = $this->getCompiledSelect();
@@ -108,40 +94,40 @@ class ReservaModel extends BaseModel
 
 
     /**
-     * Busca os imoveis para o Select2
+     * Busca as reservas para o Select2
      * @param array $filtros Filtros para a Busca
      */
-    public function selectImovel(array $filtros)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
+    // public function selectReserva(array $filtros)
+    // {
+    //     $dadosEmpresa = (new NativeSession(true))->get('empresa');
 
-        $this->select("
-            codigo_reserva AS id
-          , codigo_referencia AS text
-        ", FALSE);
+    //     $this->select("
+    //         codigo_reserva AS id
+    //       , imovel.codigo_referencia AS text
+    //     ", FALSE);
 
-        $this->where('reserva.codigo_empresa', $dadosEmpresa['codigo_empresa']);
+    //     $this->where('reserva.codigo_empresa', $dadosEmpresa['codigo_empresa']);
 
-        if (!empty($filtros)) {
-            if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo'])) {
-                    $termo = explode(' ', $filtros['termo']);
-                    foreach ($termo as $key => $value) {
-                        $this->where("reserva.codigo_referencia ILIKE '%{$value}%'");
-                    }
-                }
-            }
-        }
+    //     if (!empty($filtros)) {
+    //         if (!empty($filtros['termo'])) {
+    //             if (is_numeric($filtros['termo'])) {
+    //                 $termo = explode(' ', $filtros['termo']);
+    //                 foreach ($termo as $key => $value) {
+    //                     $this->where("reserva.codigo_referencia ILIKE '%{$value}%'");
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        $this->orderBy(2, 'ASC');
+    //     $this->orderBy(2, 'ASC');
 
-        $this->limit(30);
-        $this->offset(($filtros['page'] - 1) * 30);
+    //     $this->limit(30);
+    //     $this->offset(($filtros['page'] - 1) * 30);
 
-        $data['itens'] = $this->find();
-        $data['count'] = $this->countAllResults();
-        return $data;
+    //     $data['itens'] = $this->find();
+    //     $data['count'] = $this->countAllResults();
+    //     return $data;
 
-        return $this->find();
-    }
+    //     return $this->find();
+    // }
 }

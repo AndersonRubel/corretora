@@ -102,50 +102,9 @@ const select2ReservaFunctions = {
 
 const reservaFunctions = {
     init: () => {
-        reservaFunctions.selecionarTodasOpcoes();
+        reservaFunctions.nomefunc();
     },
-    selecionarTodasOpcoes: () => {
-        //Marca todos os elementos da coluna
-        $(document).on('click', "[data-action='marcarTodosColuna']", function() {
-            $(this).parent().find("[data-action='desmarcaTodosColuna']").removeClass('d-none');
-            $(this).addClass('d-none');
-
-            let coluna = $(this).parents('th').index();
-            $.each($('tbody').find('tr'), function(key, value) {
-                $(value).find('td').eq(coluna).find('input').prop('checked', true);
-            });
-        });
-
-        //Desmarca todos os elementos da coluna
-        $(document).on('click', "[data-action='desmarcaTodosColuna']", function() {
-            $(this).parent().find("[data-action='marcarTodosColuna']").removeClass('d-none');
-            $(this).addClass('d-none');
-
-            let coluna = $(this).parents('th').index();
-            $.each($('tbody').find('tr'), function(key, value) {
-                $(value).find('td').eq(coluna).find('input').prop('checked', false);
-            });
-        });
-
-        // Marca todas as os elementos da linha
-        $(document).on('click', "[data-action='selecionarTodosLinha']", function() {
-            $(this).parent().find("[data-action='desmarcaTodosLinha']").removeClass('d-none');
-            $(this).addClass('d-none');
-
-            for (let i = 1; i <= 4; i++) {
-                let input = $(this).parents('tr').find('td').eq(i).find('input').prop('checked', true);
-            }
-        });
-
-        // Desmarca todas as os elementos da linha
-        $(document).on('click', "[data-action='desmarcaTodosLinha']", function() {
-            $(this).parent().find("[data-action='selecionarTodosLinha']").removeClass('d-none');
-            $(this).addClass('d-none');
-            for (let i = 1; i <= 4; i++) {
-                let input = $(this).parents('tr').find('td').eq(i).find('input').prop('checked', false);
-            }
-        });
-    },
+    nomefunc: () => {},
 };
 
 const dataGridGrupoFunctions = {
@@ -206,7 +165,7 @@ const dataGridGrupoFunctions = {
                 "compare": null
             },
             {
-                "funcao": "toggleStatus",
+                "funcao": "desativar",
                 "metodo": "",
                 "compare": null
             },
@@ -260,7 +219,7 @@ const dataGridGrupoFunctions = {
         ];
         mapeamento[1][ROUTE]['btn_montar'] = true;
         mapeamento[1][ROUTE]['btn'] = [{
-            "funcao": "toggleStatus",
+            "funcao": "ativar",
             "metodo": "",
             "compare": null
         }, ];
