@@ -324,6 +324,41 @@ class BaseController extends Controller
         // Adiciona a Footer do Documento
         echo view("template/{$templateAtivo}/footer", $dados);
     }
+    /**
+     * Carrega o template HTML do sistema
+     * @param string $pasta Pasta onde se localiza a view
+     * @param array  $arquivos Arquivos que devem ser carregados da pasta
+     * @param array  $dados  Informações adicionais para a view
+     * @param bool   $navbar Define se vai exibir a navbar
+     * @param bool   $sidebar Define se vai exibir a sidebar
+     */
+    protected function templateSite(string $pasta, array $arquivos = [], array $dados = [])
+    {
+        $templateAtivo = env('app.templateSite');
+
+        //Carrega a sessão e a Instancia da Base Controller
+        // $dados['nativeSession'] = $this->nativeSession;
+        // $dados['dadosUsuario']  = $this->nativeSession->get("usuario");
+        // $dados['responseFlash'] = $this->nativeSession->getFlashdata('responseFlash');
+        // $dados['menus']         = empty($this->nativeSession->get("menus")) ? [] : $this->nativeSession->get("menus");
+        // $dados['base']          = $this;
+
+        // Adiciona o Header e as funções Base do Documento
+        echo view("templateSite/{$templateAtivo}/header", $dados);
+
+        // verifica se tem que carregar a Navbar
+        echo view("templateSite/{$templateAtivo}/navbar", $dados);
+
+        // Carrega os arquivos da pasta desejada
+        if (!empty($arquivos)) {
+            foreach ($arquivos as $valueArquivo) {
+                echo view("app/{$pasta}/{$valueArquivo}", $dados);
+            }
+        }
+
+        // Adiciona a Footer do Documento
+        echo view("templateSite/{$templateAtivo}/footer", $dados);
+    }
 
     /**
      * @param string $endPoint URL da Requisição

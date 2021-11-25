@@ -43,6 +43,13 @@ $routes->group('login', function ($routes) {
     $routes->post('email', 'LoginController::loginEmail');
 });
 
+// Rotas de site
+$routes->group('site', function ($routes) {
+    $routes->get('', 'SiteController::index');
+    $routes->get('logout', 'SiteController::logout');
+    $routes->post('email', 'SiteController::loginEmail');
+});
+
 /*
 * --------------------------------------------------------------------
 * Rotas Autenticadas
