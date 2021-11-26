@@ -46,6 +46,7 @@ $routes->group('login', function ($routes) {
 // Rotas de site
 $routes->group('site', function ($routes) {
     $routes->get('', 'SiteController::index');
+    $routes->get('detalhes/(:hash)', 'SiteController::detalhes/$1');
     $routes->get('logout', 'SiteController::logout');
     $routes->post('email', 'SiteController::loginEmail');
 });

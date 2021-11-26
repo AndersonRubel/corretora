@@ -654,6 +654,11 @@ a {
     top: 10px;
     left: 10px;
     z-index: 8; }
+    .property-entry .offer-type-wrap-2 {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 8; }
   .property-entry .property-thumbnail {
     overflow: hidden;
     position: relative;
@@ -667,6 +672,16 @@ a {
       letter-spacing: .2em;
       font-size: 9px;
       border-radius: 4px; }
+      .property-entry .property-thumbnail .offer-type-2 {
+        display: block;
+        margin-bottom: 5px;
+        padding: 1px 7px;
+        color: #fff;
+        background-color: #999999;
+        text-transform: uppercase;
+        letter-spacing: .2em;
+        font-size: 17px;
+        border-radius: 4px; }
     .property-entry .property-thumbnail img {
       -webkit-transition: .3s all ease;
       -o-transition: .3s all ease;

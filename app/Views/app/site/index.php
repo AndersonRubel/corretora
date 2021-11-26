@@ -92,36 +92,39 @@
     <div class="container">
 
         <div class="row mb-5">
-            <?php foreach ($imovel as $value) : ?>
+            <?php foreach ($imovel['itens'] as $value) : ?>
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="property-entry h-100">
-                    <a href="property-details.html" class="property-thumbnail">
+                    <a href="site/detalhes/<?= $value['uuid_imovel'] ?>" class="property-thumbnail">
                         <div class="offer-type-wrap">
-                            <span class="offer-type bg-danger">Sale</span>
+                            <span class="offer-type bg-danger"><?= $value['categoria_imovel'] ?></span>
                         </div>
-                        <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+                        <div class="row ">
+                            <img src="<?= $value['imagem_destaque'] ?>" alt="Image"
+                                style="object-fit:cover; width:400px;height:200px !important">
+                        </div>
                     </a>
                     <div class="p-4 property-body">
                         <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
-                        <h2 class="property-title"><a href="property-details.html">625 S. Berendo St</a></h2>
-                        <span class="property-location d-block mb-3"><span class="property-icon icon-room"></span>
-                            625 S. Berendo
-                            St Unit 607 Los Angeles, CA 90005</span>
-                        <strong class="property-price text-primary mb-3 d-block text-success">$2,265,500</strong>
+                        <h2 class="property-title"><a href="property-details.html"><?= $value['tipo_imovel'] ?></a></h2>
+                        <span class="property-location d-block mb-3"><span
+                                class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
+                        <strong class="property-price text-primary mb-3 d-block text-success"
+                            data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
                         <ul class="property-specs-wrap mb-3 mb-lg-0">
                             <li>
-                                <span class="property-specs">Beds</span>
-                                <span class="property-specs-number">2 <sup>+</sup></span>
+                                <span class="property-specs">Quarto(s)</span>
+                                <span class="property-specs-number"><?= $value['quarto'] ?></span>
 
                             </li>
                             <li>
-                                <span class="property-specs">Baths</span>
-                                <span class="property-specs-number">2</span>
+                                <span class="property-specs">Suite(s)</span>
+                                <span class="property-specs-number"><?= $value['suite'] ?></span>
 
                             </li>
                             <li>
-                                <span class="property-specs">SQ FT</span>
-                                <span class="property-specs-number">7,000</span>
+                                <span class="property-specs">banheiro(s)</span>
+                                <span class="property-specs-number"><?= $value['banheiro'] ?></span>
 
                             </li>
                         </ul>
@@ -346,7 +349,71 @@
 
 
 
-      
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
     </div>
 </div>
