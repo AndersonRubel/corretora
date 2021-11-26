@@ -24,9 +24,12 @@ O Corretora é um software de gerenciamento de imóveis.
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [PHP8](https://www.apachefriends.org/pt_br), [Composer](https://getcomposer.org/download).
+[Git](https://git-scm.com), [PHP8](https://www.apachefriends.org/pt_br), [Composer](https://getcomposer.org/download), [Postgres13](https://www.postgresql.org/download).
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
+### Criando banco
+Após instalar o Postgres, com uma ferramenta de gestão como o pg admin
+Crie uma nova base de dados com o nome "corretora"
 ### Rodando o Projeto
 
 ```bash
@@ -42,11 +45,8 @@ $ cd corretora
 # Instale as dependências
 $ composer install
 
-# Rode as Migrations
-$ php spark migrate
-
-# Rode os Seeders
-$ php spark db:seed DatabaseSeeder
+# Rode o comando abaixo ele executa todas migrations e seeders
+$ php spark importa:initbase
 
 # Execute a aplicação
 $ php spark serve
