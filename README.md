@@ -59,20 +59,13 @@ $ php spark serve
 -   [Dashboard de Indicadores](#dashboard)
 -   [Gestão de Cadastros](#cadastros)
 -   [Gestão de Empresas](#empresa)
--   [Gestão de Estoque](#estoque)
+-   [Gestão de Imóveis](#imovel)
 -   [Gestão de Usuários](#usuario)
 -   [Gestão de Clientes](#cliente)
--   [Gestão de Fornecedor](#fornecedor)
--   [Gestão de Vendedor](#vendedor)
--   [Gestão](#gestao)
-    -   [Centro de Custo](#centrodecusto)
--   [Gestão Financeira](#financeiro)
-    -   [Contas a Pagar](#pagar)
-    -   [Contas a Receber](#receber)
-    -   [Fluxo de Caixa](#fluxocaixa)
--   [Gestão de Vendas](#vendas)
-    -   [Fechamento](#fechamento)
--   [Relatórios](#relatorio)
+-   [Gestão de Proprietários](#proprietario)
+-   [Gestão de Reseravas](#reserva)
+
+
 
 ## Licença
 
