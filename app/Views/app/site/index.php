@@ -99,6 +99,9 @@
                         <div class="offer-type-wrap">
                             <span class="offer-type bg-danger"><?= $value['categoria_imovel'] ?></span>
                         </div>
+                        <div class="offer-type-wrap-2">
+                            <span class="offer-type-2">Ref: <?= $value['codigo_referencia'] ?></span>
+                        </div>
                         <div class="row ">
                             <img src="<?= $value['imagem_destaque'] ?>" alt="Image"
                                 style="object-fit:cover; width:400px;height:200px !important">
@@ -339,6 +342,7 @@
 
                 </div>
             </div>
+
 
 
 

@@ -135,7 +135,7 @@
             <?php foreach ($itens as $value) : ?>
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="property-entry h-100">
-                    <a href="site/detalhes/<?= $value['uuid_imovel'] ?>" class="property-thumbnail">
+                    <a href="<?= base_url("site/detalhes/" . $value['uuid_imovel']) ?>" class="property-thumbnail">
                         <div class="offer-type-wrap">
                             <span class="offer-type bg-danger"><?= $value['categoria_imovel'] ?></span>
                         </div>
@@ -173,19 +173,6 @@
                         </ul>
 
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
