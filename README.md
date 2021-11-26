@@ -27,9 +27,30 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 [Git](https://git-scm.com), [PHP8](https://www.apachefriends.org/pt_br), [Composer](https://getcomposer.org/download), [Postgres13](https://www.postgresql.org/download).
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
+### Extensões PHP Necessárias 
+Na pasta do php, abra o arquivo php.ini que contem as configurações nele descomente as seguintes extensões
+extension=bz2
+extension=curl
+extension=fileinfo
+extension=gd
+extension=gettext
+extension=gmp
+extension=intl
+extension=imap
+extension=ldap
+extension=mbstring
+extension=exif      
+extension=mysqli
+extension=openssl
+extension=pdo_mysql
+extension=pdo_pgsql
+extension=pdo_sqlite
+extension=pgsql
 ### Criando banco
 Após instalar o Postgres, com uma ferramenta de gestão como o pg admin
 Crie uma nova base de dados com o nome "corretora"
+
+## Crie o arquivo .env dentro da pasta raiz com as configuração do seu banco 
 ### Rodando o Projeto
 
 ```bash
