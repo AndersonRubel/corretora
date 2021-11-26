@@ -94,10 +94,10 @@
                                                 value="<?= old('area_construida'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label">Área Útil</label>
-                                            <input class="form-control" name="area_util" type="Number"
+                                            <label class="form-label">Área Total</label>
+                                            <input class="form-control" name="area_total" type="Number"
                                                 data-tippy-content="Informe a Área Útil em M²"
-                                                value="<?= old('area_util'); ?>">
+                                                value="<?= old('area_total'); ?>">
                                         </div>
 
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
@@ -198,6 +198,7 @@
                                         data-tippy-content="Informe se Será Exibido como Destaque">
                                         <option value="f">Não</option>
                                         <option value="t">Sim</option>
+
       
                               </select></div>
                             </div>

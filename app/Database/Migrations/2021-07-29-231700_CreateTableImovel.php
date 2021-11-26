@@ -27,7 +27,7 @@ class CreateTableImovel extends Migration
             'suite'                    => ['type' => 'BIGINT', 'null' => true],
             'estacionamento'           => ['type' => 'BIGINT', 'null' => true],
             'banheiro'                 => ['type' => 'BIGINT', 'null' => true],
-            'area_util'                => ['type' => 'BIGINT', 'null' => true],
+            'area_total'                => ['type' => 'BIGINT', 'null' => true],
             'area_construida'          => ['type' => 'BIGINT', 'null' => true],
             'edicula'                  => ['type' => 'BOOLEAN', 'default' => false],
             'mobilia'                  => ['type' => 'BOOLEAN', 'default' => false],

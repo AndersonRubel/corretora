@@ -40,7 +40,7 @@ class ImovelModel extends BaseModel
         'quarto',
         'suite',
         'banheiro',
-        'area_util',
+        'area_total',
         'area_construida',
         'edicula',
         'mobilia',
@@ -70,7 +70,7 @@ class ImovelModel extends BaseModel
           , {$this->table}.quarto
           , {$this->table}.suite
           , {$this->table}.banheiro
-          , {$this->table}.area_util
+          , {$this->table}.area_total
           , {$this->table}.area_construida
           , {$this->table}.edicula
           , {$this->table}.mobilia
