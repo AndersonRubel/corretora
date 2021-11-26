@@ -69,19 +69,19 @@
                                                 value="<?= old('codigo_tipo_imovel'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label">Quarto</label>
+                                            <label class="form-label">Quarto(s)</label>
                                             <input class="form-control" name="quarto" type="Number"
                                                 data-tippy-content="Informe Quantos Quartos" required
                                                 value="<?= old('quarto'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label">Banheiro</label>
+                                            <label class="form-label">Banheiro(s)</label>
                                             <input class="form-control" name="banheiro" type="Number"
                                                 data-tippy-content="Informe Quantos Banheiros" required
                                                 value="<?= old('banheiro'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label">Suite</label>
+                                            <label class="form-label">Suite(s)</label>
                                             <input class="form-control" name="suite" type="Number"
                                                 data-tippy-content="Informe Quantas Suites"
                                                 value="<?= old('suite'); ?>">
@@ -193,22 +193,11 @@
                                         <option value="t">Sim</option>
                                         <option value="f">Não</option>
                                     </select></div>
-                                <div class="col-6"><label for="destaque">Destaque ?</label><select name="destaque"
+                                <div class="col-6"><label for="destaque">Destaque?</label><select name="destaque"
                                         id="destaque" type="text" class="form-control"
                                         data-tippy-content="Informe se Será Exibido como Destaque">
                                         <option value="f">Não</option>
-
-
-
-
-
-
-
                                         <option value="t">Sim</option>
-
-
-
-
       
                               </select></div>
                             </div>

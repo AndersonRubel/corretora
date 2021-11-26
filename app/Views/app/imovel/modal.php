@@ -15,26 +15,32 @@
                         </div>
                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                             <label class="form-label">Preço de Custo</label>
-                            <input type="text" class="form-control" name="valor_fabrica" data-mask="dinheiro" data-tippy-content="Informe o Preço de Custo do imovel" required placeholder="0,00">
+                            <input type="text" class="form-control" name="valor_fabrica" data-mask="dinheiro"
+                                data-tippy-content="Informe o Preço de Custo do imovel" required placeholder="0,00">
                         </div>
                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                             <label class="form-label">Preço de Venda</label>
-                            <input type="text" class="form-control" name="valor_venda" data-mask="dinheiro" data-tippy-content="Informe o Preço de Venda do imovel" required placeholder="0,00">
+                            <input type="text" class="form-control" name="valor_venda" data-mask="dinheiro"
+                                data-tippy-content="Informe o Preço de Venda do imovel" required placeholder="0,00">
                         </div>
                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                             <label class="form-label">Preço de Ecommerce</label>
-                            <input type="text" class="form-control" name="valor_ecommerce" data-mask="dinheiro" data-tippy-content="Informe o Preço de Custo Ecommerce do imovel" placeholder="0,00">
+                            <input type="text" class="form-control" name="valor_ecommerce" data-mask="dinheiro"
+                                data-tippy-content="Informe o Preço de Custo Ecommerce do imovel" placeholder="0,00">
                         </div>
                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                             <label class="form-label">Preço de Atacado</label>
-                            <input type="text" class="form-control" name="valor_atacado" data-mask="dinheiro" placeholder="0,00" data-tippy-content="Informe o Preço de Atacado do imovel">
+                            <input type="text" class="form-control" name="valor_atacado" data-mask="dinheiro"
+                                placeholder="0,00" data-tippy-content="Informe o Preço de Atacado do imovel">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success text-white" data-action="realizarAlteracaoPreco">Salvar</button>
+                    <button type="submit" class="btn btn-success text-white"
+                        data-action="realizarAlteracaoPreco">Salvar</button>
                 </div>
+
             </form>
         </div>
     </div>

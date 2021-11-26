@@ -38,14 +38,6 @@ class CadastroMenuSeeder extends DatabaseSeeder
         ]);
 
         $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Gerenciar Imóvel',
-            'descricao'   => 'Gerenciamento dos Imóveis',
-            'path'        => 'imovel',
-            'agrupamento' => '#',
-            'icone'       => 'fas fa-box'
-        ]);
-
-        $this->saveOnce('cadastro_menu', [
             'nome'        => 'Empresa',
             'descricao'   => 'Gestão de Empresas',
             'path'        => 'empresa',
@@ -78,6 +70,20 @@ class CadastroMenuSeeder extends DatabaseSeeder
             'agrupamento' => 'gestao',
             'localizacao' => 'sidebar_gestao',
             'icone'       => 'fas fa-user'
+        ]);
+        /////// Inicio :: Menus Unicos ///////
+        $this->saveOnce('cadastro_menu', [
+            'nome'        => 'Gerenciar Imóvel',
+            'descricao'   => 'Gerenciamento dos Imóveis',
+            'path'        => 'imovel',
+            'icone'       => 'fas fa-box'
+        ]);
+
+        $this->saveOnce('cadastro_menu', [
+            'nome'        => 'Gerenciar Reserva',
+            'descricao'   => 'Gerenciamento dos Reservas',
+            'path'        => 'reserva',
+            'icone'       => 'fas fa-box'
         ]);
 
         /////// Inicio :: Menus de Cadastro ///////

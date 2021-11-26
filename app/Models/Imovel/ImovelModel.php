@@ -139,44 +139,26 @@ class ImovelModel extends BaseModel
 
 
     /**
-     * Busca os imovels para o Select2
+     * Busca os imoveis para o Select2
      * @param array $filtros Filtros para a Busca
      */
     public function selectImovel(array $filtros)
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
 
-        // se vier o codigo do Estoque adiciona a SubSelect para buscar a quantidade no estoque desejado
-        $fieldEstoqueAtual = "0 AS estoque_atual";
-        if (!empty($filtros)) {
-            if (!empty($filtros['codEstoque'])) {
-                $fieldEstoqueAtual = "(SELECT SUM(COALESCE(estoque_imovel.estoque_atual, 0))
-                                         FROM estoque_imovel
-                                        WHERE estoque_imovel.codigo_imovel = imovel.codigo_imovel
-                                          AND estoque_imovel.inativado_em IS NULL
-                                    ) AS estoque_atual";
-            }
-        }
-
         $this->select("
             codigo_imovel AS id
-          , nome AS text
-          , codigo_barras
-          , COALESCE(fornecedor.nome_fantasia, fornecedor.razao_social) AS fornecedor
-          , {$fieldEstoqueAtual}
+          , codigo_referencia AS text
         ", FALSE);
 
-        $this->join('fornecedor', 'fornecedor.codigo_fornecedor = imovel.codigo_fornecedor');
         $this->where('imovel.codigo_empresa', $dadosEmpresa['codigo_empresa']);
 
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {
                 if (is_numeric($filtros['termo'])) {
-                    $this->where("imovel.codigo_imovel", $filtros['termo']);
-                } else {
                     $termo = explode(' ', $filtros['termo']);
                     foreach ($termo as $key => $value) {
-                        $this->where("imovel.nome ILIKE '%{$value}%'");
+                        $this->where("imovel.codigo_referencia ILIKE '%{$value}%'");
                     }
                 }
             }

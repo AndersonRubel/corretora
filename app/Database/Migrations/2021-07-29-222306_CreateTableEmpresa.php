@@ -18,16 +18,16 @@ class CreateTableEmpresa extends Migration
             'criado_em'           => ['type' => 'TIMESTAMPTZ', 'default' => 'NOW()'],
             'alterado_em'         => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],
-            'tipo_pessoa'         => ['type' => 'INT', 'default' => 2],
+            'tipo_pessoa'         => ['type' => 'INT', 'default' => 1],
             'razao_social'        => ['type' => 'VARCHAR', 'null' => true],
             'nome_fantasia'       => ['type' => 'VARCHAR', 'null' => true],
             'cpf_cnpj'            => ['type' => 'VARCHAR', 'null' => true],
+            'data_nascimento'     => ['type' => 'DATE', 'null' => true],
             'email'               => ['type' => 'VARCHAR', 'null' => true],
             'telefone'            => ['type' => 'VARCHAR', 'null' => true],
-            'telefone_adicional'  => ['type' => 'VARCHAR', 'null' => true],
-            'celular'             => ['type' => 'VARCHAR', 'null' => true],
             'endereco'            => ['type' => 'JSONB', 'null' => true],
-            'configuracao'        => ['type' => 'JSONB', 'null' => true],
+            'celular'             => ['type' => 'VARCHAR', 'null' => true],
+            'observacao'          => ['type' => 'TEXT', 'null' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

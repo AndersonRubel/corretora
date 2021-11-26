@@ -43,6 +43,14 @@ $routes->group('login', function ($routes) {
     $routes->post('email', 'LoginController::loginEmail');
 });
 
+// Rotas de site
+$routes->group('site', function ($routes) {
+    $routes->get('', 'SiteController::index');
+    $routes->get('detalhes/(:hash)', 'SiteController::detalhes/$1');
+    $routes->get('logout', 'SiteController::logout');
+    $routes->post('email', 'SiteController::loginEmail');
+});
+
 /*
 * --------------------------------------------------------------------
 * Rotas Autenticadas
@@ -81,7 +89,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('selectTipoImovel', 'CadastroController::selectTipoImovel');
 
             // Telas de Crud
-            $routes->add('configuracao(:any)', 'CadastroController::configuracao$1$2');
             $routes->add('grupo(:any)', 'CadastroController::grupo$1$2');
             $routes->add('menu(:any)', 'CadastroController::menu$1$2');
             $routes->add('tipoImovel(:any)', 'CadastroController::tipoImovel$1$2');
@@ -170,6 +177,23 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('desativar/(:hash)', 'ProprietarioController::disable/$1');
             $routes->post('getDataGrid/(:num)', 'ProprietarioController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'ProprietarioController::backendCall/$1');
+        });
+
+
+        // Rotas de Reserva
+        $routes->group('reserva', function ($routes) {
+            // Páginas
+            $routes->get('', 'ReservaController::index');
+            $routes->get('adicionar', 'ReservaController::create');
+            $routes->get('alterar/(:hash)', 'ReservaController::edit/$1');
+
+            // Funcionalidades
+            $routes->post('store', 'ReservaController::store');
+            $routes->post('update/(:hash)', 'ReservaController::update/$1');
+            $routes->post('ativar/(:hash)', 'ReservaController::enable/$1');
+            $routes->post('desativar/(:hash)', 'ReservaController::disable/$1');
+            $routes->post('getDataGrid/(:num)', 'ReservaController::getDataGrid/$1');
+            $routes->post('backendCall/(:alphanum)', 'ReservaController::backendCall/$1');
         });
         // Rotas de Usuario
         $routes->group('usuario', function ($routes) {

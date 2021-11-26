@@ -25,6 +25,7 @@ class CreateTableImovel extends Migration
             'codigo_referencia'        => ['type' => 'VARCHAR', 'null' => true],
             'quarto'                   => ['type' => 'BIGINT', 'null' => true],
             'suite'                    => ['type' => 'BIGINT', 'null' => true],
+            'estacionamento'           => ['type' => 'BIGINT', 'null' => true],
             'banheiro'                 => ['type' => 'BIGINT', 'null' => true],
             'area_util'                => ['type' => 'BIGINT', 'null' => true],
             'area_construida'          => ['type' => 'BIGINT', 'null' => true],

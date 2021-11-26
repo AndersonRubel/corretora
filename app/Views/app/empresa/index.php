@@ -12,7 +12,8 @@
                 <div class="page-utilities">
                     <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                         <div class="col-auto">
-                            <a class="btn btn-primary success text-white" href="<?= base_url("empresa/adicionar"); ?>">Adicionar</a>
+                            <a class="btn btn-primary success text-white"
+                                href="<?= base_url("empresa/adicionar"); ?>">Adicionar</a>
                         </div>
                     </div>
                 </div>
@@ -23,11 +24,13 @@
         <!-- Fim :: Titulo e Botões -->
 
         <nav class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-            <a class="flex-sm-fill text-center nav-link active" id="ativos-tab" data-bs-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">
+            <a class="flex-sm-fill text-center nav-link active" id="ativos-tab" data-bs-toggle="tab" href="#ativos"
+                role="tab" aria-controls="ativos" aria-selected="true">
                 Ativos
                 <span class="count-tableAtivos">(0)</span>
             </a>
-            <a class="flex-sm-fill text-center nav-link" id="inativos-tab" data-bs-toggle="tab" href="#inativos" role="tab" aria-controls="inativos" aria-selected="false">
+            <a class="flex-sm-fill text-center nav-link" id="inativos-tab" data-bs-toggle="tab" href="#inativos"
+                role="tab" aria-controls="inativos" aria-selected="false">
                 Inativos
                 <span class="count-tableInativos">(0)</span>
             </a>
@@ -58,6 +61,8 @@
                 </div>
             </div>
             <!-- Fim :: Registros Inativos -->
+
+
 
         </div>
     </div>
