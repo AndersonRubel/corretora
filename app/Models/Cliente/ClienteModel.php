@@ -41,7 +41,8 @@ class ClienteModel extends BaseModel
         'email',
         'telefone',
         'celular',
-        'observacao',
+        'endereco',
+        'observacao'
     ];
 
     /**
@@ -52,15 +53,14 @@ class ClienteModel extends BaseModel
     public function getDataGrid(array $dadosDataGrid, string $condicoes = "1=1")
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
-        $dadosUsuario = (new NativeSession(true))->get('usuario');
         $configDataGrid = $this->configDataGrid($dadosDataGrid);
         $condicoes = "{$condicoes} {$configDataGrid->whereSearch}";
 
         $this->select("
             uuid_cliente
           , COALESCE(razao_social, nome_fantasia) AS nome
-          , email
           , cpf_cnpj
+          , email
           , telefone
           , celular
           , TO_CHAR(criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
@@ -93,36 +93,39 @@ class ClienteModel extends BaseModel
     }
 
     /**
-     * Busca os Clientes para o Select2
+     * Busca os Fornecedores para o Select2
      * @param array $filtros Filtros para a Busca
      */
     public function selectCliente(array $filtros)
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
+
         $this->select("
             codigo_cliente AS id
-          , nome_fantasia || ' (' || COALESCE(razao_social, '') || ')' AS text
-          , cpf_cnpj
+          , COALESCE(razao_social, nome_fantasia) AS text
         ", FALSE);
+
+        /////// Inicio :: Filtros ///////
 
         $this->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
 
         if (!empty($filtros)) {
             if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo']) && !in_array(strlen($filtros['termo']), [11, 14])) {
+                if (is_numeric($filtros['termo'])) {
                     $this->where("codigo_cliente", $filtros['termo']);
                 } else {
                     $termo = explode(' ', $filtros['termo']);
                     foreach ($termo as $key => $value) {
-                        $this->where("(
-                            cpf_cnpj ILIKE '%{$value}%'
-                         OR razao_social ILIKE '%{$value}%'
-                         OR nome_fantasia ILIKE '%{$value}%'
-                        )");
+                        $this->where("
+                           razao_social ILIKE '%{$value}%'
+                        OR nome_fantasia ILIKE '%{$value}%'
+                        ");
                     }
                 }
             }
         }
+
+        /////// Fim :: Filtros ///////
 
         $this->orderBy(2, 'ASC');
 
@@ -131,78 +134,6 @@ class ClienteModel extends BaseModel
 
         $data['itens'] = $this->find();
         $data['count'] = $this->countAllResults();
-        return $data;
-    }
-
-    /**
-     * Busca os registros para o Datagrid
-     * @param array $dadosDataGrid Dados da tabela do dataGrid
-     */
-    public function getDataGridAniversariantes(array $dadosDataGrid)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
-        $configDataGrid = $this->configDataGrid($dadosDataGrid);
-
-        // Cliente
-        $builderCliente = $this->builder("cliente");
-        $builderCliente->select("
-            uuid_cliente AS uuid
-          , COALESCE(cliente.razao_social, cliente.nome_fantasia) || ' - (Cliente)' AS nome
-          , TO_CHAR(data_nascimento, 'DD/MM') AS data_nascimento
-          , COALESCE(email, 'Não Cadastrado') AS email
-          , COALESCE(celular, 'Não Cadastrado') AS celular
-        ", FALSE);
-        $builderCliente->where("codigo_empresa", $dadosEmpresa['codigo_empresa']);
-        $builderCliente->where("data_nascimento IS NOT NULL");
-
-        if (!empty($configDataGrid->filtros['data_de'])) {
-            $dataDe = explode('-', $configDataGrid->filtros['data_de']); // separa dia, mes e ano
-            $dataDeDia = $dataDe[2]; // pega somente o mes
-            $dataDeMes = $dataDe[1]; // pega somente o dia
-            $builderCliente->where("(TO_CHAR(data_nascimento, 'MM-DD') >= '{$dataDeMes}-{$dataDeDia}')");
-        }
-
-        if (!empty($configDataGrid->filtros['data_ate'])) {
-            $dataAte = explode('-', $configDataGrid->filtros['data_ate']); // separa dia, mes e ano
-            $dataAteDia = $dataAte[2]; // pega somente o mes
-            $dataAteMes = $dataAte[1]; // pega somente o dia
-            $builderCliente->where("(TO_CHAR(data_nascimento, 'MM-DD') <= '{$dataAteMes}-{$dataAteDia}')");
-        }
-
-        $dadosCliente = $builderCliente->get()->getResultArray();
-
-        // Vendedor
-        $builderVendedor = $this->builder("vendedor");
-        $builderVendedor->select("
-            uuid_vendedor AS uuid
-          , COALESCE(vendedor.nome_fantasia, vendedor.razao_social) || ' - (Vendedor)' AS nome
-          , TO_CHAR(data_nascimento, 'DD/MM') AS data_nascimento
-          , COALESCE(usuario.email, 'Não Cadastrado') AS email
-          , COALESCE(COALESCE(vendedor.celular, usuario.celular), 'Não Cadastrado') AS celular
-        ", FALSE);
-        $builderVendedor->join("usuario", "usuario.codigo_vendedor = vendedor.codigo_vendedor");
-        $builderVendedor->where("codigo_empresa", $dadosEmpresa['codigo_empresa']);
-        $builderVendedor->where("data_nascimento IS NOT NULL");
-
-
-        if (!empty($configDataGrid->filtros['data_de'])) {
-            $dataDe = explode('-', $configDataGrid->filtros['data_de']); // separa dia, mes e ano
-            $dataDeDia = $dataDe[2]; // pega somente o mes
-            $dataDeMes = $dataDe[1]; // pega somente o dia
-            $builderVendedor->where("(TO_CHAR(data_nascimento, 'MM-DD') >= '{$dataDeMes}-{$dataDeDia}')");
-        }
-
-        if (!empty($configDataGrid->filtros['data_ate'])) {
-            $dataAte = explode('-', $configDataGrid->filtros['data_ate']); // separa dia, mes e ano
-            $dataAteDia = $dataAte[2]; // pega somente o mes
-            $dataAteMes = $dataAte[1]; // pega somente o dia
-            $builderVendedor->where("(TO_CHAR(data_nascimento, 'MM-DD') <= '{$dataAteMes}-{$dataAteDia}')");
-        }
-
-        $dadosVendedor = $builderVendedor->get()->getResultArray();
-
-        $data['data'] = array_merge($dadosCliente, $dadosVendedor);
-        $data['count']['total'] = count($data['data']);
         return $data;
     }
 }
