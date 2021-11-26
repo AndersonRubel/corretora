@@ -29,7 +29,7 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ### Extensões PHP Necessárias 
 Na pasta do php, abra o arquivo php.ini que contem as configurações nele descomente as seguintes extensões:
-extension=bz2,curl,fileinfo,gd,gettext,gmp,intl,imap,ldap,mbstring,exif,mysqli,openssl,pdo_mysql,pdo_pgsql,pdo_sqlite,pgsql.
+extension=bz2,curl,fileinfo,gd,gettext,gmp,intl,imap,ldap,mbstring,exif,mysqli,openssl,pdo_pgsql,pgsql.
 ### Criando banco
 Após instalar o Postgres, com uma ferramenta de gestão como o pg admin
 Crie uma nova base de dados com o nome "corretora"
