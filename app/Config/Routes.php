@@ -89,7 +89,6 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->post('selectTipoImovel', 'CadastroController::selectTipoImovel');
 
             // Telas de Crud
-            $routes->add('configuracao(:any)', 'CadastroController::configuracao$1$2');
             $routes->add('grupo(:any)', 'CadastroController::grupo$1$2');
             $routes->add('menu(:any)', 'CadastroController::menu$1$2');
             $routes->add('tipoImovel(:any)', 'CadastroController::tipoImovel$1$2');

@@ -15,7 +15,6 @@ use Sentry;
 use Exception;
 
 use App\Libraries\NativeSession;
-use App\Models\Cadastro\CadastroConfiguracaoModel;
 use CodeIgniter\HTTP\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -151,17 +150,6 @@ class BaseController extends Controller
         return Services::uri()->getPath();
     }
 
-    /**
-     * Retorna o valor de uma configuração
-     * @param string $chave Nome do parametro
-     * @return string Valor do parametro
-     */
-    public function getConfiguracao(string $chave): string
-    {
-        $cadastroConfiguracaoModel = new CadastroConfiguracaoModel;
-        $config = $cadastroConfiguracaoModel->get(['chave' => $chave], ['valor'], true);
-        return (string) $config['valor'];
-    }
 
     /**
      * Função Padrão para envio de emails

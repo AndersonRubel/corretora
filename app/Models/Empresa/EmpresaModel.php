@@ -32,21 +32,17 @@ class EmpresaModel extends BaseModel
         'criado_em',
         'alterado_em',
         'inativado_em',
+        'codigo_empresa',
         'tipo_pessoa',
         'razao_social',
         'nome_fantasia',
         'cpf_cnpj',
-        'codigo_empresa_situacao',
+        'data_nascimento',
         'email',
-        'email_financeiro',
         'telefone',
-        'telefone_adicional',
         'celular',
-        'dia_pagamento',
-        'responsavel',
         'endereco',
-        'configuracao',
-        'configuracao_nota_fiscal',
+        'observacao'
     ];
 
     /**
@@ -63,14 +59,16 @@ class EmpresaModel extends BaseModel
         $this->select("
             uuid_empresa
           , COALESCE(razao_social, nome_fantasia) AS nome
+          , cpf_cnpj
           , email
           , telefone
+          , celular
           , TO_CHAR(criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
           , TO_CHAR(alterado_em, 'DD/MM/YYYY HH24:MI') AS alterado_em
           , TO_CHAR(inativado_em, 'DD/MM/YYYY HH24:MI') AS inativado_em
         ", FALSE);
 
-        $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
+        // $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
 
         // Filtra o Tipo de Dados
         switch ($dadosDataGrid['status']) {
@@ -91,6 +89,51 @@ class EmpresaModel extends BaseModel
         $queryStringTotal = "SELECT COUNT(1) AS total FROM ({$queryCompiled}) AS x WHERE 1 = 1 {$configDataGrid->whereSearch}";
         $data['data'] = $this->query($queryStringSelect)->getResultArray();
         $data['count']['total'] = $this->query($queryStringTotal)->getResultArray()[0]['total'];
+        return $data;
+    }
+
+    /**
+     * Busca os Fornecedores para o Select2
+     * @param array $filtros Filtros para a Busca
+     */
+    public function selectEmpresa(array $filtros)
+    {
+        $dadosEmpresa = (new NativeSession(true))->get('empresa');
+
+        $this->select("
+            codigo_empresa AS id
+          , COALESCE(razao_social, nome_fantasia) AS text
+        ", FALSE);
+
+        /////// Inicio :: Filtros ///////
+
+        $this->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
+
+        if (!empty($filtros)) {
+            if (!empty($filtros['termo'])) {
+                if (is_numeric($filtros['termo'])) {
+                    $this->where("codigo_empresa", $filtros['termo']);
+                } else {
+                    $termo = explode(' ', $filtros['termo']);
+                    foreach ($termo as $key => $value) {
+                        $this->where("
+                           razao_social ILIKE '%{$value}%'
+                        OR nome_fantasia ILIKE '%{$value}%'
+                        ");
+                    }
+                }
+            }
+        }
+
+        /////// Fim :: Filtros ///////
+
+        $this->orderBy(2, 'ASC');
+
+        $this->limit(30);
+        $this->offset(($filtros['page'] - 1) * 30);
+
+        $data['itens'] = $this->find();
+        $data['count'] = $this->countAllResults();
         return $data;
     }
 
@@ -118,218 +161,5 @@ class EmpresaModel extends BaseModel
         $this->where("{$this->table}.codigo_empresa", $codigoEmpresa);
 
         return $this->first();
-    }
-
-    /**
-     * Busca as Empresas para o Select2
-     * @param array $filtros Filtros para a Busca
-     */
-    public function selectEmpresa(array $filtros)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
-
-        $this->select("
-            codigo_empresa AS id
-          , COALESCE(razao_social, nome_fantasia) AS text
-        ", FALSE);
-
-        $this->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
-
-        if (!empty($filtros)) {
-            if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo'])) {
-                    $this->where("codigo_empresa", $filtros['termo']);
-                } else {
-                    $termo = explode(' ', $filtros['termo']);
-                    foreach ($termo as $key => $value) {
-                        $this->where("
-                            razao_social ILIKE '%{$value}%'
-                            OR nome_fantasia ILIKE '%{$value}%'
-                        ");
-                    }
-                }
-            }
-        }
-
-        $this->orderBy(2, 'ASC');
-
-        $this->limit(30);
-        $this->offset(($filtros['page'] - 1) * 30);
-
-        $data['itens'] = $this->find();
-        $data['count'] = $this->countAllResults();
-        return $data;
-    }
-
-    /**
-     * Busca as Categorias da Empresa para o Select2
-     * @param array $filtros Filtros para a Busca
-     */
-    public function selectEmpresaCategoria(array $filtros)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
-
-        $builder = $this->builder('empresa_categoria');
-        $builder->select("
-            codigo_empresa_categoria AS id
-          , nome AS text
-        ", FALSE);
-
-        $builder->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
-
-        if (!empty($filtros)) {
-            if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo'])) {
-                    $builder->where("codigo_empresa_categoria", $filtros['termo']);
-                } else if (is_string($filtros['termo']) && strpos($filtros['termo'], ",") > 0) {
-                    $builder->whereIn('codigo_empresa_categoria', explode(',', str_replace(' ', '', $filtros['termo'])));
-                } else {
-                    $termo = explode(' ', $filtros['termo']);
-                    foreach ($termo as $key => $value) {
-                        $builder->where("nome ILIKE '%{$value}%'");
-                    }
-                    $builder->where("inativado_em IS NULL");
-                }
-            }
-        }
-
-        $builder->orderBy(2, 'ASC');
-
-        $builder->limit(30);
-        $builder->offset(($filtros['page'] - 1) * 30);
-
-        $data['itens'] = $builder->get()->getResultArray();
-        $data['count'] = $builder->countAllResults();
-        return $data;
-    }
-
-    /**
-     * Busca as Contas da Empresa para o Select2
-     * @param array $filtros Filtros para a Busca
-     */
-    public function selectEmpresaConta(array $filtros)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
-
-        $builder = $this->builder('empresa_conta');
-        $builder->select("
-            codigo_empresa_conta AS id
-          , nome AS text
-        ", FALSE);
-
-        $builder->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
-
-        if (!empty($filtros)) {
-            if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo'])) {
-                    $builder->where("codigo_empresa_conta", $filtros['termo']);
-                } else if (is_string($filtros['termo']) && strpos($filtros['termo'], ",") > 0) {
-                    $builder->whereIn('codigo_empresa_conta', explode(',', str_replace(' ', '', $filtros['termo'])));
-                } else {
-                    $termo = explode(' ', $filtros['termo']);
-                    foreach ($termo as $key => $value) {
-                        $builder->where("nome ILIKE '%{$value}%'");
-                    }
-                    $builder->where("inativado_em IS NULL");
-                }
-            }
-        }
-
-        $builder->orderBy(2, 'ASC');
-
-        $builder->limit(30);
-        $builder->offset(($filtros['page'] - 1) * 30);
-
-        $data['itens'] = $builder->get()->getResultArray();
-        $data['count'] = $builder->countAllResults();
-        return $data;
-    }
-
-    /**
-     * Busca os Centro de Custo da Empresa para o Select2
-     * @param array $filtros Filtros para a Busca
-     */
-    public function selectEmpresaCentroCusto(array $filtros)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
-
-        $builder = $this->builder('empresa_centro_custo');
-        $builder->select("
-            codigo_empresa_centro_custo AS id
-          , nome AS text
-        ", FALSE);
-
-        $builder->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
-
-        if (!empty($filtros)) {
-            if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo'])) {
-                    $builder->where("codigo_empresa_centro_custo", $filtros['termo']);
-                } else {
-                    $termo = explode(' ', $filtros['termo']);
-                    foreach ($termo as $key => $value) {
-                        $builder->where("nome ILIKE '%{$value}%'");
-                    }
-                    $builder->where("inativado_em IS NULL");
-                }
-            }
-        }
-
-        $builder->orderBy(2, 'ASC');
-
-        $builder->limit(30);
-        $builder->offset(($filtros['page'] - 1) * 30);
-
-        $data['itens'] = $builder->get()->getResultArray();
-        $data['count'] = $builder->countAllResults();
-        return $data;
-    }
-
-    /**
-     * Busca as Comissões da Empresa para o Select2
-     * @param array $filtros Filtros para a Busca
-     */
-    public function selectEmpresaComissao(array $filtros)
-    {
-        $dadosEmpresa = (new NativeSession(true))->get('empresa');
-
-        $builder = $this->builder('empresa_comissao');
-        $builder->select("
-            codigo_empresa_comissao AS id
-          , percentual || '%' AS text
-          , codigo_vendedor
-          , percentual
-          , valor_inicial
-          , valor_final
-        ", FALSE);
-
-        $builder->where('codigo_empresa', $dadosEmpresa['codigo_empresa']);
-
-        if (!empty($filtros)) {
-            if (!empty($filtros['termo'])) {
-                if (is_numeric($filtros['termo'])) {
-                    $builder->where("codigo_empresa_comissao", $filtros['termo']);
-                } else {
-                    $termo = explode(' ', $filtros['termo']);
-                    foreach ($termo as $key => $value) {
-                        $builder->where("percentual ILIKE '%{$value}%'");
-                    }
-                    $builder->where("inativado_em IS NULL");
-                }
-            }
-
-            if (!empty($filtros['codVendedor'])) {
-                $builder->where("(codigo_vendedor = {$filtros['codVendedor']} OR codigo_vendedor IS NULL)");
-            }
-        }
-
-        $builder->orderBy(2, 'ASC');
-
-        $builder->limit(30);
-        $builder->offset(($filtros['page'] - 1) * 30);
-
-        $data['itens'] = $builder->get()->getResultArray();
-        $data['count'] = $builder->countAllResults();
-        return $data;
     }
 }
