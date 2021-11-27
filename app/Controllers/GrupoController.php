@@ -118,7 +118,6 @@ class GrupoController extends BaseController
         }
 
         $grupo = [
-            'usuario_criacao' => $dadosUsuario['codigo_usuario'],
             'nome'            => $dadosRequest['nome'],
             'slug'            => snakeCase($dadosRequest['slug'], true)
         ];
@@ -139,7 +138,6 @@ class GrupoController extends BaseController
                 if (!empty($dadosRequest['permissao'])) {
                     foreach ($dadosRequest['permissao'] as $keyCodigoMenu => $valuePermissao) {
                         $permissoes = [
-                            'usuario_criacao'       => $dadosUsuario['codigo_usuario'],
                             'codigo_cadastro_grupo' => $codigoGrupo,
                             'codigo_cadastro_menu'  => $keyCodigoMenu,
                             'consultar'             => !empty($valuePermissao['consultar']) ? $valuePermissao['consultar'] : 0,
@@ -202,7 +200,6 @@ class GrupoController extends BaseController
         }
 
         $grupoUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
             'nome'              => $dadosRequest['nome'],
             'slug'              => snakeCase($dadosRequest['slug'], true)
         ];
@@ -234,12 +231,10 @@ class GrupoController extends BaseController
                     // Verifica se tem que criar ou editar o registro
                     if (!empty($valuePermissao['codigo_usuario_grupo_menu'])) {
                         // Edita o registro
-                        $permissoes['usuario_alteracao'] = $dadosUsuario['codigo_usuario'];
                         $permissoes['alterado_em'] = "NOW()";
                         $usuarioGrupoMenuModel->save($valuePermissao['codigo_usuario_grupo_menu'], $permissoes);
                     } else {
                         // Cria o registro
-                        $permissoes['usuario_criacao'] = $dadosUsuario['codigo_usuario'];
                         $usuarioGrupoMenuModel->save($permissoes);
                     }
                 }
@@ -249,7 +244,7 @@ class GrupoController extends BaseController
             if (!empty($dadosRequest['relatorio'])) {
                 // Inativa os registros anteriores
                 $usuarioGrupoRelatorioModel->where('codigo_cadastro_grupo', $grupo['codigo_cadastro_grupo'])->set(
-                    ['usuario_inativacao' => $dadosUsuario['codigo_usuario'], 'inativado_em' => "NOW()"]
+                    ['inativado_em' => "NOW()"]
                 )->update();
 
                 foreach (explode(',', $dadosRequest['relatorio']) as $id) {
@@ -286,9 +281,7 @@ class GrupoController extends BaseController
 
         $dadosGrupo = [
             'alterado_em'        => "NOW()",
-            'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
             'inativado_em'       => null,
-            'usuario_inativacao' => null
         ];
 
         try {

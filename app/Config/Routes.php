@@ -104,6 +104,7 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
 
             // Funcionalidades
             $routes->post('store', 'ClienteController::store');
+            $routes->post('storeSimplificado', 'ClienteController::storeSimplificado');
             $routes->post('update/(:hash)', 'ClienteController::update/$1');
             $routes->post('ativar/(:hash)', 'ClienteController::enable/$1');
             $routes->post('desativar/(:hash)', 'ClienteController::disable/$1');
@@ -172,6 +173,7 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->get('converter-pf/(:hash)', 'ProprietarioController::converterPf/$1');
             $routes->get('converter-pj/(:hash)', 'ProprietarioController::converterPj/$1');
             $routes->post('store', 'ProprietarioController::store');
+            $routes->post('storeSimplificado', 'ProprietarioController::storeSimplificado');
             $routes->post('update/(:hash)', 'ProprietarioController::update/$1');
             $routes->post('ativar/(:hash)', 'ProprietarioController::enable/$1');
             $routes->post('desativar/(:hash)', 'ProprietarioController::disable/$1');

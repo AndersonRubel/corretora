@@ -28,9 +28,6 @@ class LogLoginModel extends BaseModel
     protected $allowedFields = [
         'codigo_log_login',
         'uuid_log_login',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
         'criado_em',
         'alterado_em',
         'inativado_em',

@@ -146,19 +146,9 @@
                     "title": "Criado em"
                 },
                 {
-                    "data": "usuario_criacao",
-                    "visible": false,
-                    "title": "Criado por"
-                },
-                {
                     "data": "alterado_em",
                     "visible": false,
                     "title": "Alterado em"
-                },
-                {
-                    "data": "usuario_alteracao",
-                    "visible": false,
-                    "title": "Alterado por"
                 },
                 {
                     "data": "uuid_cadastro_grupo",
@@ -214,29 +204,14 @@
                     "title": "Criado em"
                 },
                 {
-                    "data": "usuario_criacao",
-                    "visible": false,
-                    "title": "Criado por"
-                },
-                {
                     "data": "alterado_em",
                     "visible": false,
                     "title": "Alterado em"
                 },
                 {
-                    "data": "usuario_alteracao",
-                    "visible": false,
-                    "title": "Alterado por"
-                },
-                {
                     "data": "inativado_em",
                     "visible": false,
                     "title": "Inativado em"
-                },
-                {
-                    "data": "usuario_inativacao",
-                    "visible": false,
-                    "title": "Inativado por"
                 },
                 {
                     "data": "uuid_cadastro_grupo",

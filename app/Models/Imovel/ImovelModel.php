@@ -42,6 +42,7 @@ class ImovelModel extends BaseModel
         'banheiro',
         'area_total',
         'area_construida',
+        'vaga',
         'edicula',
         'mobilia',
         'condominio',
@@ -74,6 +75,7 @@ class ImovelModel extends BaseModel
           , {$this->table}.area_construida
           , {$this->table}.edicula
           , {$this->table}.mobilia
+          , {$this->table}.vaga
           , {$this->table}.condominio
           , {$this->table}.publicado
           , {$this->table}.valor

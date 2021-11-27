@@ -28,9 +28,6 @@ class EmpresaUsuarioModel extends BaseModel
     protected $allowedFields = [
         'codigo_empresa_usuario',
         'uuid_empresa_usuario',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
         'criado_em',
         'alterado_em',
         'inativado_em',
