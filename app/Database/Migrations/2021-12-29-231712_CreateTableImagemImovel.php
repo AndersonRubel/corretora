@@ -4,11 +4,11 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateTableReserva extends Migration
+class CreateTableImagemImovel extends Migration
 {
-	protected $table = 'reserva';
-    protected $primaryKey = 'codigo_reserva';
-    protected $uuidColumn = 'uuid_reserva';
+    protected $table = 'imagem_imovel';
+    protected $primaryKey = 'codigo_imagem_imovel';
+    protected $uuidColumn = 'uuid_imagem_imovel';
 
     public function up()
     {
@@ -20,13 +20,13 @@ class CreateTableReserva extends Migration
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'codigo_empresa'      => ['type' => 'BIGINT'],
             'codigo_imovel'       => ['type' => 'BIGINT'],
-            'codigo_cliente'      => ['type' => 'BIGINT'],
-            'data_inicio'         => ['type' => 'TIMESTAMPTZ'],
-            'data_fim'            => ['type' => 'TIMESTAMPTZ'],
-            'descricao'           => ['type' => 'VARCHAR', 'null' => true],
+            'diretorio_imagem'    => ['type' => 'VARCHAR'],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);
+        $this->forge->addForeignKey('codigo_empresa', 'empresa', 'codigo_empresa');
+        $this->forge->addForeignKey('codigo_imovel', 'imovel', 'codigo_imovel');
+
         $this->forge->createTable($this->table);
 
         $this->db->query("ALTER TABLE {$this->table} ALTER COLUMN {$this->uuidColumn} SET DEFAULT uuid_generate_v4()");

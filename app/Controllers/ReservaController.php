@@ -40,7 +40,7 @@ class ReservaController extends BaseController
      */
     public function create()
     {
-        return $this->template('reserva', ['create', 'functions']);
+        return $this->template('reserva', ['create', 'modal', 'functions']);
     }
 
     /**

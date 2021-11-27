@@ -32,7 +32,7 @@ class UsuarioModel extends BaseModel
         'criado_em',
         'alterado_em',
         'inativado_em',
-        'codigo_empresa_padrao',
+        'codigo_empresa',
         'codigo_vendedor',
         'login',
         'senha',

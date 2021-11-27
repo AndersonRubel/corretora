@@ -39,11 +39,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call('CadastroEmpresaSeeder');
         $this->call('CadastroGrupoSeeder');
         $this->call('CadastroMenuSeeder');
         $this->call('UsuarioSeeder');
         $this->call('EmpresaUsuarioSeeder');
-        $this->call('CadastroEmpresaSeeder');
         $this->call('CadastroCategoriaImovelSeeder');
         $this->call('CadastroTipoImovelSeeder');
     }

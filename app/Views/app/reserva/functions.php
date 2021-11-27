@@ -102,21 +102,79 @@ const select2ReservaFunctions = {
 
 const reservaFunctions = {
     init: () => {
-        reservaFunctions.nomefunc();
+        reservaFunctions.listenerCliente();
+
     },
-    nomefunc: () => {},
+    listenerCliente: () => {
+
+        // Ao fechar a Modal limpa os campos
+        $(document).on('hide.bs.modal', '#modalCadastrarCliente', async function() {
+            $("#modalCadastrarCliente input").val('');
+        });
+
+        $(document).on('keyup', "#modalCadastrarCliente [data-mask='cep']", function() {
+
+            const cep = $(this).val();
+            if (cep.length >= 9) {
+                appFunctions.buscarCep(cep).then(
+                    (retorno) => {
+                        if (retorno) {
+                            $("#modalCadastrarCliente input[name='rua']").val(retorno.street);
+                            $("#modalCadastrarCliente input[name='bairro']").val(retorno
+                                .neighborhood);
+                            $("#modalCadastrarCliente input[name='cidade']").val(retorno.city);
+                            $("#modalCadastrarCliente input[name='cidade_completa']").val(
+                                `${retorno.city}/${retorno.state}`);
+                            $("#modalCadastrarCliente input[name='uf']").val(retorno.state);
+                            $("#modalCadastrarCliente input[name='numero']").val('');
+                            $("#modalCadastrarCliente input[name='numero']").focus();
+                        }
+                    }
+                )
+            }
+        });
+
+        // Realiza o salvamento do registro
+        $(document).on('click', "[data-action='salvarClienteSimplificado']", async function() {
+            if (!$("#modalCadastrarCliente form")[0].reportValidity()) return false;
+
+            await appFunctions.backendCall('POST', `cliente/storeSimplificado`, {
+                nome_fantasia: $("#modalCadastrarCliente input[name='nome_fantasia']")
+                    .val(),
+                cpf_cnpj: $("#modalCadastrarCliente input[name='cpf_cnpj']").val(),
+                email: $("#modalCadastrarCliente input[name='email']").val(),
+                data_nascimento: $("#modalCadastrarCliente input[name='data_nascimento']")
+                    .val(),
+                telefone: $("#modalCadastrarCliente input[name='telefone']").val(),
+                celular: $("#modalCadastrarCliente input[name='celular']").val(),
+                cep: $("#modalCadastrarCliente input[name='cep']").val(),
+                rua: $("#modalCadastrarCliente input[name='rua']").val(),
+                numero: $("#modalCadastrarCliente input[name='numero']").val(),
+                bairro: $("#modalCadastrarCliente input[name='bairro']").val(),
+                complemento: $("#modalCadastrarCliente input[name='complemento']").val(),
+                cidade: $("#modalCadastrarCliente input[name='cidade']").val(),
+                uf: $("#modalCadastrarCliente input[name='uf']").val(),
+            }).then(res => {
+                if (res && res.cliente) {
+                    $("[data-select='buscarCliente']").select2('val', res.cliente);
+                    $("#modalCadastrarCliente").modal('hide');
+                }
+            }).catch(err => notificationFunctions.toastSmall(err.textStatus, err.mensagem));
+        });
+
+    },
 };
 
-const dataGridGrupoFunctions = {
+const dataGridReservaFunctions = {
     init: () => {
-        dataGridGrupoFunctions.mapeamentoGrupo();
+        dataGridReservaFunctions.mapeamentoGrupo();
 
         if (METODO == 'index') {
             $('#tableAtivos').DataTable(dataGridGlobalFunctions.getSettings(0));
             $('#tableInativos').DataTable(dataGridGlobalFunctions.getSettings(1));
         }
     },
-    mapeamentoGrupo: () => {
+    mapeamentoReserva: () => {
         // Ativos
         mapeamento[0] = [];
         mapeamento[0][ROUTE] = [];
@@ -227,8 +285,8 @@ const dataGridGrupoFunctions = {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    select2ReservaFunctions.init();
     reservaFunctions.init();
-    dataGridGrupoFunctions.init();
+    select2ReservaFunctions.init();
+    dataGridReservaFunctions.init();
 });
 </script>

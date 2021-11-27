@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-sm-12 mb-2">
                                     <label class="form-label">Empresa Padrão</label>
-                                    <input type="text" class="form-control" name="codigo_empresa_padrao" data-select="buscarEmpresa" readonly value="<?= old('codigo_empresa_padrao', $usuario['empresa_padrao']); ?>">
+                                    <input type="text" class="form-control" name="codigo_empresa" data-select="buscarEmpresa" readonly value="<?= old('codigo_empresa', $usuario['empresa_padrao']); ?>">
                                 </div>
                             </div>
                         </div>

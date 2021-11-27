@@ -131,7 +131,6 @@ class ProprietarioController extends BaseController
 
         $proprietario = [
             'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
-            'usuario_criacao' => $dadosUsuario['codigo_usuario'],
             'tipo_pessoa'     => onlyNumber($dadosRequest['tipo_pessoa']),
             'nome_fantasia'   => $dadosRequest['nome_fantasia'],
             'razao_social'    => $dadosRequest['razao_social'],
@@ -158,6 +157,70 @@ class ProprietarioController extends BaseController
         return redirect()->to(base_url("proprietario"));
     }
 
+    /**
+     * Realiza o Cadastro do Registro
+     * @return \CodeIgniter\HTTP\Response
+     */
+    public function storeSimplificado(): Response
+    {
+        $proprietarioModel = new ProprietarioModel;
+        $dadosRequest = convertEmptyToNull($this->request->getVar());
+        $dadosEmpresa = $this->nativeSession->get("empresa");
+
+        $erros = $this->validarRequisicao($this->request, [
+            'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
+            'cpf_cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
+            'email' => 'permit_empty|valid_email|max_length[255]',
+            'data_nascimento' => 'permit_empty|valid_date',
+            'telefone' => [
+                'rules' => 'permit_empty|checkTelefone',
+                'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
+            ],
+            'celular' => [
+                'rules' => 'permit_empty|checkTelefone',
+                'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
+            ]
+        ]);
+
+        if (!empty($erros)) {
+            return $this->response->setJSON(['mensagem' => formataErros($erros)], 422);
+        }
+        // JSONB de Dados do Endereço
+        $proprietarioEndereco = [
+            'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
+            'rua'         => !empty($dadosRequest['rua'])         ? $dadosRequest['rua']                : '',
+            'numero'      => !empty($dadosRequest['numero'])      ? onlyNumber($dadosRequest['numero']) : '',
+            'bairro'      => !empty($dadosRequest['bairro'])      ? $dadosRequest['bairro']             : '',
+            'complemento' => !empty($dadosRequest['complemento']) ? $dadosRequest['complemento']        : '',
+            'cidade'      => !empty($dadosRequest['cidade'])      ? $dadosRequest['cidade']             : '',
+            'uf'          => !empty($dadosRequest['uf'])          ? $dadosRequest['uf']                 : ''
+        ];
+
+        $proprietario = [
+            'codigo_empresa'  => $dadosEmpresa['codigo_empresa'],
+            'tipo_pessoa'     => strlen($dadosRequest['cpf_cnpj']) == 14 ? 2 : 1,
+            'nome_fantasia'   => $dadosRequest['nome_fantasia'],
+            'razao_social'    => $dadosRequest['nome_fantasia'],
+            'cpf_cnpj'        => onlyNumber($dadosRequest['cpf_cnpj']),
+            'telefone'        => onlyNumber($dadosRequest['telefone']),
+            'celular'         => onlyNumber($dadosRequest['celular']),
+            'email'           => $dadosRequest['email'],
+            'data_nascimento' => $dadosRequest['data_nascimento'],
+            'endereco'        => !empty($proprietarioEndereco) ? json_encode($proprietarioEndereco) : null,
+        ];
+
+        //Inicia as operações de DB
+        $this->db->transStart();
+        try {
+            $proprietarioModel->save($proprietario);
+            $proprietarioId = $proprietarioModel->insertID('proprietario_codigo_proprietario_seq');
+            $this->db->transComplete();
+        } catch (Exception $e) {
+            return $this->response->setJSON(['mensagem' => lang('Errors.banco.validaInsercao')], 422);
+        }
+
+        return $this->response->setJSON(['mensagem' => lang('Success.default.cadastrado', ['Proprietário']), 'proprietario' => $proprietarioId], 200);
+    }
     /**
      * Altera o Registro
      * @param string $uuid UUID do Registro
@@ -218,8 +281,6 @@ class ProprietarioController extends BaseController
         ];
 
         $proprietarioUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
-            'data_alteracao'    => "NOW()",
             'nome_fantasia'     => $dadosRequest['nome_fantasia'],
             'razao_social'      => !empty($dadosRequest['razao_social']) ? $dadosRequest['razao_social'] : $dadosRequest['nome_fantasia'],
             'cpf_cnpj'          => onlyNumber($dadosRequest['cpf_cnpj']),
@@ -261,9 +322,7 @@ class ProprietarioController extends BaseController
 
         $dadosProprietario = [
             'alterado_em'        => "NOW()",
-            'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
             'inativado_em'       => null,
-            'usuario_inativacao' => null
         ];
 
         try {

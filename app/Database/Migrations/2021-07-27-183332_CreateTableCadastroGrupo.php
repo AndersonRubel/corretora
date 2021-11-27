@@ -24,6 +24,7 @@ class CreateTableCadastroGrupo extends Migration
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);
+
         $this->forge->createTable($this->table);
 
         $this->db->query("ALTER TABLE {$this->table} ALTER COLUMN {$this->uuidColumn} SET DEFAULT uuid_generate_v4()");

@@ -36,10 +36,18 @@
                                     <input type="text" class="form-control" name="codigo_imovel"
                                         data-select="buscarImovel" value="<?= old('codigo_imovel'); ?>" required>
                                 </div>
+
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-4">
                                     <label class="form-label">Buscar Cliente</label>
-                                    <input type="text" class="form-control" name="codigo_cliente"
-                                        data-select="buscarCliente" value="<?= old('codigo_cliente'); ?>" required>
+                                    <div class="input-group">
+                                        <span class="input-group-text cursor" id="btnModalCadastrarCliente"
+                                            data-tippy-content="Cadastrar novo Cliente" data-tippy-placement="bottom"
+                                            data-bs-toggle="modal" data-bs-target="#modalCadastrarCliente">
+                                            <i class="fas fa-user-plus"></i>
+                                        </span>
+                                        <input type="text" class="form-control" name="codigo_cliente"
+                                            data-select="buscarCliente" value="<?= old('codigo_cliente'); ?>" required>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12 mb-5">
                                     <label class="form-label">Descrição</label>
@@ -70,6 +78,16 @@
 
             </form>
             <!-- Fim :: Formulário -->
+
+
+
+
+
+
+
+
+
+
 
 
 

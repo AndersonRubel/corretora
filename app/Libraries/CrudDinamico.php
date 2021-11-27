@@ -611,11 +611,6 @@ class CrudDinamico
             $dadosRequest[$key] = $value == '' ? null : $value;
         }
 
-        // Realiza a Validação de Campos da Tabela
-        if ($this->db->fieldExists('usuario_criacao', $table)) {
-            $dadosRequest['usuario_criacao'] = $dadosUsuario['codigo_usuario'];
-        }
-
         if ($this->db->fieldExists('codigo_empresa', $table)) {
             $dadosRequest['codigo_empresa'] = $dadosEmpresa['codigo_empresa'];
         }
@@ -653,11 +648,6 @@ class CrudDinamico
         $dadosRequest = $this->request->getPost();
         foreach ($dadosRequest as $key => $value) {
             $dadosRequest[$key] = $value == '' ? null : $value;
-        }
-
-        // Realiza a Validação de Campos da Tabela
-        if ($this->db->fieldExists('usuario_alteracao', $table)) {
-            $dadosRequest['usuario_alteracao'] = $dadosUsuario['codigo_usuario'];
         }
 
         if ($this->db->fieldExists('alterado_em', $table)) {
@@ -728,10 +718,8 @@ class CrudDinamico
         // Verifica se o registro esta ativo ou inativo
         if (empty($consulta['inativado_em'])) {
             $dadosUpdate['inativado_em'] = 'NOW()';
-            $dadosUpdate['usuario_inativacao'] = $dadosUsuario['codigo_usuario'];
         } else {
             $dadosUpdate['inativado_em'] = null;
-            $dadosUpdate['usuario_inativacao'] = null;
         }
 
         // Atualiza o registro
@@ -793,18 +781,6 @@ class CrudDinamico
 
         if ($this->db->fieldExists('inativado_em', $table)) {
             $consulta['inativado_em'] = null;
-        }
-
-        if ($this->db->fieldExists('usuario_criacao', $table)) {
-            $consulta['usuario_criacao'] = $dadosUsuario['codigo_usuario'];
-        }
-
-        if ($this->db->fieldExists('usuario_alteracao', $table)) {
-            $consulta['usuario_alteracao'] = null;
-        }
-
-        if ($this->db->fieldExists('usuario_inativacao', $table)) {
-            $consulta['usuario_inativacao'] = null;
         }
 
         // Insere o registro

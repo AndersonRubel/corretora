@@ -27,9 +27,6 @@ class RelatorioModel extends BaseModel
 
     protected $allowedFields = [
         'codigo_cadastro_relatorio',
-        'usuario_criacao',
-        'usuario_alteracao',
-        'usuario_inativacao',
         'criado_em',
         'alterado_em',
         'inativao_em',

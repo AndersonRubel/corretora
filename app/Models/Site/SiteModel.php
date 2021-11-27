@@ -35,7 +35,7 @@ class SiteModel extends BaseModel
     public function selectImoveis($uuid = null)
     {
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
-        //   , estacionamento
+
         $this->select("codigo_imovel
                       , uuid_imovel
                       , codigo_referencia
@@ -46,7 +46,7 @@ class SiteModel extends BaseModel
                       , valor
                       , diretorio_imagem
                       , descricao
-                      , COALESCE(estacionamento,0) As estacionamento
+                      , COALESCE(vaga,0) As vaga
                       , (SELECT nome FROM categoria_imovel
                           WHERE categoria_imovel.codigo_categoria_imovel = imovel.codigo_categoria_imovel
                         ) as categoria_imovel

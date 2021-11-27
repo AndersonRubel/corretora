@@ -512,7 +512,7 @@ class CadastroController extends BaseController
         ////////// Configurações das Váriaveis //////////
         $config['nomeCrud']          = 'Categorias de Imóvel';
         $config['table']             = 'categoria_imovel';
-        $config['primaryKey']        = "{$config['table']}.uuid_categoria_imovel";
+        $config['primaryKey']        = "{$config['table']}.codigo_categoria_imovel";
         $config['primaryKeyValue']   = $primaryKeyValue;
         $config['btnAdicionarLabel'] = 'Adicionar';
         $config['paginadorMaximo']   = 50;
@@ -542,7 +542,7 @@ class CadastroController extends BaseController
             [
                 'tab_name' => 'Ativos',
                 'fields'   => [
-                    "{$config['table']}.uuid_categoria_imovel"           => 'Código',
+                    "{$config['table']}.codigo_categoria_imovel"           => 'Código',
                     "{$config['table']}.nome"                            => 'Nome',
                     "{$config['table']}.criado_em"                       => 'Criado em'
                 ],
@@ -554,7 +554,7 @@ class CadastroController extends BaseController
             [
                 'tab_name' => 'Inativos',
                 'fields'   => [
-                    "{$config['table']}.uuid_categoria_imovel"           => 'Código',
+                    "{$config['table']}.codigo_categoria_imovel"           => 'Código',
                     "{$config['table']}.nome"                            => 'Nome',
                     "{$config['table']}.criado_em"                       => 'Criado em'
                 ],

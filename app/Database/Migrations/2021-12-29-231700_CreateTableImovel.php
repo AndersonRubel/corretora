@@ -25,9 +25,9 @@ class CreateTableImovel extends Migration
             'codigo_referencia'        => ['type' => 'VARCHAR', 'null' => true],
             'quarto'                   => ['type' => 'BIGINT', 'null' => true],
             'suite'                    => ['type' => 'BIGINT', 'null' => true],
-            'estacionamento'           => ['type' => 'BIGINT', 'null' => true],
+            'vaga'                     => ['type' => 'BIGINT', 'null' => true],
             'banheiro'                 => ['type' => 'BIGINT', 'null' => true],
-            'area_total'                => ['type' => 'BIGINT', 'null' => true],
+            'area_total'               => ['type' => 'BIGINT', 'null' => true],
             'area_construida'          => ['type' => 'BIGINT', 'null' => true],
             'edicula'                  => ['type' => 'BOOLEAN', 'default' => false],
             'mobilia'                  => ['type' => 'BOOLEAN', 'default' => false],
@@ -41,6 +41,10 @@ class CreateTableImovel extends Migration
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);
+        $this->forge->addForeignKey('codigo_empresa', 'empresa', 'codigo_empresa');
+        $this->forge->addForeignKey('codigo_categoria_imovel', 'categoria_imovel', 'codigo_categoria_imovel');
+        $this->forge->addForeignKey('codigo_tipo_imovel', 'tipo_imovel', 'codigo_tipo_imovel');
+        $this->forge->addForeignKey('codigo_proprietario', 'proprietario', 'codigo_proprietario');
         $this->forge->createTable($this->table);
 
         $this->db->query("ALTER TABLE {$this->table} ALTER COLUMN {$this->uuidColumn} SET DEFAULT uuid_generate_v4()");

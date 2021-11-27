@@ -18,7 +18,7 @@ class CreateTableUsuario extends Migration
             'criado_em'             => ['type' => 'TIMESTAMPTZ', 'default' => 'NOW()'],
             'alterado_em'           => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'          => ['type' => 'TIMESTAMPTZ', 'null' => true],
-            'codigo_empresa_padrao' => ['type' => 'BIGINT', 'null' => true],
+            'codigo_empresa'        => ['type' => 'BIGINT', 'null' => true],
             'email'                 => ['type' => 'VARCHAR', 'unique' => true],
             'senha'                 => ['type' => 'VARCHAR'],
             'nome'                  => ['type' => 'VARCHAR', 'null' => true],
@@ -29,6 +29,7 @@ class CreateTableUsuario extends Migration
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);
+        $this->forge->addForeignKey('codigo_empresa', 'empresa', 'codigo_empresa');
         $this->forge->createTable($this->table);
 
         $this->db->query("ALTER TABLE {$this->table} ALTER COLUMN {$this->uuidColumn} SET DEFAULT uuid_generate_v4()");

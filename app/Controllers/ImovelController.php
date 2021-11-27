@@ -33,7 +33,7 @@ class ImovelController extends BaseController
      */
     public function create()
     {
-        return $this->template('imovel', ['create', 'functions']);
+        return $this->template('imovel', ['create', 'modal', 'functions']);
     }
 
     /**
@@ -124,6 +124,7 @@ class ImovelController extends BaseController
             'area_construida' => 'permit_empty|integer',
             'area_total' => 'permit_empty|integer',
             'edicula' => 'permit_empty|string',
+            'vaga' => 'permit_empty|integer',
             'destaque' => 'permit_empty|string',
             'publicado' => 'permit_empty|string',
             'descricao' => 'permit_empty|string',
@@ -161,6 +162,7 @@ class ImovelController extends BaseController
             'codigo_proprietario'      => $dadosRequest['codigo_proprietario'],
             'quarto'                   => $dadosRequest['quarto'],
             'suite'                    => $dadosRequest['suite'],
+            'vaga'                     => $dadosRequest['vaga'],
             'banheiro'                 => $dadosRequest['banheiro'],
             'area_construida'          => onlyNumber($dadosRequest['area_construida']),
             'area_total'                => onlyNumber($dadosRequest['area_total']),
@@ -171,7 +173,6 @@ class ImovelController extends BaseController
             'valor'                    => onlyNumber($dadosRequest['valor']),
 
         ];
-
 
         //Faz upload de imagem de destaque se existir
         if (!empty($dadosRequest['imagem'])) {
@@ -295,6 +296,7 @@ class ImovelController extends BaseController
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosEmpresa = $this->nativeSession->get("empresa");
 
+
         $erros = $this->validarRequisicao($this->request, [
             'codigo_referencia' => 'permit_empty|string|max_length[255]',
             'codigo_categoria_imovel' => 'required|integer',
@@ -303,6 +305,7 @@ class ImovelController extends BaseController
             'quarto' => 'required|integer',
             'suite' => 'permit_empty|integer',
             'banheiro' => 'required|integer',
+            'vaga' => 'permit_empty|integer',
             'area_construida' => 'permit_empty|integer',
             'area_total' => 'permit_empty|integer',
             'edicula' => 'permit_empty|string',
@@ -345,6 +348,7 @@ class ImovelController extends BaseController
             'codigo_proprietario'      => $dadosRequest['codigo_proprietario'],
             'quarto'                   => $dadosRequest['quarto'],
             'suite'                    => $dadosRequest['suite'],
+            'vaga'                     => $dadosRequest['vaga'],
             'banheiro'                 => $dadosRequest['banheiro'],
             'area_construida'          => onlyNumber($dadosRequest['area_construida']),
             'area_total'                => onlyNumber($dadosRequest['area_total']),
@@ -355,7 +359,6 @@ class ImovelController extends BaseController
             'valor'                    => onlyNumber($dadosRequest['valor']),
 
         ];
-
 
         //Faz upload de imagem de destaque se existir
         if (!empty($dadosRequest['imagem'])) {
