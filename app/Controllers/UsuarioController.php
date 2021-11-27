@@ -120,7 +120,7 @@ class UsuarioController extends BaseController
             'nome' => 'required|string|min_length[3]|max_length[255]',
             'email' => 'required|valid_email|max_length[255]|is_unique[usuario.email]',
             'codigo_cadastro_grupo' => 'required|integer',
-            'codigo_empresa_padrao' => 'permit_empty|integer',
+            'codigo_empresa' => 'permit_empty|integer',
             'celular' => [
                 'rules' => 'permit_empty|checkTelefone',
                 'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
@@ -141,7 +141,7 @@ class UsuarioController extends BaseController
         }
 
         $empresa = [
-            'codigo_empresa_padrao' => !empty($dadosRequest['codigo_empresa_padrao']) ? $dadosRequest['codigo_empresa_padrao'] : $dadosSessaoEmpresa['codigo_empresa'],
+            'codigo_empresa' => !empty($dadosRequest['codigo_empresa']) ? $dadosRequest['codigo_empresa'] : $dadosSessaoEmpresa['codigo_empresa'],
             'nome'                  => $dadosRequest['nome'],
             'email'                 => $dadosRequest['email'],
             'celular'               => onlyNumber($dadosRequest['celular']),
@@ -156,7 +156,7 @@ class UsuarioController extends BaseController
 
             // Cria o vinculo do usuario com a Empresa
             $empresaUsuario = [
-                'codigo_empresa'        => $dadosRequest['codigo_empresa_padrao'],
+                'codigo_empresa'        => $dadosRequest['codigo_empresa'],
                 'codigo_usuario'        => $usuarioId,
                 'codigo_cadastro_grupo' => $dadosRequest['codigo_cadastro_grupo'],
             ];
@@ -193,7 +193,7 @@ class UsuarioController extends BaseController
             'nome' => 'required|string|min_length[3]|max_length[255]',
             'email' => 'required|valid_email|max_length[255]',
             'codigo_cadastro_grupo' => 'required|integer',
-            'codigo_empresa_padrao' => 'permit_empty|integer',
+            'codigo_empresa' => 'permit_empty|integer',
             'celular' => [
                 'rules' => 'permit_empty|checkTelefone',
                 'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
@@ -237,8 +237,7 @@ class UsuarioController extends BaseController
                 'codigo_cadastro_grupo' => $dadosRequest['codigo_cadastro_grupo'],
             ];
 
-            $empresaUsuarioModel->where([
-                'codigo_empresa' => $dadosRequest['codigo_empresa_padrao'],
+            $empresaUsuarioModel->where(['codigo_empresa' => $dadosRequest['codigo_empresa'],
                 'codigo_usuario' => $usuario['codigo_usuario']
             ])->set($empresaUsuario)->update();
 
@@ -358,7 +357,7 @@ class UsuarioController extends BaseController
             $usuarioModel->where($usuarioModel->primaryKey, $dadosUsuario['codigo_usuario'])->set($usuarioUpdate)->update();
 
             // Atualiza a Sessão
-            $colunas = ['codigo_usuario', 'uuid_usuario', 'codigo_empresa_padrao', 'nome', 'email', 'celular', 'diretorio_avatar'];
+            $colunas = ['codigo_usuario', 'uuid_usuario', 'codigo_empresa', 'nome', 'email', 'celular', 'diretorio_avatar'];
             $usuario = $usuarioModel->get(["codigo_usuario" => $dadosUsuario['codigo_usuario']], $colunas, true);
             $dadosSessao['usuario']                  = $usuario;
             $dadosSessao['usuario']['avatar_base64'] = $this->getFileImagem($dadosSessao['usuario']['diretorio_avatar']);

@@ -79,7 +79,7 @@ class LoginController extends BaseController
         $colunas = [
             'codigo_usuario',
             'uuid_usuario',
-            'codigo_empresa_padrao',
+            'codigo_empresa',
             'senha',
             'nome',
             'email',
@@ -113,7 +113,7 @@ class LoginController extends BaseController
         unset($usuario['senha']); // Remove a Senha do array para salvar na sessão
 
         // Busca os dados da Empresa
-        $empresa = $empresaModel->getEmpresaUsuario($usuario['codigo_empresa_padrao']);
+        $empresa = $empresaModel->getEmpresaUsuario($usuario['codigo_empresa']);
         if (empty($empresa)) {
             $this->_logLogin("f", lang("Errors.login.naoPossuiEmpresa"), null, $this->request);
             $this->nativeSession->setFlashData('error', lang("Errors.login.naoPossuiEmpresa"));
