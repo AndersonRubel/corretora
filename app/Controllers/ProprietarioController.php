@@ -281,8 +281,6 @@ class ProprietarioController extends BaseController
         ];
 
         $proprietarioUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
-            'data_alteracao'    => "NOW()",
             'nome_fantasia'     => $dadosRequest['nome_fantasia'],
             'razao_social'      => !empty($dadosRequest['razao_social']) ? $dadosRequest['razao_social'] : $dadosRequest['nome_fantasia'],
             'cpf_cnpj'          => onlyNumber($dadosRequest['cpf_cnpj']),
@@ -324,9 +322,7 @@ class ProprietarioController extends BaseController
 
         $dadosProprietario = [
             'alterado_em'        => "NOW()",
-            'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
             'inativado_em'       => null,
-            'usuario_inativacao' => null
         ];
 
         try {

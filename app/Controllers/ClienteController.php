@@ -280,8 +280,6 @@ class ClienteController extends BaseController
         ];
 
         $clienteUpdate = [
-            'usuario_alteracao' => $dadosUsuario['codigo_usuario'],
-            'data_alteracao'    => "NOW()",
             'nome_fantasia'     => $dadosRequest['nome_fantasia'],
             'razao_social'      => !empty($dadosRequest['razao_social']) ? $dadosRequest['razao_social'] : $dadosRequest['nome_fantasia'],
             'cpf_cnpj'          => onlyNumber($dadosRequest['cpf_cnpj']),
@@ -323,9 +321,7 @@ class ClienteController extends BaseController
 
         $dadosCliente = [
             'alterado_em'        => "NOW()",
-            'usuario_alteracao'  => $dadosUsuario['codigo_usuario'],
             'inativado_em'       => null,
-            'usuario_inativacao' => null
         ];
 
         try {
