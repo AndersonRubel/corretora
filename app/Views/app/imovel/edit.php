@@ -101,7 +101,7 @@
                                             <label class="form-label">Valor</label>
                                             <input type="text" class="form-control" name="valor" data-mask="dinheiro" required value="<?= old('valor', $imovel['valor']); ?>" placeholder="0,00">
                                         </div>
-                                        <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Proprietário</label>
                                             <input type="text" class="form-control" name="codigo_proprietario" data-select="buscarProprietario" data-tippy-content="Selecione o Proprietário do Imóvel" value="<?= old('codigo_proprietario', $imovel['codigo_proprietario']); ?>">
                                         </div>

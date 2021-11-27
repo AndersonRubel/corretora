@@ -85,10 +85,9 @@ class EmpresaController extends BaseController
         $dadosEmpresa = $this->nativeSession->get("empresa");
 
         $erros = $this->validarRequisicao($this->request, [
-            'tipo_pessoa' => 'required|integer|in_list[1,2]',
             'razao_social' => 'permit_empty|string|min_length[3]|max_length[255]',
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
-            'cpf_cnpj' => 'required|string|min_length[11]|max_length[18]',
+            'cnpj' => 'required|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
             'data_nascimento' => 'permit_empty|valid_date',
@@ -129,10 +128,9 @@ class EmpresaController extends BaseController
         ];
 
         $empresa = [
-            'tipo_pessoa'     => onlyNumber($dadosRequest['tipo_pessoa']),
             'nome_fantasia'   => $dadosRequest['nome_fantasia'],
             'razao_social'    => $dadosRequest['razao_social'],
-            'cpf_cnpj'        => onlyNumber($dadosRequest['cpf_cnpj']),
+            'cnpj'        => onlyNumber($dadosRequest['cpf_cnpj']),
             'telefone'        => onlyNumber($dadosRequest['telefone']),
             'celular'         => onlyNumber($dadosRequest['celular']),
             'email'           => $dadosRequest['email'],
@@ -174,7 +172,7 @@ class EmpresaController extends BaseController
         $erros = $this->validarRequisicao($this->request, [
             'razao_social' => 'permit_empty|string|min_length[3]|max_length[255]',
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
-            'cpf_cnpj' => 'required|string|min_length[11]|max_length[18]',
+            'cnpj' => 'required|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
             'data_nascimento' => 'permit_empty|valid_date',

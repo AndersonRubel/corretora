@@ -97,7 +97,7 @@
                                             <label class="form-label">Valor</label>
                                             <input type="text" class="form-control" name="valor" data-mask="dinheiro" required value="<?= old('valor'); ?>" placeholder="0,00">
                                         </div>
-                                        <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Proprietário</label>
                                             <div class="input-group">
                                                 <span class="input-group-text cursor" id="btnModalCadastrarProprietario" data-tippy-content="Cadastrar novo Proprietário" data-tippy-placement="bottom" data-bs-toggle="modal" data-bs-target="#modalCadastrarProprietario">
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-12 mb-2">
                                     <label class="form-label">Rua</label>
-                                    <input type="text" class="form-control" name="rua" readonly required value="<?= old('rua'); ?>">
+                                    <input type="text" class="form-control" name="rua" required value="<?= old('rua'); ?>">
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-12 mb-2">
                                     <label class="form-label">Número</label>
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                     <label class="form-label">Bairro</label>
-                                    <input type="text" class="form-control" name="bairro" readonly required value="<?= old('bairro'); ?>">
+                                    <input type="text" class="form-control" name="bairro" required value="<?= old('bairro'); ?>">
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
                                     <label class="form-label">Complemento</label>
@@ -149,7 +149,7 @@
                                     <label class="form-label">Cidade</label>
                                     <input type="hidden" name="cidade" required value="<?= old('cidade'); ?>">
                                     <input type="hidden" name="uf" required value="<?= old('uf'); ?>">
-                                    <input type="text" class="form-control" name="cidade_completa" readonly required value="<?= old('cidade'); ?>/<?= old('uf'); ?>">
+                                    <input type="text" class="form-control" name="cidade_completa" required value="<?= old('cidade'); ?>/<?= old('uf'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -165,10 +165,12 @@
                     <div class="card-body">
                         <div class="form-group col-12">
                             <div class="row">
-                                <div class="col-6"><label for="publicado">Publicar?</label><select name="publicado" id="publicado" type="text" class="form-control" data-tippy-content="Informe se Deve ser Publicado ou Não">
+                                <div class="col-6"><label for="publicado">Publicar?</label>
+                                    <select name="publicado" id="publicado" type="text" class="form-control" data-tippy-content="Informe se Deve ser Publicado ou Não" value="<?= old('publicado'); ?>">
                                         <option value="t">Sim</option>
                                         <option value="f">Não</option>
-                                    </select></div>
+                                    </select>
+                                </div>
                                 <div class="col-6"><label for="destaque">Destaque?</label><select name="destaque" id="destaque" type="text" class="form-control" data-tippy-content="Informe se Será Exibido como Destaque">
                                         <option value="f">Não</option>
 
