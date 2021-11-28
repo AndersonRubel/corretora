@@ -36,7 +36,7 @@ class EmpresaModel extends BaseModel
         'tipo_pessoa',
         'razao_social',
         'nome_fantasia',
-        'cpf_cnpj',
+        'cnpj',
         'data_nascimento',
         'email',
         'telefone',
@@ -59,7 +59,7 @@ class EmpresaModel extends BaseModel
         $this->select("
             uuid_empresa
           , COALESCE(razao_social, nome_fantasia) AS nome
-          , cpf_cnpj
+          , cnpj
           , email
           , telefone
           , celular
@@ -149,7 +149,7 @@ class EmpresaModel extends BaseModel
           , {$this->table}.uuid_empresa
           , {$this->table}.razao_social
           , {$this->table}.nome_fantasia
-          , {$this->table}.cpf_cnpj
+          , {$this->table}.cnpj
           , eu.codigo_empresa_usuario
           , eu.uuid_empresa_usuario
           , eu.codigo_empresa

@@ -90,7 +90,6 @@ class EmpresaController extends BaseController
             'cnpj' => 'required|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
-            'data_nascimento' => 'permit_empty|valid_date',
             'telefone' => [
                 'rules' => 'permit_empty|checkTelefone',
                 'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
@@ -130,12 +129,11 @@ class EmpresaController extends BaseController
         $empresa = [
             'nome_fantasia'   => $dadosRequest['nome_fantasia'],
             'razao_social'    => $dadosRequest['razao_social'],
-            'cnpj'        => onlyNumber($dadosRequest['cpf_cnpj']),
+            'cnpj'        => onlyNumber($dadosRequest['cnpj']),
             'telefone'        => onlyNumber($dadosRequest['telefone']),
             'celular'         => onlyNumber($dadosRequest['celular']),
             'email'           => $dadosRequest['email'],
             'observacao'      => $dadosRequest['observacao'],
-            'data_nascimento' => $dadosRequest['data_nascimento'],
             'endereco'        => !empty($empresaEndereco) ? json_encode($empresaEndereco) : null,
         ];
         $empresaModel->save($empresa);
@@ -175,7 +173,6 @@ class EmpresaController extends BaseController
             'cnpj' => 'required|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
-            'data_nascimento' => 'permit_empty|valid_date',
             'telefone' => [
                 'rules' => 'permit_empty|checkTelefone',
                 'errors' => ['checkTelefone' => 'Errors.geral.telefoneInvalido'],
@@ -215,12 +212,11 @@ class EmpresaController extends BaseController
         $empresaUpdate = [
             'nome_fantasia'     => $dadosRequest['nome_fantasia'],
             'razao_social'      => !empty($dadosRequest['razao_social']) ? $dadosRequest['razao_social'] : $dadosRequest['nome_fantasia'],
-            'cpf_cnpj'          => onlyNumber($dadosRequest['cpf_cnpj']),
+            'cnpj'          => onlyNumber($dadosRequest['cnpj']),
             'telefone'          => onlyNumber($dadosRequest['telefone']),
             'celular'           => onlyNumber($dadosRequest['celular']),
             'email'             => $dadosRequest['email'],
             'observacao'        => $dadosRequest['observacao'],
-            'data_nascimento'   => $dadosRequest['data_nascimento'],
             'endereco'          => !empty($empresaEndereco) ? json_encode($empresaEndereco) : null,
         ];
 

@@ -1,6 +1,6 @@
 <div class="slide-one-item home-slider owl-carousel">
 
-    <div class="site-blocks-cover overlay" style="background-image: url(assets/site/images/hero_bg_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay" style="background-image: url(<?= base_url("assets/site/images/hero_bg_1.jpg") ?>);" data-aos="fade" data-stellar-background-ratio="0.5">
     </div>
 
 </div>
@@ -9,30 +9,28 @@
 <div class="site-section site-section-sm pb-0">
     <div class="container">
         <div class="row">
-            <form class="form-search col-md-12" style="margin-top: -650px; margin-bottom: 450px;" method="POST" action="<?= base_url('site/buscar'); ?>">
-                <div class=" row align-items-end">
+            <form class="form-search col-md-12" style="margin-top: -650px; margin-bottom: 450px;">
+                <div class="row  align-items-end">
 
                     <div class="col-md-3">
-                        <label for="tipo_imovel">Tipos de Imóvel</label>
+                        <label for="list-types">Tipos de Imóvel</label>
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
-                            <select name="codigo_tipo_imovel" id="codigo_tipo_imovel" class="form-control d-block rounded-0">
-                                <option value>Todos</option>
-                                <?php foreach ($tipoImovel as $value) : ?>
-                                    <option value="<?= $value['codigo_tipo_imovel'] ?>"><?= $value['nome'] ?></option>
-                                <?php endforeach; ?>
+                            <select name="list-types" id="list-types" class="form-control d-block rounded-0">
+                                <option value="">Condo</option>
+                                <option value="">Commercial Building</option>
+                                <option value="">Land Property</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <label for="offer-types">Categorias</label>
+                        <label for="offer-types">Tipos Ofertados</label>
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
-                            <select name="codigo_categoria_imovel" id="codigo_categoria_imovel" class="form-control d-block rounded-0">
-                                <option value>Todas</option>
-                                <?php foreach ($categoriaImovel as $value) : ?>
-                                    <option value="<?= $value['codigo_categoria_imovel'] ?>"><?= $value['nome'] ?></option>
-                                <?php endforeach; ?>
+                            <select name="offer-types" id="offer-types" class="form-control d-block rounded-0">
+                                <option value="">For Sale</option>
+                                <option value="">For Rent</option>
+                                <option value="">For Lease</option>
                             </select>
                         </div>
                     </div>
@@ -40,16 +38,17 @@
                         <label for="select-city">Selecione a Cidade</label>
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
-                            <select name="cidade" id="cidade" class="form-control d-block rounded-0">
-                                <option value>Todas</option>
-                                <?php foreach ($cidades as $value) : ?>
-                                    <option value="<?= $value['cidade'] ?>"><?= $value['cidade'] ?></option>
-                                <?php endforeach; ?>
+                            <select name="select-city" id="select-city" class="form-control d-block rounded-0">
+                                <option value="">New York</option>
+                                <option value="">Brooklyn</option>
+                                <option value="">London</option>
+                                <option value="">Japan</option>
+                                <option value="">Philippines</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <input type="submit" class="btn btn-success text-white btn-block rounded-0" value="Buscar">
+                        <input type="submit" class="btn btn-success text-white btn-block rounded-0" value="Search">
                     </div>
                 </div>
             </form>
@@ -65,18 +64,18 @@
                     </div>
                     <div class="ml-auto d-flex align-items-center">
                         <div>
-                            <a href="#" class="view-list px-3 border-right active">Todos</a>
-                            <a href="#" class="view-list px-3 border-right">Aluguel</a>
-                            <a href="#" class="view-list px-3">Venda</a>
+                            <a href="#" class="view-list px-3 border-right active">All</a>
+                            <a href="#" class="view-list px-3 border-right">Rent</a>
+                            <a href="#" class="view-list px-3">Sale</a>
                         </div>
 
 
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
                             <select class="form-control form-control-sm d-block rounded-0">
-                                <option value="">Ordenar</option>
-                                <option value="">Maior Preço</option>
-                                <option value="">Menor Preço</option>
+                                <option value="">Sort by</option>
+                                <option value="">Price Ascending</option>
+                                <option value="">Price Descending</option>
                             </select>
                         </div>
                     </div>
@@ -150,7 +149,7 @@
     </div>
 </div>
 
-<!-- <div class="site-section">
+<div class="site-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7 text-center">
@@ -338,82 +337,6 @@
 
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     </div>
-</div> -->
+</div>
