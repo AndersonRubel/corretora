@@ -49,7 +49,8 @@ $routes->group('site', function ($routes) {
     $routes->post('buscar', 'SiteController::buscarImoveis');
     $routes->get('buscar', 'SiteController::buscarImoveis');
     $routes->get('detalhes/(:hash)', 'SiteController::detalhes/$1');
-    $routes->get('logout', 'SiteController::logout');
+    $routes->get('contato', 'SiteController::contato');
+    $routes->get('sobre', 'SiteController::sobre');
     $routes->post('email', 'SiteController::loginEmail');
 });
 

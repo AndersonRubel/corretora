@@ -109,19 +109,18 @@ class ImovelModel extends BaseModel
                 break;
         }
 
-        // if (!empty($configDataGrid->filtros['codigo_imovel'])) {
-        //     $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
-        // }
-
-        // if (!empty($configDataGrid->filtros['categoria'])) {
-        //     $categoria = $configDataGrid->filtros['categoria'];
-        //     $this->where("{$categoria} IN (SELECT i.codigo_categoria_imovel
-        //                                      FROM imovel i
-        //                                     WHERE pc.codigo_imovel = {$this->table}.codigo_imovel
-        //                                       AND pc.inativado_em IS NULL
-        //                                 )
-        //         ");
-        // }
+        if (!empty($configDataGrid->filtros['codigo_imovel'])) {
+            $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
+        }
+        if (!empty($configDataGrid->filtros['codigo_tipo_imovel'])) {
+            $this->where("{$this->table}.codigo_tipo_imovel", $configDataGrid->filtros['codigo_tipo_imovel']);
+        }
+        if (!empty($configDataGrid->filtros['codigo_categoria_imovel'])) {
+            $this->where("{$this->table}.codigo_categoria_imovel", $configDataGrid->filtros['codigo_categoria_imovel']);
+        }
+        if (!empty($configDataGrid->filtros['codigo_proprietario'])) {
+            $this->where("{$this->table}.codigo_proprietario", $configDataGrid->filtros['codigo_proprietario']);
+        }
 
         /////// Fim :: Filtros ///////
 
@@ -151,6 +150,7 @@ class ImovelModel extends BaseModel
         $this->select("
             codigo_imovel AS id
           , codigo_referencia AS text
+          , diretorio_imagem
         ", FALSE);
 
         $this->where('imovel.codigo_empresa', $dadosEmpresa['codigo_empresa']);

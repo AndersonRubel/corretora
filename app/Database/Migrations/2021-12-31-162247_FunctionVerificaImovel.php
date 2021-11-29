@@ -18,9 +18,13 @@ class FunctionVerificaImovel extends Migration
                  END IF;
 
                  IF NEW.area_construida IS NOT NULL THEN
-                    IF NEW.area_construida :: integer <= 0 THEN
-                       RAISE EXCEPTION '|A area construida tem que ser maior que 0|';
+
+                    IF NEW.codigo_tipo_imovel :: integer != 3 THEN
+                       IF NEW.area_construida :: integer <= 0 THEN
+                          RAISE EXCEPTION '|A area construida tem que ser maior que 0|';
+                       END IF;
                     END IF;
+
                  END IF;
 
                  IF NEW.valor <= 0 THEN

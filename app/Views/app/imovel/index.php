@@ -34,14 +34,22 @@
                     <div class="app-card-body">
                         <div class="row">
 
-                            <div class=" col-sm-12 col-md-6 col-lg-3" data-filtro="filtro_imovel">
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_imovel">
                                 <label>Imóvel</label>
-                                <input type="text" class="form-control" data-select="buscarimovel" name="codigo_imovel" data-tippy-content="Selecione o imovel" />
+                                <input type="text" class="form-control" data-select="buscarImovel" name="codigo_imovel" data-tippy-content="Selecione o Imóvel" />
+                            </div>
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_tipo_imovel">
+                                <label>Tipo Imóvel</label>
+                                <input type="text" class="form-control" data-select="buscarTipoImovel" name="codigo_tipo_imovel" data-tippy-content="Selecione o Tipo Imóvel" />
+                            </div>
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_categoria_imovel">
+                                <label>Categoria Imóvel</label>
+                                <input type="text" class="form-control" data-select="buscarCategoriaImovel" name="codigo_categoria_imovel" data-tippy-content="Selecione a Categoria  Imóvel" />
                             </div>
 
-                            <div class=" col-sm-12 col-md-6 col-lg-6" data-filtro="filtro_categoria">
-                                <label>Categorias</label>
-                                <input type="text" class="form-control" data-select="buscarCategoria" name="categorias" data-tippy-content="Selecione a Categoria do imovel" />
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_propriteario">
+                                <label>Proprietário</label>
+                                <input type="text" class="form-control" data-select="buscarProprietario" name="categorias" data-tippy-content="Selecione ao cliente" />
                             </div>
 
                             <!-- Inicio :: Botão Filtrar e Limpar -->

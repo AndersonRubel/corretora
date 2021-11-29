@@ -16,5 +16,11 @@ class UsuarioSeeder extends DatabaseSeeder
             'senha'                 => password_hash('corretora', PASSWORD_BCRYPT),
             'codigo_empresa' => 1,
         ]);
+        $this->saveOnce('usuario', [
+            'nome'                  => 'Administrador corretora',
+            'email'                 => 'administrador@corretora.com.br',
+            'senha'                 => password_hash('corretora', PASSWORD_BCRYPT),
+            'codigo_empresa' => 1,
+        ]);
     }
 }

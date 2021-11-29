@@ -1,11 +1,14 @@
-<div class="site-blocks-cover inner-page-cover overlay" data-aos="fade" style="min-height: 0;">
-
-</div>
-<div class="breadcrumb-wrap">
+<div class="breadcrumb-wrap mt-5">
     <div class="container">
-        <a class="btn text-light" style="background-color: #364e68;" href="<?= previous_url(false) ?>">Voltar</a>
+        <a class="btn text-light" style="background-color: #364e68;" href="<?= previous_url(true) ?>">Voltar</a>
 
     </div>
+</div>
+<div class="container mt-5">
+    <h2>
+        <?= $imovel['tipo_imovel'] . " à " . strtolower($imovel['categoria_imovel']) . " - " . $imovel['endereco'] ?>
+    </h2>
+
 </div>
 <div class="site-section site-section-sm">
     <div class="container">
@@ -26,44 +29,58 @@
                         <div class="col-md-6">
                             <strong class="text-success h1 mb-3">R$<?= intToreal($imovel['valor']) ?></strong>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <ul class="property-specs-wrap mb-3 mb-lg-0  float-lg-right">
                                 <li>
                                     <span class="property-specs">Quarto(s)</span>
-                                    <span class="property-specs-number"><?= $imovel['quarto'] ?></span>
+                                    <span class="property-specs-number"></span>
                                 </li>
                                 <li>
                                     <span class="property-specs">Suite(s)</span>
-                                    <span class="property-specs-number"><?= $imovel['suite'] ?></span>
+                                    <span class="property-specs-number"></span>
                                 </li>
                                 <li>
                                     <span class="property-specs">Banheiro(s)</span>
-                                    <span class="property-specs-number"><?= $imovel['banheiro'] ?></span>
+                                    <span class="property-specs-number">></span>
 
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row mb-5">
                         <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                             <span class="d-inline-block text-black mb-0 caption-text">Tipo</span>
                             <strong class="d-block"><?= $imovel['tipo_imovel'] ?></strong>
                         </div>
+                        <?php if ($imovel['tipo_imovel'] != 'Terreno') : ?>
+                            <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                                <span class="d-inline-block text-black mb-0 caption-text">Quarto(s)</span>
+                                <strong class="d-block"><?= $imovel['quarto'] ?></strong>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                                <span class="d-inline-block text-black mb-0 caption-text">Suite(s)</span>
+                                <strong class="d-block"><?= $imovel['suite'] ?></strong>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                                <span class="d-inline-block text-black mb-0 caption-text">Banheiro(s)</span>
+                                <strong class="d-block"><?= $imovel['banheiro'] ?></strong>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                                <span class="d-inline-block text-black mb-0 caption-text">Vagas(s)</span>
+                                <strong class="d-block"><?= $imovel['vaga'] ?></strong>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                                <span class="d-inline-block text-black mb-0 caption-text">Área Construida</span>
+                                <strong class="d-block"><?= $imovel['area_construida'] ?></strong>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                                <span class="d-inline-block text-black mb-0 caption-text">Edícula</span>
+                                <strong class="d-block"><?= $imovel['edicula'] == true ? 'Sim' : 'Não' ?></strong>
+                            </div>
+                        <?php endif; ?>
                         <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                            <span class="d-inline-block text-black mb-0 caption-text">Quarto(s)</span>
-                            <strong class="d-block"><?= $imovel['quarto'] ?></strong>
-                        </div>
-                        <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                            <span class="d-inline-block text-black mb-0 caption-text">Suite(s)</span>
-                            <strong class="d-block"><?= $imovel['suite'] ?></strong>
-                        </div>
-                        <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                            <span class="d-inline-block text-black mb-0 caption-text">Banheiro(s)</span>
-                            <strong class="d-block"><?= $imovel['banheiro'] ?></strong>
-                        </div>
-                        <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
-                            <span class="d-inline-block text-black mb-0 caption-text">Vagas(s)</span>
-                            <strong class="d-block"><?= $imovel['vaga'] ?></strong>
+                            <span class="d-inline-block text-black mb-0 caption-text">Área Total</span>
+                            <strong class="d-block"><?= $imovel['area_total'] ?></strong>
                         </div>
                     </div>
                     <h2 class="h4 text-black">Mais Informações</h2>
@@ -107,8 +124,7 @@
 
                 <div class="bg-white widget border rounded">
                     <h3 class="h4 text-black widget-title mb-3">Contato whats</h3>
-                    <a class="btn btn-success" href="https://web.whatsapp.com/send?phone=554299045104"> 55 42
-                        9904-5104</a>
+                    <a class="btn btn-success" href="https://web.whatsapp.com/send?phone=5542998230013"> 55 42 9 9823-0013</a>
                 </div>
 
             </div>
@@ -150,19 +166,31 @@
                             <span class="property-location d-block mb-3"><span class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
                             <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
                             <ul class="property-specs-wrap mb-3 mb-lg-0">
-                                <li>
-                                    <span class="property-specs">Quarto(s)</span>
-                                    <span class="property-specs-number"><?= $value['quarto'] ?></span>
+                                <?php if ($value['tipo_imovel'] != 'Terreno') : ?>
+                                    <li>
+                                        <span class="property-specs">Quarto(s)</span>
+                                        <span class="property-specs-number"><?= $value['quarto'] ?></span>
 
-                                </li>
-                                <li>
-                                    <span class="property-specs">Suite(s)</span>
-                                    <span class="property-specs-number"><?= $value['suite'] ?></span>
+                                    </li>
+                                    <li>
+                                        <span class="property-specs">Suite(s)</span>
+                                        <span class="property-specs-number"><?= $value['suite'] ?></span>
 
-                                </li>
+                                    </li>
+                                    <li>
+                                        <span class="property-specs">banheiro(s)</span>
+                                        <span class="property-specs-number"><?= $value['banheiro'] ?></span>
+
+                                    </li>
+                                    <li>
+                                        <span class="property-specs">Área Construida</span>
+                                        <span class="property-specs-number"><?= $value['area_construida'] ?> M²</span>
+
+                                    </li>
+                                <?php endif; ?>
                                 <li>
-                                    <span class="property-specs">banheiro(s)</span>
-                                    <span class="property-specs-number"><?= $value['banheiro'] ?></span>
+                                    <span class="property-specs">Área Total</span>
+                                    <span class="property-specs-number"><?= $value['area_total'] ?> M²</span>
 
                                 </li>
                             </ul>

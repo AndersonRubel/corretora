@@ -46,8 +46,8 @@
                                         </li>
                                     </ul>
                                 </li> -->
-                                    <li><a href="<?= base_url('sobre') ?>">Sobre</a></li>
-                                    <li><a href="<?= base_url('contato') ?>">Contato</a></li>
+                                    <li><a href="<?= base_url('site/sobre') ?>">Sobre</a></li>
+                                    <li><a href="<?= base_url('site/contato') ?>">Contato</a></li>
                                 </ul>
                             </nav>
                         </div>

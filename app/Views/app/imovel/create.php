@@ -60,32 +60,39 @@
                                             <input type="text" class="form-control" name="codigo_tipo_imovel" data-select="buscarTipoImovel" data-tippy-content="Selecione o Tipo de Imóvel" required value="<?= old('codigo_tipo_imovel'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                            <label class="form-label" for="condominio">Condomínio?</label>
+                                            <select name="condominio" id="condominio" type="text" class="form-control" data-tippy-content="Informe se é Condomínio" required>
+                                                <option value="f">Não</option>
+                                                <option value="t">Sim</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="quarto">
                                             <label class="form-label">Quarto(s)</label>
                                             <input class="form-control" name="quarto" type="Number" data-tippy-content="Informe Quantos Quartos" required value="<?= old('quarto'); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2 " id="banheiro">
                                             <label class="form-label">Banheiro(s)</label>
                                             <input class="form-control" name="banheiro" type="Number" data-tippy-content="Informe Quantos Banheiros" required value="<?= old('banheiro'); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="suite">
                                             <label class="form-label">Suite(s)</label>
                                             <input class="form-control" name="suite" type="Number" data-tippy-content="Informe Quantas Suites" value="<?= old('suite'); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="vaga">
                                             <label class="form-label">Vagas(s)</label>
                                             <input class="form-control" name="vaga" type="Number" data-tippy-content="Informe Quantas Vagas de Garagem" value="<?= old('vaga'); ?>">
                                         </div>
 
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="vaga">
                                             <label class="form-label">Área Construida</label>
                                             <input class="form-control" name="area_construida" type="Number" data-tippy-content="Informe a Área Construida em M²" value="<?= old('area_construida'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Área Total</label>
-                                            <input class="form-control" name="area_total" type="Number" data-tippy-content="Informe a Área Útil em M²" value="<?= old('area_total'); ?>">
+                                            <input class="form-control" name="area_total" type="Number" required data-tippy-content="Informe a Área Útil em M²" value="<?= old('area_total'); ?>">
                                         </div>
 
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="edicula-campo">
                                             <label class="form-label" for="publicar">Possui Edícula?</label>
                                             <select name="edicula" id="edicula" type="text" class="form-control" data-tippy-content="Informe se Possui Edícula ou Não">
                                                 <option value="f">Não</option>
@@ -149,7 +156,7 @@
                                     <label class="form-label">Cidade</label>
                                     <input type="hidden" name="cidade" required value="<?= old('cidade'); ?>">
                                     <input type="hidden" name="uf" required value="<?= old('uf'); ?>">
-                                    <input type="text" class="form-control" name="cidade_completa" required value="<?= old('cidade'); ?>/<?= old('uf'); ?>">
+                                    <input type="text" class="form-control" name="cidade_completa" readonly required value="<?= old('cidade'); ?>/<?= old('uf'); ?>">
                                 </div>
                             </div>
                         </div>
@@ -173,14 +180,7 @@
                                 </div>
                                 <div class="col-6"><label for="destaque">Destaque?</label><select name="destaque" id="destaque" type="text" class="form-control" data-tippy-content="Informe se Será Exibido como Destaque">
                                         <option value="f">Não</option>
-
-
-
-
-
                                         <option value="t">Sim</option>
-
-
                                     </select></div>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
 
                 <!-- Inicio :: imovel - imagem imovel -->
 
-                <div class="card mt-2">
+                <div class="card mt-2 mb-2">
                     <div class="card-header fw-bold">Imagens do imóvel</div>
                     <div class="card-body">
                         <div class="form-group col-12">
@@ -207,7 +207,7 @@
                 <!-- Fim :: imovel - imagem imovel -->
 
                 <div class="d-flex justify-content-end mt-2">
-                    <button type="submit" class="btn app-btn-primary">Salvar</button>
+                    <button type="submit" class="btn app-btn-primary" style="z-index:1">Salvar</button>
                 </div>
 
             </form>

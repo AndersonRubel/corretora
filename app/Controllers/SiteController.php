@@ -33,7 +33,7 @@ class SiteController extends BaseController
         $dados['tipoImovel'] = $tipoImovelModel->get();
         $dados['categoriaImovel'] = $categoriaImovelModel->get();
 
-        $dados['imovel'] = $siteModel->selectImoveis();
+        $dados['imovel'] = $siteModel->selectImoveisFiltrar(['destque' => 'true']);
         $dados['cidades'] = $siteModel->selectCidades();
         // dd($dados);
 
@@ -90,7 +90,7 @@ class SiteController extends BaseController
 
         $siteModel = new SiteModel;
         $dadosRequest = convertEmptyToNull($this->request->getVar());
-        // dd($dadosRequest);
+
         $dados['imovel'] = $siteModel->selectImoveisFiltrar($dadosRequest);
         foreach ($dados['imovel']['itens'] as $key => $value) {
             $value['imagem_destaque'] = base_url('assets/img/sem_imagem.jpg');
@@ -100,5 +100,21 @@ class SiteController extends BaseController
             $dados['imovel']['itens'][$key] = $value;
         }
         return $this->templateSite('site', ['comprar', 'functions'], $dados);
+    }
+    /**
+     * Exibe a Tela de inicial site
+     * @return html
+     */
+    public function contato()
+    {
+        return $this->templateSite('site', ['contato']);
+    }
+    /**
+     * Exibe a Tela de inicial site
+     * @return html
+     */
+    public function sobre()
+    {
+        return $this->templateSite('site', ['sobre']);
     }
 }

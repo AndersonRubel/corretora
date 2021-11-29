@@ -142,7 +142,7 @@ class EmpresaModel extends BaseModel
      * @param int $codigoEmpresa Código da Empresa
      * @return array
      */
-    public function getEmpresaUsuario(int $codigoEmpresa)
+    public function getEmpresaUsuario(array $usuario)
     {
         $this->select("
             {$this->table}.codigo_empresa
@@ -157,8 +157,8 @@ class EmpresaModel extends BaseModel
           , eu.codigo_cadastro_grupo
         ", FALSE);
 
-        $this->join("empresa_usuario eu", "eu.codigo_empresa = {$this->table}.{$this->primaryKey}");
-        $this->where("{$this->table}.codigo_empresa", $codigoEmpresa);
+        $this->join("empresa_usuario eu", "eu.codigo_usuario = {$usuario['codigo_usuario']}");
+        $this->where("{$this->table}.codigo_empresa", $usuario['codigo_empresa']);
 
         return $this->first();
     }

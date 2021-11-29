@@ -1,9 +1,16 @@
 <script>
+    const condominio = '<?= !empty($imovel['condominio']) ? $imovel['condominio'] : ''; ?>';
+    const publicado = '<?= !empty($imovel['publicado']) ? $imovel['publicado'] : ''; ?>';
+    const edicula = '<?= !empty($imovel['edicula']) ? $imovel['edicula'] : ''; ?>';
+    const destaque = '<?= !empty($imovel['destaque']) ? $imovel['destaque'] : ''; ?>';
+    const codigo_tipo_imovel = '<?= !empty($imovel['codigo_tipo_imovel']) ? $imovel['codigo_tipo_imovel'] : ''; ?>';
+
     const select2ImovelFunctions = {
         init: () => {
             select2ImovelFunctions.buscarProprietario();
             select2ImovelFunctions.buscarCategoriaImovel();
             select2ImovelFunctions.buscarTipoImovel();
+            select2ImovelFunctions.buscarImovel();
         },
         buscarProprietario: (caller) => {
             let elementSelect2 = $("[data-select='buscarProprietario']");
@@ -151,6 +158,53 @@
                 formatSelection: (data) => data.text
             });
         },
+        buscarImovel: (caller) => {
+            let elementSelect2 = $("[data-select='buscarImovel']");
+            let url = `${BASEURL}/imovel/backendCall/selectImovel`;
+            elementSelect2.select2({
+                placeholder: "Selecione...",
+                allowClear: false,
+                multiple: false,
+                quietMillis: 2000,
+                initSelection: function(element, callback) {
+                    $.ajax({
+                        url: url,
+                        dataType: "json",
+                        type: 'POST',
+                        params: {
+                            contentType: "application/json; charset=utf-8",
+                        },
+                        data: {
+                            termo: $(element).val(),
+                            page: 1
+                        },
+                        success: (data) => callback(data.itens[0])
+                    })
+                },
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    type: 'POST',
+                    data: (term, page) => {
+                        return {
+                            termo: term,
+                            page: page,
+                        };
+                    },
+                    results: (data, page) => {
+                        if (page == 1) {
+                            $(elementSelect2).data('count', data.count);
+                        }
+                        return {
+                            results: data.itens,
+                            more: (page * 30) < $(elementSelect2).data('count')
+                        };
+                    }
+                },
+                formatResult: (data) => data.text,
+                formatSelection: (data) => data.text
+            });
+        },
     };
 
     const imovelFunctions = {
@@ -162,7 +216,50 @@
             imovelFunctions.confirmDesativar();
             imovelFunctions.listenerBuscarCepImovel();
             imovelFunctions.listenerProprietario();
+            imovelFunctions.listenerPopulaFiltros();
+            imovelFunctions.listenerTipoImovel();
+            $("[data-select='buscarTipoImovel']").change();
+        },
 
+        listenerTipoImovel: () => {
+            $(document).on('change', "[data-select='buscarTipoImovel']", async function(e) {
+
+                if ($(this).val() == '3' || codigo_tipo_imovel == 3) {
+
+                    // $("[name='quarto']").addClass('d-none');
+
+                    $("[id='quarto']").addClass('d-none').find('input').removeAttr('required');
+                    $("[id='area_construida']").addClass('d-none');
+                    $("[id='suite']").addClass('d-none');
+                    $("[id='banheiro']").addClass('d-none').find('input').removeAttr('required');
+                    $("[id='vaga']").addClass('d-none');
+                    $("[id='edicula_campo']").addClass('d-none');
+
+                    $("[id='quarto']").val('');
+                    $("[id='area_construida']").val('');
+                    $("[id='suite']").val('');
+                    $("[id='banheiro']").val('');
+                    $("[id='vaga']").val('');
+
+
+                } else {
+                    $("[id='quarto']").removeClass('d-none');
+                    $("[id='quarto']").removeAttr('required');
+                    $("[id='area_construida']").removeClass('d-none');
+                    $("[id='suite']").removeClass('d-none');
+                    $("[id='banheiro']").removeClass('d-none');
+                    $("[id='vaga']").removeClass('d-none');
+                    $("[id='edicula']").removeClass('d-none');
+                }
+
+            });
+        },
+        listenerPopulaFiltros: () => {
+
+            $("#selectFormCondominio").val(condominio);
+            $("#selectFormPublicado").val(publicado);
+            $("#selectFormEdicula").val(edicula);
+            $("#selectFormDestaque").val(destaque);
         },
         listenerBuscarCepImovel: () => {
             $(document).on('keyup', "input[name='cep']", function() {
@@ -212,10 +309,7 @@
             //Ativa o Plugin
             const pondImgDestaque = FilePond.create(document.getElementById("imagensImovel"), {
                 labelIdle: `Arraste e solte sua imagem aqui ou <span class="filepond--label-action">escolha</span>`,
-                imagePreviewHeight: 170,
-                imageCropAspectRatio: '1:1',
-                imageResizeTargetWidth: 200,
-                imageResizeTargetHeight: 200,
+                allowImagePreview: 'false',
                 stylePanelLayout: 'compact',
                 allowFileEncode: true,
                 allowReorder: true,
@@ -244,9 +338,10 @@
                 }
 
                 let filtros = [{
-                    codigo_fornecedor: $("input[name='codigo_fornecedor']").val(),
+                    codigo_proprietario: $("input[name='codigo_proprietario']").val(),
                     codigo_imovel: $("input[name='codigo_imovel']").val(),
-                    categorias: $("input[name='categorias']").val(),
+                    codigo_categoria_imovel: $("input[name='codigo_categoria_imovel']").val(),
+                    codigo_tipo_imovel: $("input[name='codigo_tipo_imovel']").val(),
                 }];
 
                 mapeamento[0][ROUTE]['custom_data'] = filtros;
