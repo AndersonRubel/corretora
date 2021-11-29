@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         $this->call('EmpresaUsuarioSeeder');
         $this->call('CadastroCategoriaImovelSeeder');
         $this->call('CadastroTipoImovelSeeder');
+        $this->call('PermissaoSeeder');
     }
 }
 

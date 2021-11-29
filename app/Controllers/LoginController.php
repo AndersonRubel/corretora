@@ -113,7 +113,8 @@ class LoginController extends BaseController
         unset($usuario['senha']); // Remove a Senha do array para salvar na sessão
 
         // Busca os dados da Empresa
-        $empresa = $empresaModel->getEmpresaUsuario($usuario['codigo_empresa']);
+        $empresa = $empresaModel->getEmpresaUsuario($usuario);
+
         if (empty($empresa)) {
             $this->_logLogin("f", lang("Errors.login.naoPossuiEmpresa"), null, $this->request);
             $this->nativeSession->setFlashData('error', lang("Errors.login.naoPossuiEmpresa"));
@@ -125,7 +126,7 @@ class LoginController extends BaseController
 
         // Monta um Array com os dados que ficarão na Sessão
         $dadosSessao['usuario']                   = $usuario;
-        $dadosSessao['usuario']['codigo_imovel'] = !empty($imovel['codigo_produto']) ? $imovel['codigo_produto'] : null;
+        $dadosSessao['usuario']['codigo_imovel'] = !empty($imovel['codigo_imovel']) ? $imovel['codigo_imovel'] : null;
         $dadosSessao['usuario']['avatar_base64']  = $this->getFileImagem($usuario['diretorio_avatar']);
         $dadosSessao['usuario']['data_login']     = date('Y-m-d H:i');
         $dadosSessao['empresa']                   = $empresa;

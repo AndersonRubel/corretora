@@ -46,6 +46,7 @@ class ReservaModel extends BaseModel
      */
     public function getDataGrid(array $dadosDataGrid, string $condicoes = "1=1")
     {
+
         $dadosEmpresa = (new NativeSession(true))->get('empresa');
         $configDataGrid = $this->configDataGrid($dadosDataGrid);
         $condicoes = "{$condicoes} {$configDataGrid->whereSearch}";
@@ -54,6 +55,7 @@ class ReservaModel extends BaseModel
             {$this->table}.uuid_reserva
           , {$this->table}.codigo_reserva
           , imovel.codigo_referencia
+          , (SELECT COALESCE(cliente.razao_social,cliente.nome_fantasia) FROM cliente WHERE cliente.codigo_cliente = reserva.codigo_cliente) AS nome_cliente
           , TO_CHAR({$this->table}.data_inicio, 'DD/MM/YYYY HH24:MI') AS data_inicio
           , TO_CHAR({$this->table}.data_fim, 'DD/MM/YYYY HH24:MI') AS data_fim
           , TO_CHAR({$this->table}.criado_em, 'DD/MM/YYYY HH24:MI') AS criado_em
@@ -65,6 +67,19 @@ class ReservaModel extends BaseModel
         $this->where("{$this->table}.codigo_empresa", $dadosEmpresa['codigo_empresa']);
 
         // Filtra o Tipo de Dados
+
+        if (!empty($configDataGrid->filtros['codigo_imovel'])) {
+            $this->where("{$this->table}.codigo_imovel", $configDataGrid->filtros['codigo_imovel']);
+        }
+        if (!empty($configDataGrid->filtros['codigo_tipo_imovel'])) {
+            $this->where("imovel.codigo_tipo_imovel", $configDataGrid->filtros['codigo_tipo_imovel']);
+        }
+        if (!empty($configDataGrid->filtros['codigo_categoria_imovel'])) {
+            $this->where("imovel.codigo_categoria_imovel", $configDataGrid->filtros['codigo_categoria_imovel']);
+        }
+        if (!empty($configDataGrid->filtros['codigo_cliente'])) {
+            $this->where("{$this->table}.codigo_cliente", $configDataGrid->filtros['codigo_cliente']);
+        }
         switch ($dadosDataGrid['status']) {
             case 0: // Inativos
                 $this->where("{$this->table}.inativado_em IS NOT NULL");
@@ -92,7 +107,36 @@ class ReservaModel extends BaseModel
         return $data;
     }
 
+    /**
+     * Busca o Estoque de um imovel
+     * @param array $dadosDataGrid Dados da tabela do dataGrid
+     * @param string $condicoes Where de condições
+     */
+    public function selectReservaImovel(array $filtros)
+    {
+        $dadosEmpresa = (new NativeSession(true))->get('empresa');
 
+        $this->select("
+            reserva.codigo_reserva
+          , COALESCE( c.razao_social,c.nome_fantasia) AS nome
+          , data_inicio
+          , data_fim
+        ", FALSE);
+
+        $this->join('cliente c', 'c.codigo_cliente = reserva.codigo_cliente');
+
+
+        /////// Inicio :: Filtros ///////
+        $this->where('reserva.codigo_empresa', $dadosEmpresa['codigo_empresa']);
+
+        $this->orderBy(1, 'ASC');
+
+        $this->limit(30);
+
+        $data['itens'] = $this->find();
+        $data['count'] = $this->countAllResults();
+        return $data;
+    }
     /**
      * Busca as reservas para o Select2
      * @param array $filtros Filtros para a Busca

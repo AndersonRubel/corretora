@@ -16,15 +16,15 @@
 
                     <div class="app-utilities col-auto">
 
-                        <!-- Inicio :: Consultar Produto -->
+                        <!-- Inicio :: Consultar Imovel -->
                         <div class="app-utility-item">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalConsultarProduto" data-tippy-content="Consultar Produto">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalConsultarImovel" data-tippy-content="Consultar Imóvel">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-search icon" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                 </svg>
                             </a>
                         </div>
-                        <!-- Fim :: Consultar Produto -->
+                        <!-- Fim :: Consultar Imovel -->
 
                         <!-- Inicio :: Notificações -->
                         <!-- <div class="app-utility-item app-notifications-dropdown dropdown">
@@ -82,38 +82,11 @@
                         <!-- Fim :: Configurações -->
 
                         <!-- Inicio :: Opções APP -->
-                        <div class="app-utility-item app-user-dropdown dropdown">
-                            <a id="app-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-tippy-content="Apps">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-window-sidebar icon" viewBox="0 0 16 16">
-                                    <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
-                                    <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1h12zM1 13V6h4v8H2a1 1 0 0 1-1-1zm5 1V6h9v7a1 1 0 0 1-1 1H6z" />
-                                </svg>
+                        <div class="app-utility-item">
+                            <a href="<?= base_url('site'); ?>" class="text-center">
+                                <i class="fas fa-home"></i>
+                                <span>Ir ao Site</span>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="app-dropdown-toggle">
-                                <div id="menuApps" class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <a href="<?= base_url('aniversario'); ?>" class="text-center">
-                                            <i class="fas fa-gift"></i>
-                                            <span>Aniversários</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <a href="<?= base_url('estatistica'); ?>" class="text-center">
-                                            <i class="fas fa-chart-bar"></i>
-                                            <span>Estatísticas</span>
-                                        </a>
-                                    </div>
-
-                                    <!-- <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <a href="<?= base_url('sms'); ?>" class="text-center">
-                                            <i class="fas fa-comments"></i>
-                                            <span>SMS</span>
-                                        </a>
-                                    </div> -->
-
-                                </div>
-                            </div>
                         </div>
                         <!-- Fim :: Opções APP -->
 

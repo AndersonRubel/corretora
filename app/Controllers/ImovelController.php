@@ -57,16 +57,16 @@ class ImovelController extends BaseController
 
         $dados['imagemImovel'] = $imagemImovelModel->get(['codigo_imovel' => $dados['imovel']['codigo_imovel']], ['uuid_imagem_imovel', 'diretorio_imagem']);
 
-        $imagemProduto = [];
+        $imagemImovel = [];
         if (!empty($dados['imagemImovel'])) {
             foreach ($dados['imagemImovel'] as $key => $value) {
                 $imagem['uuid_imagem_imovel'] = $value['uuid_imagem_imovel'];
                 $imagem['diretorio_imagem'] = $this->getFileImagem($value['diretorio_imagem']);
-                array_push($imagemProduto, $imagem);
+                array_push($imagemImovel, $imagem);
             }
         }
 
-        $dados['imagemImovel'] = $imagemProduto;
+        $dados['imagemImovel'] = $imagemImovel;
 
         $dados['imovel']['imagem_destaque'] = base_url('assets/img/sem_imagem.jpg');
         if (!empty($dados['imovel']['diretorio_imagem'])) {
@@ -114,16 +114,17 @@ class ImovelController extends BaseController
         $dadosEmpresa = $this->nativeSession->get("empresa");
 
         $erros = $this->validarRequisicao($this->request, [
-            'codigo_referencia' => 'permit_empty|string|max_length[255]',
+            'codigo_referencia' => 'required|string|max_length[255]',
             'codigo_categoria_imovel' => 'required|integer',
             'codigo_tipo_imovel' => 'required|integer',
             'codigo_proprietario' => 'permit_empty|integer',
-            'quarto' => 'required|integer',
+            'quarto' => 'permit_empty|integer',
             'suite' => 'permit_empty|integer',
-            'banheiro' => 'required|integer',
+            'banheiro' => 'permit_empty|integer',
             'area_construida' => 'permit_empty|integer',
             'area_total' => 'permit_empty|integer',
             'edicula' => 'permit_empty|string',
+            'condominio' => 'permit_empty|string',
             'vaga' => 'permit_empty|integer',
             'destaque' => 'permit_empty|string',
             'publicado' => 'permit_empty|string',
@@ -165,8 +166,9 @@ class ImovelController extends BaseController
             'vaga'                     => $dadosRequest['vaga'],
             'banheiro'                 => $dadosRequest['banheiro'],
             'area_construida'          => onlyNumber($dadosRequest['area_construida']),
-            'area_total'                => onlyNumber($dadosRequest['area_total']),
+            'area_total'               => onlyNumber($dadosRequest['area_total']),
             'edicula'                  => $dadosRequest['edicula'],
+            'condominio'               => $dadosRequest['condominio'],
             'destaque'                 => $dadosRequest['destaque'],
             'publicado'                => $dadosRequest['publicado'],
             'descricao'                => $dadosRequest['descricao'],
@@ -266,7 +268,7 @@ class ImovelController extends BaseController
             }
 
             $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Produto']));
+            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Imovel']));
         } catch (Exception $e) {
             $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
             return redirect()->back()->withInput();
@@ -298,17 +300,18 @@ class ImovelController extends BaseController
 
 
         $erros = $this->validarRequisicao($this->request, [
-            'codigo_referencia' => 'permit_empty|string|max_length[255]',
+            'codigo_referencia' => 'required|string|max_length[255]',
             'codigo_categoria_imovel' => 'required|integer',
             'codigo_tipo_imovel' => 'required|integer',
             'codigo_proprietario' => 'permit_empty|integer',
-            'quarto' => 'required|integer',
+            'quarto' => 'permit_empty|integer',
             'suite' => 'permit_empty|integer',
-            'banheiro' => 'required|integer',
+            'banheiro' => 'permit_empty|integer',
             'vaga' => 'permit_empty|integer',
             'area_construida' => 'permit_empty|integer',
             'area_total' => 'permit_empty|integer',
             'edicula' => 'permit_empty|string',
+            'condominio' => 'permit_empty|string',
             'destaque' => 'permit_empty|string',
             'publicado' => 'permit_empty|string',
             'descricao' => 'permit_empty|string',
@@ -351,8 +354,9 @@ class ImovelController extends BaseController
             'vaga'                     => $dadosRequest['vaga'],
             'banheiro'                 => $dadosRequest['banheiro'],
             'area_construida'          => onlyNumber($dadosRequest['area_construida']),
-            'area_total'                => onlyNumber($dadosRequest['area_total']),
+            'area_total'               => onlyNumber($dadosRequest['area_total']),
             'edicula'                  => $dadosRequest['edicula'],
+            'condominio'               => $dadosRequest['condominio'],
             'destaque'                 => $dadosRequest['destaque'],
             'publicado'                => $dadosRequest['publicado'],
             'descricao'                => $dadosRequest['descricao'],

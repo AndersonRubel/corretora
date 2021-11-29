@@ -115,7 +115,7 @@ class UsuarioController extends BaseController
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosUsuario = $this->nativeSession->get("usuario");
         $dadosSessaoEmpresa = $this->nativeSession->get("empresa");
-// dd($dadosRequest);
+
         $erros = $this->validarRequisicao($this->request, [
             'nome' => 'required|string|min_length[3]|max_length[255]',
             'email' => 'required|valid_email|max_length[255]|is_unique[usuario.email]',

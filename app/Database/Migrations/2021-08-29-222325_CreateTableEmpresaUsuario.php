@@ -25,6 +25,7 @@ class CreateTableEmpresaUsuario extends Migration
 
         $this->forge->addPrimaryKey($this->primaryKey);
         $this->forge->addForeignKey('codigo_empresa', 'empresa', 'codigo_empresa');
+        $this->forge->addForeignKey('codigo_usuario', 'usuario', 'codigo_usuario');
         $this->forge->createTable($this->table);
 
 

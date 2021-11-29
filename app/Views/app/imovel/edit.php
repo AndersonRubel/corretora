@@ -62,36 +62,43 @@
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Tipo Imóvel</label>
-                                            <input type="text" class="form-control" name="codigo_tipo_imovel" data-select="buscarTipoImovel" data-tippy-content="Selecione o Tipo de Imóvel" required value="<?= old('codigo_tipo_imovel', $imovel['codigo_tipo_imovel']); ?>">
+                                            <input type="text" class="form-control" name="codigo_tipo_imovel" data-select="buscarTipoImovel" readonly data-tippy-content="Selecione o Tipo de Imóvel" required value="<?= old('codigo_tipo_imovel', $imovel['codigo_tipo_imovel']); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                            <label class="form-label" for="condominio">Condomínio?</label>
+                                            <select name="condominio" id="selectFormCondominio" type="text" class="form-control" data-tippy-content="Informe se é Condomínio" required value="<?= old('condominio', $imovel['condominio'] == true ? 't' : 'f'); ?>">
+                                                <option value="f">Não</option>
+                                                <option value="t">Sim</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="quarto">
                                             <label class="form-label">Quarto</label>
                                             <input class="form-control" name="quarto" type="Number" data-tippy-content="Informe Quantos Quartos" required value="<?= old('quarto', $imovel['quarto']); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="banheiro">
                                             <label class="form-label">Banheiro</label>
                                             <input class="form-control" name="banheiro" type="Number" data-tippy-content="Informe Quantos Banheiros" required value="<?= old('banheiro', $imovel['banheiro']); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="suite">
                                             <label class="form-label">Suite</label>
                                             <input class="form-control" name="suite" type="Number" data-tippy-content="Informe Quantas Suites" value="<?= old('suite', $imovel['suite']); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="vaga">
                                             <label class="form-label">Vagas(s)</label>
                                             <input class="form-control" name="vaga" type="Number" data-tippy-content="Informe Quantas Vagas de Garagem" value="<?= old('vaga', $imovel['vaga']); ?>">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="area_construida">
                                             <label class="form-label">Área Construida</label>
                                             <input class="form-control" name="area_construida" type="Number" data-tippy-content="Informe a Área Construida em M²" value="<?= old('area_construida', $imovel['area_construida']); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Área Total</label>
-                                            <input class="form-control" name="area_total" type="Number" data-tippy-content="Informe a Área Útil em M²" value="<?= old('area_total', $imovel['area_total']); ?>">
+                                            <input class="form-control" name="area_total" type="Number" data-tippy-content="Informe a Área Útil em M²" required value="<?= old('area_total', $imovel['area_total']); ?>">
                                         </div>
 
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label" for="publicar">Possui Edícula?</label>
-                                            <select name="edicula" id="edicula" type="text" class="form-control" data-tippy-content="Informe se Possui Edícula ou Não">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="edicula_campo">
+                                            <label class="form-label" for="edicula">Possui Edícula?</label>
+                                            <select name="edicula" id="selectFormEdicula" type="text" class="form-control" data-tippy-content="Informe se Possui Edícula ou Não" <?= old('edicula'); ?>>
                                                 <option value="f">Não</option>
                                                 <option value="t">Sim</option>
                                             </select>
@@ -101,7 +108,7 @@
                                             <label class="form-label">Valor</label>
                                             <input type="text" class="form-control" name="valor" data-mask="dinheiro" required value="<?= old('valor', $imovel['valor']); ?>" placeholder="0,00">
                                         </div>
-                                        <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Proprietário</label>
                                             <input type="text" class="form-control" name="codigo_proprietario" data-select="buscarProprietario" data-tippy-content="Selecione o Proprietário do Imóvel" value="<?= old('codigo_proprietario', $imovel['codigo_proprietario']); ?>">
                                         </div>
@@ -129,7 +136,7 @@
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-12 mb-2">
                                     <label class="form-label">Rua</label>
-                                    <input type="text" class="form-control" name="rua" readonly required value="<?= old('rua', $endereco['rua']); ?>">
+                                    <input type="text" class="form-control" name="rua" required value="<?= old('rua', $endereco['rua']); ?>">
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-12 mb-2">
                                     <label class="form-label">Número</label>
@@ -137,7 +144,7 @@
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                     <label class="form-label">Bairro</label>
-                                    <input type="text" class="form-control" name="bairro" readonly required value="<?= old('bairro', $endereco['bairro']); ?>">
+                                    <input type="text" class="form-control" name="bairro" required value="<?= old('bairro', $endereco['bairro']); ?>">
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
                                     <label class="form-label">Complemento</label>
@@ -161,11 +168,11 @@
                     <div class="card-body">
                         <div class="form-group col-12">
                             <div class="row">
-                                <div class="col-6"><label for="publicado">Publicar?</label><select name="publicado" id="publicado" type="text" class="form-control" data-tippy-content="Informe se Deve ser Publicado ou Não">
+                                <div class="col-6"><label for="publicado">Publicar?</label><select name="publicado" id="selectFormPublicado" type="text" class="form-control" data-tippy-content="Informe se Deve ser Publicado ou Não" <?= old('publicado'); ?>>
                                         <option value="t">Sim</option>
                                         <option value="f">Não</option>
                                     </select></div>
-                                <div class="col-6"><label for="destaque">Destaque ?</label><select name="destaque" id="destaque" type="text" class="form-control" data-tippy-content="Informe se Será Exibido como Destaque">
+                                <div class="col-6"><label for="destaque">Destaque ?</label><select name="destaque" id="selectFormDestaque" type="text" class="form-control" data-tippy-content="Informe se Será Exibido como Destaque" <?= old('destaque'); ?>>
 
                                         <option value="f">Não</option>
                                         <option value="t">Sim</option>

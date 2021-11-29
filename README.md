@@ -34,7 +34,7 @@ extension=bz2,curl,fileinfo,gd,gettext,gmp,intl,imap,ldap,mbstring,exif,mysqli,o
 Após instalar o Postgres, com uma ferramenta de gestão como o pg admin
 Crie uma nova base de dados com o nome "corretora"
 
-## Crie o arquivo .env dentro da pasta raiz com as configuração do seu banco 
+## Crie o arquivo .env dentro da pasta raiz com configuração do seu banco 
 ### Rodando o Projeto
 
 ```bash
@@ -74,4 +74,4 @@ $ php spark serve
 
 ## Licença
 
-MIT © [AndersonRubel](https://github.com/AndersonRubel)
+MIT © [XPROJECT](https://github.com/AndersonRubel)

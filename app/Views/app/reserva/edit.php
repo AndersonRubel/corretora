@@ -33,32 +33,23 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
                                     <label class="form-label">Buscar Imóvel</label>
-                                    <input type="text" class="form-control" name="codigo_imovel"
-                                        data-select="buscarImovel"
-                                        value="<?= old('codigo_imovel', $reserva['codigo_imovel']); ?>" required>
+                                    <input type="text" class="form-control" name="codigo_imovel" data-select="buscarImovel" value="<?= old('codigo_imovel', $reserva['codigo_imovel']); ?>" required>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-4">
                                     <label class="form-label">Buscar Cliente</label>
-                                    <input type="text" class="form-control" name="codigo_cliente"
-                                        data-select="buscarCliente"
-                                        value="<?= old('codigo_cliente', $reserva['codigo_cliente']); ?>" required>
+                                    <input type="text" class="form-control" name="codigo_cliente" data-select="buscarCliente" value="<?= old('codigo_cliente', $reserva['codigo_cliente']); ?>" required>
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12 mb-5">
                                     <label class="form-label">Descrição</label>
-                                    <textarea class="form-control" name="descricao" rows="2"
-                                        data-tippy-content="Informe uma Descrição Para o Imóvel"><?= old('descricao', $reserva['descricao']); ?></textarea>
+                                    <textarea class="form-control" name="descricao" rows="2" data-tippy-content="Informe uma Descrição Para o Imóvel"><?= old('descricao', $reserva['descricao']); ?></textarea>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
                                     <label class="form-label">Data de Início</label>
-                                    <input type="date" class="form-control" name="data_inicio" required
-                                        value="<?= old('data_inicio', date('Y-m-d', strtotime($reserva['data_inicio']))); ?>"
-                                        data-tippy-content="Data de Início da Reserva">
+                                    <input type="date" class="form-control" name="data_inicio" required value="<?= old('data_inicio', date('Y-m-d', strtotime($reserva['data_inicio']))); ?>" data-tippy-content="Data de Início da Reserva">
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
                                     <label class="form-label">Data Fim</label>
-                                    <input type="date" class="form-control" name="data_fim" required
-                                        value="<?= old('data_fim', date('Y-m-d', strtotime($reserva['data_fim']))); ?>"
-                                        data-tippy-content="Data do Fim da Reserva">
+                                    <input type="date" class="form-control" name="data_fim" required value="<?= old('data_fim', date('Y-m-d', strtotime($reserva['data_fim']))); ?>" data-tippy-content="Data do Fim da Reserva">
                                 </div>
 
                                 <hr class="mb-4">

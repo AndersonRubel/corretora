@@ -7,8 +7,9 @@ use CodeIgniter\HTTP\RedirectResponse;
 use Exception;
 
 use App\Models\Site\SiteModel;
-use App\Models\Imovel\EnderecoImovelModel;
 use App\Models\Imovel\ImagemImovelModel;
+use App\Models\Cadastro\CadastroTipoImovelModel;
+use App\Models\Cadastro\CadastroCategoriaImovelModel;
 
 
 class SiteController extends BaseController
@@ -26,9 +27,16 @@ class SiteController extends BaseController
     public function index()
     {
         $siteModel = new SiteModel;
-        $imagemImovelModel = new ImagemImovelModel;
+        $tipoImovelModel = new CadastroTipoImovelModel;
+        $categoriaImovelModel = new CadastroCategoriaImovelModel;
 
-        $dados['imovel'] = $siteModel->selectImoveis();
+        $dados['tipoImovel'] = $tipoImovelModel->get();
+        $dados['categoriaImovel'] = $categoriaImovelModel->get();
+
+        $dados['imovel'] = $siteModel->selectImoveisFiltrar(['destque' => 'true']);
+        $dados['cidades'] = $siteModel->selectCidades();
+        // dd($dados);
+
         foreach ($dados['imovel']['itens'] as $key => $value) {
             $value['imagem_destaque'] = base_url('assets/img/sem_imagem.jpg');
             if (!empty($value['diretorio_imagem'])) {
@@ -72,5 +80,41 @@ class SiteController extends BaseController
         }
         // dd($dados);
         return $this->templateSite('site', ['detalhes'], $dados);
+    }
+    /**
+     * Exibe a Tela de inicial site
+     * @return html
+     */
+    public function buscarImoveis()
+    {
+
+        $siteModel = new SiteModel;
+        $dadosRequest = convertEmptyToNull($this->request->getVar());
+
+        $dados['imovel'] = $siteModel->selectImoveisFiltrar($dadosRequest);
+        foreach ($dados['imovel']['itens'] as $key => $value) {
+            $value['imagem_destaque'] = base_url('assets/img/sem_imagem.jpg');
+            if (!empty($value['diretorio_imagem'])) {
+                $value['imagem_destaque'] = $this->getFileImagem($value['diretorio_imagem']);
+            }
+            $dados['imovel']['itens'][$key] = $value;
+        }
+        return $this->templateSite('site', ['comprar', 'functions'], $dados);
+    }
+    /**
+     * Exibe a Tela de inicial site
+     * @return html
+     */
+    public function contato()
+    {
+        return $this->templateSite('site', ['contato']);
+    }
+    /**
+     * Exibe a Tela de inicial site
+     * @return html
+     */
+    public function sobre()
+    {
+        return $this->templateSite('site', ['sobre']);
     }
 }

@@ -26,8 +26,8 @@ class ImagemImovelModel extends BaseModel
     protected $skipValidation = false;
 
     protected $allowedFields = [
-        'codigo_produto_imagem',
-        'uuid_produto_imagem',
+        'codigo_imovel_imagem',
+        'uuid_imovel_imagem',
         'criado_em',
         'alterado_em',
         'inativado_em',

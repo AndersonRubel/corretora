@@ -1,7 +1,6 @@
 <div class="slide-one-item home-slider owl-carousel">
 
-    <div class="site-blocks-cover overlay" style="background-image: url(assets/site/images/hero_bg_1.jpg);"
-        data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay" style="background-image: url(assets/site/images/hero_bg_1.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
     </div>
 
 </div>
@@ -10,28 +9,30 @@
 <div class="site-section site-section-sm pb-0">
     <div class="container">
         <div class="row">
-            <form class="form-search col-md-12" style="margin-top: -650px; margin-bottom: 450px;">
-                <div class="row  align-items-end">
+            <form class="form-search col-md-12" style="margin-top: -650px; margin-bottom: 450px;" method="POST" action="<?= base_url('site/buscar'); ?>">
+                <div class=" row align-items-end">
 
                     <div class="col-md-3">
-                        <label for="list-types">Tipos de Imóvel</label>
+                        <label for="tipo_imovel">Tipos de Imóvel</label>
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
-                            <select name="list-types" id="list-types" class="form-control d-block rounded-0">
-                                <option value="">Condo</option>
-                                <option value="">Commercial Building</option>
-                                <option value="">Land Property</option>
+                            <select name="codigo_tipo_imovel" id="codigo_tipo_imovel" class="form-control d-block rounded-0">
+                                <option value>Todos</option>
+                                <?php foreach ($tipoImovel as $value) : ?>
+                                    <option value="<?= $value['codigo_tipo_imovel'] ?>"><?= $value['nome'] ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <label for="offer-types">Tipos Ofertados</label>
+                        <label for="offer-types">Categorias</label>
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
-                            <select name="offer-types" id="offer-types" class="form-control d-block rounded-0">
-                                <option value="">For Sale</option>
-                                <option value="">For Rent</option>
-                                <option value="">For Lease</option>
+                            <select name="codigo_categoria_imovel" id="codigo_categoria_imovel" class="form-control d-block rounded-0">
+                                <option value>Todas</option>
+                                <?php foreach ($categoriaImovel as $value) : ?>
+                                    <option value="<?= $value['codigo_categoria_imovel'] ?>"><?= $value['nome'] ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -39,50 +40,19 @@
                         <label for="select-city">Selecione a Cidade</label>
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
-                            <select name="select-city" id="select-city" class="form-control d-block rounded-0">
-                                <option value="">New York</option>
-                                <option value="">Brooklyn</option>
-                                <option value="">London</option>
-                                <option value="">Japan</option>
-                                <option value="">Philippines</option>
+                            <select name="cidade" id="cidade" class="form-control d-block rounded-0">
+                                <option value>Todas</option>
+                                <?php foreach ($cidades as $value) : ?>
+                                    <option value="<?= $value['cidade'] ?>"><?= $value['cidade'] ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <input type="submit" class="btn btn-success text-white btn-block rounded-0" value="Search">
+                        <input type="submit" class="btn btn-success text-white btn-block rounded-0" value="Buscar">
                     </div>
                 </div>
             </form>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="view-options bg-white py-3 px-3 d-md-flex align-items-center">
-                    <div class="mr-auto">
-                        <a href="index.html" class="icon-view view-module active"><span
-                                class="icon-view_module"></span></a>
-                        <a href="view-list.html" class="icon-view view-list"><span class="icon-view_list"></span></a>
-
-                    </div>
-                    <div class="ml-auto d-flex align-items-center">
-                        <div>
-                            <a href="#" class="view-list px-3 border-right active">All</a>
-                            <a href="#" class="view-list px-3 border-right">Rent</a>
-                            <a href="#" class="view-list px-3">Sale</a>
-                        </div>
-
-
-                        <div class="select-wrap">
-                            <span class="icon icon-arrow_drop_down"></span>
-                            <select class="form-control form-control-sm d-block rounded-0">
-                                <option value="">Sort by</option>
-                                <option value="">Price Ascending</option>
-                                <option value="">Price Descending</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -91,70 +61,79 @@
 <div class="site-section site-section-sm bg-light">
     <div class="container">
 
+        <div class="row">
+            <div class="col-12">
+                <div class="site-section-title mb-5">
+                    <h2>Destaques</h2>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row mb-5">
             <?php foreach ($imovel['itens'] as $value) : ?>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="property-entry h-100">
-                    <a href="site/detalhes/<?= $value['uuid_imovel'] ?>" class="property-thumbnail">
-                        <div class="offer-type-wrap">
-                            <span class="offer-type bg-danger"><?= $value['categoria_imovel'] ?></span>
-                        </div>
-                        <div class="offer-type-wrap-2">
-                            <span class="offer-type-2">Ref: <?= $value['codigo_referencia'] ?></span>
-                        </div>
-                        <div class="row ">
-                            <img src="<?= $value['imagem_destaque'] ?>" alt="Image"
-                                style="object-fit:cover; width:400px;height:200px !important">
-                        </div>
-                    </a>
-                    <div class="p-4 property-body">
-                        <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
-                        <h2 class="property-title"><a href="property-details.html"><?= $value['tipo_imovel'] ?></a></h2>
-                        <span class="property-location d-block mb-3"><span
-                                class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
-                        <strong class="property-price text-primary mb-3 d-block text-success"
-                            data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
-                        <ul class="property-specs-wrap mb-3 mb-lg-0">
-                            <li>
-                                <span class="property-specs">Quarto(s)</span>
-                                <span class="property-specs-number"><?= $value['quarto'] ?></span>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="property-entry h-100">
+                        <a href="<?= base_url("site/detalhes/" . $value['uuid_imovel']) ?>" class="property-thumbnail">
+                            <div class="offer-type-wrap">
+                                <span class="offer-type bg-danger"><?= $value['categoria_imovel'] ?></span>
+                            </div>
+                            <div class="offer-type-wrap-2">
+                                <span class=" offer-type-2">Ref: <?= $value['codigo_referencia'] ?></span>
+                            </div>
+                            <div class="row ">
+                                <img src="<?= $value['imagem_destaque'] ?>" alt="Image" style="object-fit:cover; width:400px;height:200px !important">
+                            </div>
+                        </a>
+                        <div class="p-4 property-body">
+                            <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
+                            <h2 class="property-title"><a href="property-details.html"><?= $value['tipo_imovel'] ?></a></h2>
+                            <span class="property-location d-block mb-3"><span class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
+                            <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
+                            <ul class="property-specs-wrap mb-3 mb-lg-0">
+                                <?php if ($value['tipo_imovel'] != 'Terreno') : ?>
+                                    <li>
+                                        <span class="property-specs">Quarto(s)</span>
+                                        <span class="property-specs-number"><?= $value['quarto'] ?></span>
 
-                            </li>
-                            <li>
-                                <span class="property-specs">Suite(s)</span>
-                                <span class="property-specs-number"><?= $value['suite'] ?></span>
+                                    </li>
+                                    <li>
+                                        <span class="property-specs">Suite(s)</span>
+                                        <span class="property-specs-number"><?= $value['suite'] ?></span>
 
-                            </li>
-                            <li>
-                                <span class="property-specs">banheiro(s)</span>
-                                <span class="property-specs-number"><?= $value['banheiro'] ?></span>
+                                    </li>
+                                    <li>
+                                        <span class="property-specs">banheiro(s)</span>
+                                        <span class="property-specs-number"><?= $value['banheiro'] ?></span>
 
-                            </li>
-                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="property-specs">Área Construida</span>
+                                        <span class="property-specs-number"><?= $value['area_construida'] ?> M²</span>
+
+                                    </li>
+                                <?php endif; ?>
+                                <li>
+                                    <span class="property-specs">Área Total</span>
+                                    <span class="property-specs-number"><?= $value['area_total'] ?> M²</span>
+
+                                </li>
+                            </ul>
+
+                        </div>
+
+
+
+
 
                     </div>
                 </div>
-            </div>
             <?php endforeach; ?>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="site-pagination">
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <span>...</span>
-                    <a href="#">10</a>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 
-<div class="site-section">
+<!-- <div class="site-section">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7 text-center">
@@ -420,4 +399,4 @@
 
         </div>
     </div>
-</div>
+</div> -->

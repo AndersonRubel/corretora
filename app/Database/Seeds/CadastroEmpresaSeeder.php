@@ -8,11 +8,10 @@ class CadastroEmpresaSeeder extends DatabaseSeeder
 {
 	public function run()
 	{
-        $this->saveOnce('empresa',[
-            'tipo_pessoa'              => 1,
+        $this->saveOnce('empresa', [
             'razao_social'             => "SM CORRETORA",
             'nome_fantasia'            => "Sueli imóveis",
-            'cpf_cnpj'                 => "09403091908",
+            'cnpj'                     => "09403091908",
             'endereco'                 => json_encode([
                 "uf" => "PR",
                 "cep" => "84010150",

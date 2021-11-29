@@ -12,25 +12,61 @@
                 <div class="page-utilities">
                     <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                         <div class="col-auto">
-                            <a class="btn btn-primary success text-white"
-                                href="<?= base_url("reserva/adicionar"); ?>">Adicionar</a>
+                            <a class="btn btn-primary success text-white" href="<?= base_url("reserva/adicionar"); ?>">Adicionar</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Inicio :: Filtros de imovel -->
+        <div class="card mb-4 mt-4">
+            <div class="card-header fw-bold change-icon" data-bs-toggle="collapse" data-bs-target="#collapseFiltros" aria-expanded="false" aria-controls="collapseFiltros">
+                Filtros
+            </div>
+            <div class="collapse" id="collapseFiltros">
+                <div class="app-card shadow-sm p-4">
+                    <div class="app-card-body">
+                        <div class="row">
 
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_imovel">
+                                <label>Imóvel</label>
+                                <input type="text" class="form-control" data-select="buscarImovel" name="codigo_imovel" data-tippy-content="Selecione o Imóvel" />
+                            </div>
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_tipo_imovel">
+                                <label>Tipo Imóvel</label>
+                                <input type="text" class="form-control" data-select="buscarTipoImovel" name="codigo_tipo_imovel" data-tippy-content="Selecione o Tipo Imóvel" />
+                            </div>
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_categoria_imovel">
+                                <label>Categoria Imóvel</label>
+                                <input type="text" class="form-control" data-select="buscarCategoriaImovel" name="codigo_categoria_imovel" data-tippy-content="Selecione a Categoria  Imóvel" />
+                            </div>
+
+                            <div class=" col-sm-12 col-md-3 col-lg-3" data-filtro="filtro_cliente">
+                                <label>Cliente</label>
+                                <input type="text" class="form-control" data-select="buscarCliente" name="codigo_cliente" data-tippy-content="Selecione o cliente" />
+                            </div>
+
+                            <!-- Inicio :: Botão Filtrar e Limpar -->
+                            <div class="col mt-1 d-flex align-items-end justify-content-end">
+                                <button type="button" class="btn btn-danger text-white mx-1" data-action="btnLimpar">Limpar</button>
+                                <button type="submit" class="btn btn-success text-white" data-action="btnFiltrar">Filtrar</button>
+                            </div>
+                            <!-- Fim :: Botão Filtrar e Limpar -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim :: Filtros de imovel -->
         <hr class="mb-4">
         <!-- Fim :: Titulo e Botões -->
 
         <nav class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-            <a class="flex-sm-fill text-center nav-link active" id="ativos-tab" data-bs-toggle="tab" href="#ativos"
-                role="tab" aria-controls="ativos" aria-selected="true">
+            <a class="flex-sm-fill text-center nav-link active" id="ativos-tab" data-bs-toggle="tab" href="#ativos" role="tab" aria-controls="ativos" aria-selected="true">
                 Ativos
                 <span class="count-tableAtivos">(0)</span>
             </a>
-            <a class="flex-sm-fill text-center nav-link" id="inativos-tab" data-bs-toggle="tab" href="#inativos"
-                role="tab" aria-controls="inativos" aria-selected="false">
+            <a class="flex-sm-fill text-center nav-link" id="inativos-tab" data-bs-toggle="tab" href="#inativos" role="tab" aria-controls="inativos" aria-selected="false">
                 Inativos
                 <span class="count-tableInativos">(0)</span>
             </a>

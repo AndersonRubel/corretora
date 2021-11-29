@@ -36,7 +36,7 @@ class EmpresaModel extends BaseModel
         'tipo_pessoa',
         'razao_social',
         'nome_fantasia',
-        'cpf_cnpj',
+        'cnpj',
         'data_nascimento',
         'email',
         'telefone',
@@ -59,7 +59,7 @@ class EmpresaModel extends BaseModel
         $this->select("
             uuid_empresa
           , COALESCE(razao_social, nome_fantasia) AS nome
-          , cpf_cnpj
+          , cnpj
           , email
           , telefone
           , celular
@@ -142,14 +142,14 @@ class EmpresaModel extends BaseModel
      * @param int $codigoEmpresa Código da Empresa
      * @return array
      */
-    public function getEmpresaUsuario(int $codigoEmpresa)
+    public function getEmpresaUsuario(array $usuario)
     {
         $this->select("
             {$this->table}.codigo_empresa
           , {$this->table}.uuid_empresa
           , {$this->table}.razao_social
           , {$this->table}.nome_fantasia
-          , {$this->table}.cpf_cnpj
+          , {$this->table}.cnpj
           , eu.codigo_empresa_usuario
           , eu.uuid_empresa_usuario
           , eu.codigo_empresa
@@ -157,8 +157,8 @@ class EmpresaModel extends BaseModel
           , eu.codigo_cadastro_grupo
         ", FALSE);
 
-        $this->join("empresa_usuario eu", "eu.codigo_empresa = {$this->table}.{$this->primaryKey}");
-        $this->where("{$this->table}.codigo_empresa", $codigoEmpresa);
+        $this->join("empresa_usuario eu", "eu.codigo_usuario = {$usuario['codigo_usuario']}");
+        $this->where("{$this->table}.codigo_empresa", $usuario['codigo_empresa']);
 
         return $this->first();
     }
