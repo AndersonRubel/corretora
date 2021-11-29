@@ -15,164 +15,169 @@
     //   DECLARAÇÃO DO CRUD DINAMICO    //
     //                                  //
     //////////////////////////////////////
-    <?php if(!empty($configCrudDinamico)){ ?>
-        <?php foreach ($configCrudDinamico as $n => $tab): ?>
+    <?php if (!empty($configCrudDinamico)) { ?>
+        <?php foreach ($configCrudDinamico as $n => $tab) : ?>
             <?php $temp_primary_key                                = explode('.', $primaryKey); ?>
 
-            mapeamento[<?= $n ?>]                                  = []; // cria um array
-            mapeamento[<?= $n ?>]['cadastro']                      = []; // cria um array
-            mapeamento[<?= $n ?>]['cadastro']['pageLength']        = "<?= $paginadorMaximo; ?>"; // itens por página
-            mapeamento[<?= $n ?>]['cadastro']['id_column']         = "<?= end($temp_primary_key); ?>"; // chave primária, para montar id dos botões
-            mapeamento[<?= $n ?>]['cadastro']['btn_montar']        = <?= $tab['options']['enabled'] ? 'true' : 'false' ?>; // montar os botões?
-            mapeamento[<?= $n ?>]['cadastro']['btn_column']        = <?= $tab['options']['enabled'] ? count(array_diff($tab['fields'], [NULL])) : 0 ?>; // localização da coluna de botoes
-            mapeamento[<?= $n ?>]['cadastro']['ajax_nome']         = METODO; // nome da função de paginação
-            mapeamento[<?= $n ?>]['cadastro']['ajax_url']          = `${BASEURL}/cadastro/${mapeamento[<?= $n ?>]['cadastro']['ajax_nome']}`; // nome da função de paginação
-            mapeamento[<?= $n ?>]['cadastro']['pdf_columns']       = [<?php for($i = 0; $i < count(array_diff($tab['fields'], [NULL])); $i++): echo $i + 1 == count(array_diff($tab['fields'], [NULL])) ? $i : $i.', '; endfor; ?>];
-            mapeamento[<?= $n ?>]['cadastro']['disable_order_by']  = [<?= $disable_order_by; ?>];
+            mapeamento[<?= $n ?>] = []; // cria um array
+            mapeamento[<?= $n ?>]['cadastro'] = []; // cria um array
+            mapeamento[<?= $n ?>]['cadastro']['pageLength'] = "<?= $paginadorMaximo; ?>"; // itens por página
+            mapeamento[<?= $n ?>]['cadastro']['id_column'] = "<?= end($temp_primary_key); ?>"; // chave primária, para montar id dos botões
+            mapeamento[<?= $n ?>]['cadastro']['btn_montar'] = <?= $tab['options']['enabled'] ? 'true' : 'false' ?>; // montar os botões?
+            mapeamento[<?= $n ?>]['cadastro']['btn_column'] = <?= $tab['options']['enabled'] ? count(array_diff($tab['fields'], [NULL])) : 0 ?>; // localização da coluna de botoes
+            mapeamento[<?= $n ?>]['cadastro']['ajax_nome'] = METODO; // nome da função de paginação
+            mapeamento[<?= $n ?>]['cadastro']['ajax_url'] = `${BASEURL}/cadastro/${mapeamento[<?= $n ?>]['cadastro']['ajax_nome']}`; // nome da função de paginação
+            mapeamento[<?= $n ?>]['cadastro']['pdf_columns'] = [<?php for ($i = 0; $i < count(array_diff($tab['fields'], [NULL])); $i++) : echo $i + 1 == count(array_diff($tab['fields'], [NULL])) ? $i : $i . ', ';
+                                                                endfor; ?>];
+            mapeamento[<?= $n ?>]['cadastro']['disable_order_by'] = [<?= $disable_order_by; ?>];
 
             <?php
-                $order_by = 0;
-                foreach ($tab['fields'] as $key => $value) {
-                    if ($value == NULL) continue;
+            $order_by = 0;
+            foreach ($tab['fields'] as $key => $value) {
+                if ($value == NULL) continue;
 
-                    $temp_order_by  = explode('.', $tab['order_by']['field']);
-                    $temp_key       = explode('.', $key);
-                    $temp_key       = end($temp_key);
-                    $temp_key       = explode(' ', $temp_key);
+                $temp_order_by  = explode('.', $tab['order_by']['field']);
+                $temp_key       = explode('.', $key);
+                $temp_key       = end($temp_key);
+                $temp_key       = explode(' ', $temp_key);
 
-                    if(end($temp_order_by) == end($temp_key)){
-                        break;
-                    }
-
-                    $order_by++;
+                if (end($temp_order_by) == end($temp_key)) {
+                    break;
                 }
+
+                $order_by++;
+            }
             ?>
 
-            mapeamento[<?= $n ?>]['cadastro']['order_by']          = [{ "coluna" : <?= $order_by; ?>, "metodo" : "<?= $tab['order_by']['method']; ?>" } ];
-            mapeamento[<?= $n ?>]['cadastro']['custom_data']       = [{ config_number: <?= $n ?>, type: 'datatables' }];
+            mapeamento[<?= $n ?>]['cadastro']['order_by'] = [{
+                "coluna": <?= $order_by; ?>,
+                "metodo": "<?= $tab['order_by']['method']; ?>"
+            }];
+            mapeamento[<?= $n ?>]['cadastro']['custom_data'] = [{
+                config_number: <?= $n ?>,
+                type: 'datatables'
+            }];
 
-            mapeamento[<?= $n ?>]['cadastro']['columns']           = <?php
-                $fields = array();
-                foreach ($tab['fields'] as $key => $value) {
-                    if ($value == NULL){
-                        continue;
-                    }
+            mapeamento[<?= $n ?>]['cadastro']['columns'] = <?php
+                                                            $fields = array();
+                                                            foreach ($tab['fields'] as $key => $value) {
+                                                                if ($value == NULL) {
+                                                                    continue;
+                                                                }
 
-                    $temp_key_parenteses        = explode(' ', $key);
-                    $temp_key_parenteses        = end($temp_key_parenteses);
-                    $temp_key_parenteses        = explode('(', $temp_key_parenteses);
-                    $temp_key_parenteses        = end($temp_key_parenteses);
-                    $temp_key_parenteses        = explode('.', $temp_key_parenteses);
-                    $current_field              = new stdClass();
-                    $current_field->data        = str_replace(')', '', str_replace(',', '', end($temp_key_parenteses)));
-                    $current_field->name        = str_replace(')', '', str_replace(',', '', end($temp_key_parenteses)));
-                    $fields[]                   = $current_field;
-                }
+                                                                $temp_key_parenteses        = explode(' ', $key);
+                                                                $temp_key_parenteses        = end($temp_key_parenteses);
+                                                                $temp_key_parenteses        = explode('(', $temp_key_parenteses);
+                                                                $temp_key_parenteses        = end($temp_key_parenteses);
+                                                                $temp_key_parenteses        = explode('.', $temp_key_parenteses);
+                                                                $current_field              = new stdClass();
+                                                                $current_field->data        = str_replace(')', '', str_replace(',', '', end($temp_key_parenteses)));
+                                                                $current_field->name        = str_replace(')', '', str_replace(',', '', end($temp_key_parenteses)));
+                                                                $fields[]                   = $current_field;
+                                                            }
 
-                if ($tab['options']['enabled']) {
-                    $current_field              = new stdClass();
-                    $current_field->data        = end($temp_primary_key);
+                                                            if ($tab['options']['enabled']) {
+                                                                $current_field              = new stdClass();
+                                                                $current_field->data        = end($temp_primary_key);
 
-                    $fields[]                   = $current_field;
-                }
+                                                                $fields[]                   = $current_field;
+                                                            }
 
-                echo json_encode($fields);
-            ?>;
+                                                            echo json_encode($fields);
+                                                            ?>;
 
             mapeamento[<?= $n ?>]['cadastro']['btn'] = <?php
-                $btn                            = array();
+                                                        $btn                            = array();
 
-                if (isset($tab['options']['enabled']) && $tab['options']['enabled']) {
-                    $temp_table                 = explode(' ', $table);
+                                                        if (isset($tab['options']['enabled']) && $tab['options']['enabled']) {
+                                                            $temp_table                 = explode(' ', $table);
 
-                    if (isset($tab['options']['edit']) && $tab['options']['edit']) {
-                        $current_btn            = new stdClass();
-                        $current_btn->funcao    = "editar";
-                        $current_btn->metodo    = 'alterar';
-                        $current_btn->compare   = null;
-                        $btn[]                  = $current_btn;
+                                                            if (isset($tab['options']['edit']) && $tab['options']['edit']) {
+                                                                $current_btn            = new stdClass();
+                                                                $current_btn->funcao    = "editar";
+                                                                $current_btn->metodo    = 'alterar';
+                                                                $current_btn->compare   = null;
+                                                                $btn[]                  = $current_btn;
+                                                            }
 
-                    }
+                                                            if (isset($tab['options']['copiar']) && $tab['options']['copiar']) {
+                                                                $current_btn            = new stdClass();
+                                                                $current_btn->funcao    = "copiarCrud";
+                                                                $current_btn->metodo    = 'copiarRegistro/' . reset($temp_table) . '/' . end($temp_primary_key);
+                                                                $current_btn->compare   = array(
+                                                                    'operator'          => 'OR',
+                                                                    'expressions'       => array(
+                                                                        array(
+                                                                            'column'    => 'reservado',
+                                                                            'type'      => '!=',
+                                                                            'value'     => 't'
+                                                                        )
+                                                                    )
+                                                                );
 
-                    if (isset($tab['options']['copiar']) && $tab['options']['copiar']) {
-                        $current_btn            = new stdClass();
-                        $current_btn->funcao    = "copiarCrud";
-                        $current_btn->metodo    = 'copiarRegistro/' . reset($temp_table) . '/' . end($temp_primary_key);
-                        $current_btn->compare   = array(
-                            'operator'          => 'OR',
-                            'expressions'       => array(
-                                array(
-                                    'column'    => 'reservado',
-                                    'type'      => '!=',
-                                    'value'     => 't'
-                                )
-                            )
-                        );
+                                                                $btn[]                  = $current_btn;
+                                                            }
 
-                        $btn[]                  = $current_btn;
-                    }
+                                                            if (isset($tab['options']['delete']) && $tab['options']['delete']) {
+                                                                $current_btn            = new stdClass();
+                                                                $current_btn->funcao    = "excluirCrud";
+                                                                $current_btn->metodo    = 'delete/' . reset($temp_table) . '/' . end($temp_primary_key);
+                                                                $current_btn->compare   = array(
+                                                                    'operator'          => 'OR',
+                                                                    'expressions'       => array(
+                                                                        array(
+                                                                            'column'    => 'reservado',
+                                                                            'type'      => '!=',
+                                                                            'value'     => 't'
+                                                                        )
+                                                                    )
+                                                                );
 
-                    if (isset($tab['options']['delete']) && $tab['options']['delete']) {
-                        $current_btn            = new stdClass();
-                        $current_btn->funcao    = "excluirCrud";
-                        $current_btn->metodo    = 'delete/' . reset($temp_table) . '/' . end($temp_primary_key);
-                        $current_btn->compare   = array(
-                            'operator'          => 'OR',
-                            'expressions'       => array(
-                                array(
-                                    'column'    => 'reservado',
-                                    'type'      => '!=',
-                                    'value'     => 't'
-                                )
-                            )
-                        );
+                                                                $btn[]                  = $current_btn;
+                                                            }
 
-                        $btn[]                  = $current_btn;
+                                                            if (isset($tab['options']['ativar']) && $tab['options']['ativar']) {
+                                                                $current_btn            = new stdClass();
+                                                                $current_btn->funcao    = "ativarCrud";
+                                                                $current_btn->metodo    = 'toggle-status/' . reset($temp_table) . '/' . end($temp_primary_key);
+                                                                $current_btn->compare   = array(
+                                                                    'operator'          => 'OR',
+                                                                    'expressions'       => array(
+                                                                        array(
+                                                                            'column'    => 'reservado',
+                                                                            'type'      => '!=',
+                                                                            'value'     => 't'
+                                                                        )
+                                                                    )
+                                                                );
 
-                    }
+                                                                $btn[]                  = $current_btn;
+                                                            }
 
-                    if (isset($tab['options']['ativar']) && $tab['options']['ativar']) {
-                        $current_btn            = new stdClass();
-                        $current_btn->funcao    = "ativarCrud";
-                        $current_btn->metodo    = 'toggle-status/' . reset($temp_table) . '/' . end($temp_primary_key);
-                        $current_btn->compare   = array(
-                            'operator'          => 'OR',
-                            'expressions'       => array(
-                                array(
-                                    'column'    => 'reservado',
-                                    'type'      => '!=',
-                                    'value'     => 't'
-                                )
-                            )
-                        );
+                                                            if (isset($tab['options']['desativar']) && $tab['options']['desativar']) {
+                                                                $current_btn            = new stdClass();
+                                                                $current_btn->funcao    = "desativarCrud";
+                                                                $current_btn->metodo    = 'toggle-status/' . reset($temp_table) . '/' . end($temp_primary_key);
+                                                                $current_btn->compare   = array(
+                                                                    'operator'          => 'OR',
+                                                                    'expressions'       => array(
+                                                                        array(
+                                                                            'column'    => 'reservado',
+                                                                            'type'      => '!=',
+                                                                            'value'     => 't'
+                                                                        )
+                                                                    )
+                                                                );
 
-                        $btn[]                  = $current_btn;
-                    }
+                                                                $btn[]                  = $current_btn;
+                                                            }
+                                                        }
 
-                    if (isset($tab['options']['desativar']) && $tab['options']['desativar']) {
-                        $current_btn            = new stdClass();
-                        $current_btn->funcao    = "desativarCrud";
-                        $current_btn->metodo    = 'toggle-status/' . reset($temp_table) . '/' . end($temp_primary_key);
-                        $current_btn->compare   = array(
-                            'operator'          => 'OR',
-                            'expressions'       => array(
-                                array(
-                                    'column'    => 'reservado',
-                                    'type'      => '!=',
-                                    'value'     => 't'
-                                )
-                            )
-                        );
+                                                        echo json_encode($btn);
+                                                        ?>;
 
-                        $btn[]                  = $current_btn;
-                    }
-                }
-
-                echo json_encode($btn);
-            ?>;
-
-            mapeamento[<?= $n ?>]['cadastro']['multiple_select']   = false;
-            mapeamento[<?= $n ?>]['cadastro']['toolbar_buttons']   = [];
+            mapeamento[<?= $n ?>]['cadastro']['multiple_select'] = false;
+            mapeamento[<?= $n ?>]['cadastro']['toolbar_buttons'] = [];
         <?php endforeach; ?>
     <?php } ?>
 
@@ -280,8 +285,8 @@
                 "clienteAdicionarSaldo": () => `<i class="fas fa-plus mx-1 cursor" data-id="${id}" data-status="${method}" data-action="adicionarSaldo" data-tippy-content="Adicionar Saldo"></i>`,
                 "historicoVisualizar": () => `<i class="fas fa-search mx-1 cursor" data-id="${id}" data-status="${method}" data-action="historicoVisualizar" data-tippy-content="Visualizar"></i>`,
                 "historicoVisualizarItem": () => `<i class="fas fa-eye mx-1 cursor" data-id="${id}" data-status="${method}" data-action="historicoVisualizarItem" data-tippy-content="Visualizar Histórico Total"></i>`,
-                "produtoAlterarPreco": () => `<i class="fas fa-dollar-sign mx-1 cursor" data-id="${id}" data-status="${method}" data-action="produtoAlterarPreco" data-tippy-content="Alterar Preço do Produto"></i>`,
-                "produtoVisualizarHistorico": () => `<a href="${BASEURL}/estoque/historico/?produto=${id}"><i class="fas fa-search mx-1 cursor text-warning" data-tippy-content="Visualizar Histórico"></i></a>`,
+                "imovelAlterarPreco": () => `<i class="fas fa-dollar-sign mx-1 cursor" data-id="${id}" data-status="${method}" data-action="imovelAlterarPreco" data-tippy-content="Alterar Preço do Imovel"></i>`,
+                "imovelVisualizarHistorico": () => `<a href="${BASEURL}/estoque/historico/?imovel=${id}"><i class="fas fa-search mx-1 cursor text-warning" data-tippy-content="Visualizar Histórico"></i></a>`,
             }
 
             return buttons.hasOwnProperty(nome) ? buttons[nome]() : '';
@@ -308,21 +313,21 @@
              */
 
             // Configurações Padrão do Mapeamento (Normalização do Array)
-            mapeamento[position][nameRoute]['id_column']       = mapeamento[position][nameRoute]['id_column'] || "uuid";
-            mapeamento[position][nameRoute]['ajax_nome']       = mapeamento[position][nameRoute]['ajax_nome'] || "getDataGrid";
-            mapeamento[position][nameRoute]['ajax_url']        = mapeamento[position][nameRoute]['ajax_url'] || `${BASEURL}/${ROUTE}/${mapeamento[position][nameRoute]['ajax_nome']}`;
-            mapeamento[position][nameRoute]['custom_data']     = mapeamento[position][nameRoute]['custom_data'] || [];
-            mapeamento[position][nameRoute]['order_by']        = mapeamento[position][nameRoute]['order_by'] || [{
+            mapeamento[position][nameRoute]['id_column'] = mapeamento[position][nameRoute]['id_column'] || "uuid";
+            mapeamento[position][nameRoute]['ajax_nome'] = mapeamento[position][nameRoute]['ajax_nome'] || "getDataGrid";
+            mapeamento[position][nameRoute]['ajax_url'] = mapeamento[position][nameRoute]['ajax_url'] || `${BASEURL}/${ROUTE}/${mapeamento[position][nameRoute]['ajax_nome']}`;
+            mapeamento[position][nameRoute]['custom_data'] = mapeamento[position][nameRoute]['custom_data'] || [];
+            mapeamento[position][nameRoute]['order_by'] = mapeamento[position][nameRoute]['order_by'] || [{
                 "coluna": 1,
                 "metodo": "ASC"
             }];
-            mapeamento[position][nameRoute]['pageLength']      = mapeamento[position][nameRoute]['pageLength'] || 25;
+            mapeamento[position][nameRoute]['pageLength'] = mapeamento[position][nameRoute]['pageLength'] || 25;
             mapeamento[position][nameRoute]['multiple_select'] = mapeamento[position][nameRoute]['multiple_select'] || false;
             mapeamento[position][nameRoute]['toolbar_buttons'] = mapeamento[position][nameRoute]['toolbar_buttons'] || [];
-            mapeamento[position][nameRoute]['btn_montar']      = mapeamento[position][nameRoute]['btn_montar'] || false;
-            mapeamento[position][nameRoute]['footer_montar']   = mapeamento[position][nameRoute]['footer_montar'] || true;
-            mapeamento[position][nameRoute]['btn_column']      = mapeamento[position][nameRoute]['columns'].length - 1;
-            mapeamento[position][nameRoute]['pdf_columns']     = dataGridGlobalFunctions.getArrayKeys(mapeamento[position][nameRoute]['columns'].length - 1);
+            mapeamento[position][nameRoute]['btn_montar'] = mapeamento[position][nameRoute]['btn_montar'] || false;
+            mapeamento[position][nameRoute]['footer_montar'] = mapeamento[position][nameRoute]['footer_montar'] || true;
+            mapeamento[position][nameRoute]['btn_column'] = mapeamento[position][nameRoute]['columns'].length - 1;
+            mapeamento[position][nameRoute]['pdf_columns'] = dataGridGlobalFunctions.getArrayKeys(mapeamento[position][nameRoute]['columns'].length - 1);
 
             let mapeamentoObj = mapeamento[position][nameRoute];
             let settings = {

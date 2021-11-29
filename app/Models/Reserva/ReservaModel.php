@@ -108,7 +108,7 @@ class ReservaModel extends BaseModel
     }
 
     /**
-     * Busca o Estoque de um produto
+     * Busca o Estoque de um imovel
      * @param array $dadosDataGrid Dados da tabela do dataGrid
      * @param string $condicoes Where de condições
      */

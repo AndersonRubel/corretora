@@ -55,12 +55,12 @@
     const templateFunctions = {
         init: () => {
             // templateFunctions.buscarCep();
-            templateFunctions.listenerModalConsultaProduto();
+            templateFunctions.listenerModalConsultaImovel();
 
             // Registra o Plugin de Upload de Imagens
             $.fn.filepond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode);
         },
-        listenerModalConsultaProduto: () => {
+        listenerModalConsultaImovel: () => {
 
             // Ao fechar a Modal, limpa os campos e a tabela
             $(document).on('hide.bs.modal', '#modalConsultarImovel', function(e) {
@@ -73,7 +73,7 @@
 
             // Efetua a Busca do Imovel
             $(document).on('change', "[data-select='buscarImovel']", async () => {
-                let codigoProduto = $("[data-select='buscarImovel']").val();
+                let codigoImovel = $("[data-select='buscarImovel']").val();
                 $('#modalConsultarImovel #tableConsultaImovel tbody').html('');
 
                 setTimeout(async () => {
@@ -87,11 +87,11 @@
                     }
 
                 }, 1000)
-                // Busca o produto nos estoques disponíveis
+                // Busca o imovel nos estoques disponíveis
                 let quantidadeTotalEstoques = 0;
-                if (codigoProduto) {
+                if (codigoImovel) {
                     await appFunctions.backendCall('POST', `reserva/backendCall/selectReservaImovel`, {
-                        termo: codigoProduto,
+                        termo: codigoImovel,
                         page: 1
                     }).then(res => {
                         $('#modalConsultarImovel #tableConsultaImovel tbody').html('');

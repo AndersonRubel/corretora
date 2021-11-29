@@ -16,7 +16,7 @@
 
                     <div class="app-utilities col-auto">
 
-                        <!-- Inicio :: Consultar Produto -->
+                        <!-- Inicio :: Consultar Imovel -->
                         <div class="app-utility-item">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalConsultarImovel" data-tippy-content="Consultar Imóvel">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-search icon" viewBox="0 0 16 16">
@@ -24,7 +24,7 @@
                                 </svg>
                             </a>
                         </div>
-                        <!-- Fim :: Consultar Produto -->
+                        <!-- Fim :: Consultar Imovel -->
 
                         <!-- Inicio :: Notificações -->
                         <!-- <div class="app-utility-item app-notifications-dropdown dropdown">

@@ -57,16 +57,16 @@ class ImovelController extends BaseController
 
         $dados['imagemImovel'] = $imagemImovelModel->get(['codigo_imovel' => $dados['imovel']['codigo_imovel']], ['uuid_imagem_imovel', 'diretorio_imagem']);
 
-        $imagemProduto = [];
+        $imagemImovel = [];
         if (!empty($dados['imagemImovel'])) {
             foreach ($dados['imagemImovel'] as $key => $value) {
                 $imagem['uuid_imagem_imovel'] = $value['uuid_imagem_imovel'];
                 $imagem['diretorio_imagem'] = $this->getFileImagem($value['diretorio_imagem']);
-                array_push($imagemProduto, $imagem);
+                array_push($imagemImovel, $imagem);
             }
         }
 
-        $dados['imagemImovel'] = $imagemProduto;
+        $dados['imagemImovel'] = $imagemImovel;
 
         $dados['imovel']['imagem_destaque'] = base_url('assets/img/sem_imagem.jpg');
         if (!empty($dados['imovel']['diretorio_imagem'])) {
@@ -268,7 +268,7 @@ class ImovelController extends BaseController
             }
 
             $this->db->transComplete();
-            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Produto']));
+            $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Imovel']));
         } catch (Exception $e) {
             $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
             return redirect()->back()->withInput();

@@ -44,7 +44,7 @@
                                         <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.54);font-size:11px;line-height:18px;padding-top:12px;text-align:center">
                                             <div>Para sua segurança, não encaminhe este e-mail para ninguém.</div>
                                             <a style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;color:rgba(0,0,0,0.54);font-size:11px;line-height:18px;padding-top:12px;text-align:center">
-                                                © <?= date("Y"); ?> Anderson Rubel
+                                                © <?= date("Y"); ?> XPROJECT
                                             </a>
                                         </div>
                                     </div>

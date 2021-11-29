@@ -19,11 +19,11 @@ return [
         'diaPagamentoInvalido' => 'O dia de Pagamento informado não é válido',
     ],
     'estoque' => [
-        'estoqueQuantidadeInvalida' => 'Estoque atual insuficiente para o produto.',
+        'estoqueQuantidadeInvalida' => 'Estoque atual insuficiente para o imovel.',
         'transferencia' => 'Não foi possível realizar a transferência.',
-        'transferenciaSemProdutos' => 'Não foi informado produtos na transferência.',
+        'transferenciaSemImovels' => 'Não foi informado imovels na transferência.',
         'devolucao' => 'Não foi possível realizar a devolução.',
-        'devolucaoSemProdutos' => 'Não foi informado produtos na devolucao.',
+        'devolucaoSemImovels' => 'Não foi informado imovels na devolucao.',
     ],
     'fluxo' => [
         'semValorAbater' => 'O Cliente não possui valores em aberto.',
@@ -68,9 +68,9 @@ return [
     'pdv' => [
         'carrinhoVazio' => 'O carrinho está vazio.',
         'naoRealizada' => 'Não foi possível realizar a venda.',
-        'estoqueInsuficiente' => 'Estoque atual insuficiente para o produto {0}.',
+        'estoqueInsuficiente' => 'Estoque atual insuficiente para o imovel {0}.',
     ],
-    'produto' => [
+    'imovel' => [
         'imagemInvalida' => 'A imagem é inválida.',
         'codigoEmUso' => 'O Código Interno/Barras informado já está em uso.',
         'codigoNaogerado' => 'Não foi possível gerar um código.',
@@ -78,7 +78,7 @@ return [
     'venda' => [
         'estorno' => 'Não foi possível estornar a venda.',
         'vendedor' => 'Esta venda não é deste vendedor.',
-        'produto' => 'Não foram encontrados produtos na venda.',
+        'imovel' => 'Não foram encontrados imovels na venda.',
         'vendaFaturamento' => 'Esta venda não pode ser estornada pois está dentro de um faturamento.',
     ]
 ];

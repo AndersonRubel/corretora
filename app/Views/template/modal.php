@@ -1,4 +1,4 @@
-<!-- Inicio :: Modal Consultar Produto -->
+<!-- Inicio :: Modal Consultar Imovel -->
 <div class="modal fade" id="modalConsultarImovel" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -42,4 +42,4 @@
         </div>
     </div>
 </div>
-<!-- Fim :: Modal Consultar Produto -->
+<!-- Fim :: Modal Consultar Imovel -->
