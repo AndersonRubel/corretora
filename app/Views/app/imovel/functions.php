@@ -218,6 +218,7 @@
             imovelFunctions.listenerProprietario();
             imovelFunctions.listenerPopulaFiltros();
             imovelFunctions.listenerTipoImovel();
+            imovelFunctions.listenerValidaCampos();
             $("[data-select='buscarTipoImovel']").change();
         },
 
@@ -410,6 +411,14 @@
 
                 $("#imagemEdicao").removeClass('d-none');
                 $("[data-action='cancelarAlterarImagemDestaque']").addClass('d-none');
+            });
+        },
+        listenerValidaCampos: () => {
+            $(document).on('focusout', "input[name='suite']", function(e) {
+              if($(this).val() >= $("input[name='quarto']").val()){
+                notificationFunctions.toastSmall('error', 'O campo suites deve ser menor que o numero de quartos')
+                $(this).focus()
+              }
             });
         },
         listenerProprietario: () => {
