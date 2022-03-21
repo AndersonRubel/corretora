@@ -64,6 +64,7 @@
     <div class="container">
 
         <div class="row mb-5">
+            
             <?php foreach ($imovel['itens'] as $value) : ?>
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="property-entry h-100">
