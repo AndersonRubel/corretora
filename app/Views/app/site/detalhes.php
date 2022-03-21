@@ -128,7 +128,11 @@
                 </div>
 
             </div>
-
+            <div class="col-md-12 col-lg-12 mt-3 col-sm-12">
+                <div class="border-map">
+                    <?= $imovel['mapa'] ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -207,3 +211,14 @@
         </div>
     </div>
 </div>
+
+<style>
+    iframe {
+        height: 300px !important;
+        width: 100% !important;
+    }
+
+    .border-map {
+        border: 1px solid #dee2e6 !important;
+    }
+</style>

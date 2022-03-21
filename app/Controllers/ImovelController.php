@@ -73,7 +73,7 @@ class ImovelController extends BaseController
             $dados['imovel']['imagem_destaque'] = $this->getFileImagem($dados['imovel']['diretorio_imagem']);
         }
         // dd($dados);
-        return $this->template('imovel', ['edit', 'functions'], $dados);
+        return $this->template('imovel', ['edit', 'functions', 'modal'], $dados);
     }
 
     /**
@@ -112,7 +112,7 @@ class ImovelController extends BaseController
         $enderecoImovelModel = new EnderecoImovelModel;
         $dadosRequest = convertEmptyToNull($this->request->getVar());
         $dadosEmpresa = $this->nativeSession->get("empresa");
-
+        // dd($dadosRequest);
         $erros = $this->validarRequisicao($this->request, [
             'codigo_referencia' => 'required|string|max_length[255]',
             'codigo_categoria_imovel' => 'required|integer',
@@ -129,7 +129,7 @@ class ImovelController extends BaseController
             'destaque' => 'permit_empty|string',
             'publicado' => 'permit_empty|string',
             'descricao' => 'permit_empty|string',
-            'valor' => 'required|string',
+            'mapa' => 'required|string',
             'cep' => [
                 'rules' => 'required|checkCep',
                 'errors' => ['checkCep' => 'Errors.geral.cepInvalido'],
@@ -172,7 +172,8 @@ class ImovelController extends BaseController
             'destaque'                 => $dadosRequest['destaque'],
             'publicado'                => $dadosRequest['publicado'],
             'descricao'                => $dadosRequest['descricao'],
-            'valor'                    => onlyNumber($dadosRequest['valor']),
+            'valor_venda'              => $dadosRequest['valor_venda'] ? onlyNumber($dadosRequest['valor_venda']) : '',
+            'valor_aluguel'            => $dadosRequest['valor_venda'] ? onlyNumber($dadosRequest['valor_aluguel']) : '',
 
         ];
 
@@ -261,7 +262,8 @@ class ImovelController extends BaseController
                     'bairro'         => $dadosRequest['bairro'],
                     'complemento'    => $dadosRequest['complemento'],
                     'cidade'         => $dadosRequest['cidade'],
-                    'uf'             => $dadosRequest['uf']
+                    'uf'             => $dadosRequest['uf'],
+                    'mapa'           =>  $dadosRequest['mapa'],
                 ];
 
                 $enderecoImovelModel->save($empresaEndereco);
@@ -270,7 +272,9 @@ class ImovelController extends BaseController
             $this->db->transComplete();
             $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Imovel']));
         } catch (Exception $e) {
-            $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
+            $error = $e->getMessage();
+            $error = explode('|',  $error);
+            $this->nativeSession->setFlashData('error', lang($error[1], ['Imovel']));
             return redirect()->back()->withInput();
         }
 
@@ -315,7 +319,7 @@ class ImovelController extends BaseController
             'destaque' => 'permit_empty|string',
             'publicado' => 'permit_empty|string',
             'descricao' => 'permit_empty|string',
-            'valor' => 'required|string',
+            'mapa' => 'required|string',
             'cep' => [
                 'rules' => 'required|checkCep',
                 'errors' => ['checkCep' => 'Errors.geral.cepInvalido'],
@@ -360,7 +364,8 @@ class ImovelController extends BaseController
             'destaque'                 => $dadosRequest['destaque'],
             'publicado'                => $dadosRequest['publicado'],
             'descricao'                => $dadosRequest['descricao'],
-            'valor'                    => onlyNumber($dadosRequest['valor']),
+            'valor_venda'              => $dadosRequest['valor_venda'] ? onlyNumber($dadosRequest['valor_venda']) : null,
+            'valor_aluguel'            => $dadosRequest['valor_venda'] ? onlyNumber($dadosRequest['valor_aluguel']) : null,
 
         ];
 
@@ -445,7 +450,8 @@ class ImovelController extends BaseController
                     'bairro'         => $dadosRequest['bairro'],
                     'complemento'    => $dadosRequest['complemento'],
                     'cidade'         => $dadosRequest['cidade'],
-                    'uf'             => $dadosRequest['uf']
+                    'uf'             => $dadosRequest['uf'],
+                    'mapa'           =>  $dadosRequest['mapa'],
                 ];
 
                 $enderecoImovelModel->where(['codigo_imovel' => $imovel['codigo_imovel']])->set($empresaEndereco)->update();
@@ -454,7 +460,9 @@ class ImovelController extends BaseController
             $this->db->transComplete();
             $this->nativeSession->setFlashData('success', lang('Success.default.cadastrado', ['Imóvel']));
         } catch (Exception $e) {
-            $this->nativeSession->setFlashData('error', lang('Errors.banco.validaInsercao'));
+            $error = $e->getMessage();
+            $error = explode('|',  $error);
+            $this->nativeSession->setFlashData('error', lang($error[1], ['Imovel']));
             return redirect()->back()->withInput();
         }
 

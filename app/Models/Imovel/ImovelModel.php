@@ -50,7 +50,8 @@ class ImovelModel extends BaseModel
         'destaque',
         'publicado',
         'diretorio_imagem',
-        'valor'
+        'valor_venda',
+        'valor_aluguel'
     ];
 
     /**
@@ -78,7 +79,8 @@ class ImovelModel extends BaseModel
           , {$this->table}.vaga
           , {$this->table}.condominio
           , {$this->table}.publicado
-          , {$this->table}.valor
+          , {$this->table}.valor_venda
+          , {$this->table}.valor_aluguel
           , (SELECT array_to_string(array_agg(ci.nome), ', ')
                FROM categoria_imovel ci
               WHERE ci.codigo_categoria_imovel = {$this->table}.codigo_categoria_imovel

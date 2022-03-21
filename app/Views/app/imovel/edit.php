@@ -6,7 +6,7 @@
             <div class="row g-3 align-items-center justify-content-between">
 
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Alterar Imóvel</h1>
+                    <h1 class="app-page-title mb-0">Alterar Imóvel<i class="fa fa-question-circle" id="btnHelp"></i></h1>
                 </div>
 
                 <div class="col-auto">
@@ -105,12 +105,21 @@
                                         </div>
 
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label">Valor</label>
-                                            <input type="text" class="form-control" name="valor" data-mask="dinheiro" required value="<?= old('valor', $imovel['valor']); ?>" placeholder="0,00">
+                                            <label class="form-label">Valor Venda</label>
+                                            <input type="text" class="form-control" name="valor_venda" data-mask="dinheiro" required value="<?= old('valor_venda', intToReal($imovel['valor_venda'])); ?>" placeholder="0,00">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                            <label class="form-label">Valor Aluguel</label>
+                                            <input type="text" class="form-control" name="valor_aluguel" data-mask="dinheiro" required value="<?= old('valor_aluguel', intToReal($imovel['valor_aluguel'])); ?>" placeholder="0,00">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Proprietário</label>
-                                            <input type="text" class="form-control" name="codigo_proprietario" data-select="buscarProprietario" data-tippy-content="Selecione o Proprietário do Imóvel" value="<?= old('codigo_proprietario', $imovel['codigo_proprietario']); ?>">
+                                            <div class="input-group">
+                                                <span class="input-group-text cursor" id="btnModalCadastrarProprietario" data-tippy-content="Cadastrar novo Proprietário" data-tippy-placement="bottom" data-bs-toggle="modal" data-bs-target="#modalCadastrarProprietario">
+                                                    <i class="fas fa-user-plus"></i></span>
+
+                                                <input type="text" class="form-control" name="codigo_proprietario" data-select="buscarProprietario" data-tippy-content="Selecione o Proprietário do Imóvel" value="<?= old('codigo_proprietario', $imovel['codigo_proprietario']); ?>">
+                                            </div>
                                         </div>
                                         <div class="col-md-12 col-lg-12 col-sm-12 mb-4">
                                             <label class="form-label">Descrição</label>
@@ -155,6 +164,10 @@
                                     <input type="hidden" name="cidade" required value="<?= old('cidade', $endereco['cidade']); ?>">
                                     <input type="hidden" name="uf" required value="<?= old('uf', $endereco['uf']); ?>">
                                     <input type="text" class="form-control" name="cidade_completa" readonly required value="<?= old('cidade', $endereco['cidade']); ?>/<?= old('uf', $endereco['uf']); ?>">
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 mb-4">
+                                    <label class="form-label">Mapa</label>
+                                    <textarea type="text" class="form-control" name="mapa" rows="2" required value="<?= old('mapa', $endereco['mapa']); ?>"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -221,11 +234,10 @@
                 </div>
                 <!-- Fim :: Cadastro  Imagem -->
 
-                <div class="d-flex justify-content-end mt-2">
-                    <button type="submit" class="btn app-btn-primary">Salvar</button>
-                </div>
-
             </form>
+            <div class="d-flex justify-content-end mt-2">
+                <button data-action='form-imovel-submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
+            </div>
         </div>
     </div>
 </div>

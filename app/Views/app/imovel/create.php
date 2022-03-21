@@ -6,7 +6,7 @@
             <div class="row g-3 align-items-center justify-content-between">
 
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Adicionar Imóvel</h1>
+                    <h1 class="app-page-title mb-0">Adicionar Imóvel <i class="fa fa-question-circle" id="btnHelp"></i></h1>
                 </div>
 
                 <div class="col-auto">
@@ -24,7 +24,7 @@
             <!-- Fim :: Titulo e Botões -->
 
             <!-- Inicio :: Formulário -->
-            <form method="POST" action="<?= base_url('imovel/store'); ?> " enctype=" multipart/form-data">
+            <form id="form-imovel" method="POST" action="<?= base_url('imovel/store'); ?> " enctype=" multipart/form-data">
 
                 <!-- Inicio :: Cadastro Básico -->
                 <div class="card">
@@ -85,7 +85,7 @@
 
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="vaga">
                                             <label class="form-label">Área Construida</label>
-                                            <input class="form-control" name="area_construida" type="Number" data-tippy-content="Informe a Área Construida em M²" value="<?= old('area_construida'); ?>">
+                                            <input class="form-control" name="area_construida" required type="Number" data-tippy-content="Informe a Área Construida em M²" value="<?= old('area_construida'); ?>">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Área Total</label>
@@ -100,9 +100,13 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                                            <label class="form-label">Valor</label>
-                                            <input type="text" class="form-control" name="valor" data-mask="dinheiro" required value="<?= old('valor'); ?>" placeholder="0,00">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="valor_venda">
+                                            <label class="form-label">Valor Venda</label>
+                                            <input type="text" class="form-control" name="valor_venda" data-mask="dinheiro" required value="<?= old('valor_venda'); ?>" placeholder="0,00">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="valor_aluguel">
+                                            <label class="form-label">Valor Aluguel</label>
+                                            <input type="text" class="form-control" name="valor_aluguel" data-mask="dinheiro" required value="<?= old('valor_aluguel'); ?>" placeholder="0,00">
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                             <label class="form-label">Proprietário</label>
@@ -127,7 +131,7 @@
 
                 <!-- Início :: imovel - endereço -->
 
-                <div class="card mt-2">
+                <div class="card mb-5">
                     <div class="card-header fw-bold">Endereço</div>
                     <div class="card-body">
                         <div class="form-group col-12">
@@ -157,6 +161,12 @@
                                     <input type="hidden" name="cidade" required value="<?= old('cidade'); ?>">
                                     <input type="hidden" name="uf" required value="<?= old('uf'); ?>">
                                     <input type="text" class="form-control" name="cidade_completa" readonly required value="<?= old('cidade'); ?>/<?= old('uf'); ?>">
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 mb-5">
+                                    <label class="form-label">Mapa</label>
+
+                                    <textarea type="text" class="form-control" name="mapa" rows="2" required value="<?= old('mapa'); ?>" placeholder="Como adicionar ? 1° Acesse o Google Maps, 2° Busque o endereço, 3° Clique em compartilhar, 4° Mude para a aba Incorporar um mapa, 5° Copiar HTML, 6° Colar neste campo"></textarea>
+                                    <a href="https://www.google.com/maps" target="_blank" rel="noopener">Google Maps</a>
                                 </div>
                             </div>
                         </div>
@@ -206,11 +216,12 @@
 
                 <!-- Fim :: imovel - imagem imovel -->
 
-                <div class="d-flex justify-content-end mt-2">
-                    <button type="submit" class="btn app-btn-primary" style="z-index:1">Salvar</button>
-                </div>
+
 
             </form>
+            <div class="d-flex justify-content-end mt-2">
+                <button data-action='form-imovel-submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
+            </div>
             <!-- Fim :: Formulário -->
 
 

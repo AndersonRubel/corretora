@@ -17,6 +17,11 @@ class CadastroCategoriaImovelSeeder extends DatabaseSeeder
             'codigo_empresa' => 1,
             'nome'           => "Venda",
         ]);
+        $this->saveOnce('categoria_imovel', [
+            'codigo_empresa' => 1,
+            'nome'           => "Aluguel/Venda",
+        ]);
+
 
     }
 }

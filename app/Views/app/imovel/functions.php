@@ -4,7 +4,7 @@
     const edicula = '<?= !empty($imovel['edicula']) ? $imovel['edicula'] : ''; ?>';
     const destaque = '<?= !empty($imovel['destaque']) ? $imovel['destaque'] : ''; ?>';
     const codigo_tipo_imovel = '<?= !empty($imovel['codigo_tipo_imovel']) ? $imovel['codigo_tipo_imovel'] : ''; ?>';
-
+    const codigo_categoria_imovel = '<?= !empty($imovel['codigo_categoria_imovel']) ? $imovel['codigo_categoria_imovel'] : ''; ?>';
     const select2ImovelFunctions = {
         init: () => {
             select2ImovelFunctions.buscarProprietario();
@@ -218,10 +218,36 @@
             imovelFunctions.listenerProprietario();
             imovelFunctions.listenerPopulaFiltros();
             imovelFunctions.listenerTipoImovel();
+            imovelFunctions.listenerModalHelp();
+            imovelFunctions.listenerOnSubmit();
             $("[data-select='buscarTipoImovel']").change();
         },
+        listenerOnSubmit: () => {
+            $(document).on('click', "[data-action ='form-imovel-submit']", () => {
+                cat_imovel = $("[data-select='buscarCategoriaImovel']").val();
+                console.log(cat_imovel)
+                if (cat_imovel == 1) {
+                    $("#valor_venda").find('input').removeAttr('required');
+                    $("#valor_venda").val('');
+                } else if (cat_imovel == 2) {
+                    $("#valor_aluguel").find('input').removeAttr('required')
+                    $("#valor_aluguel").val('');
+                }
+                $("[id='form-imovel']").submit();
+            })
 
+        },
         listenerTipoImovel: () => {
+            $(document).on('change', "[data-select='buscarCategoriaImovel']", async function(e) {
+                $("#valor_venda").removeClass('d-none')
+                $("#valor_aluguel").removeClass('d-none')
+                if ($(this).val() == '1' || codigo_categoria_imovel == 1) {
+                    $("#valor_venda").addClass('d-none')
+                } else if ($(this).val() == '2' || codigo_categoria_imovel == 2) {
+                    $("#valor_aluguel").addClass('d-none')
+                }
+
+            });
             $(document).on('change', "[data-select='buscarTipoImovel']", async function(e) {
 
                 if ($(this).val() == '3' || codigo_tipo_imovel == 3) {
@@ -229,7 +255,7 @@
                     // $("[name='quarto']").addClass('d-none');
 
                     $("[id='quarto']").addClass('d-none').find('input').removeAttr('required');
-                    $("[id='area_construida']").addClass('d-none');
+                    $("[id='area_construida']").addClass('d-none').find('input').removeAttr('required');
                     $("[id='suite']").addClass('d-none');
                     $("[id='banheiro']").addClass('d-none').find('input').removeAttr('required');
                     $("[id='vaga']").addClass('d-none');
@@ -472,6 +498,13 @@
             });
 
         },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
+        }
+
+
     };
 
     const dataGridImovelFunctions = {
@@ -505,8 +538,15 @@
                     "title": "Categoria",
                 },
                 {
-                    "data": "valor",
-                    "title": "Valor",
+                    "data": "valor_venda",
+                    "title": "Valor Venda",
+                    "className": "text-end",
+                    "isreplace": true,
+                    "render": (data) => `R$ ${convertFunctions.intToReal(data)}`
+                },
+                {
+                    "data": "valor_aluguel",
+                    "title": "Valor Venda",
                     "className": "text-end",
                     "isreplace": true,
                     "render": (data) => `R$ ${convertFunctions.intToReal(data)}`

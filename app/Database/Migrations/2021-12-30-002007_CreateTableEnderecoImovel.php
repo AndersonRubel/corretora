@@ -19,7 +19,7 @@ class CreateTableEnderecoImovel extends Migration
             'alterado_em'         => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'inativado_em'        => ['type' => 'TIMESTAMPTZ', 'null' => true],
             'codigo_empresa'      => ['type' => 'BIGINT'],
-            'codigo_imovel'      => ['type' => 'BIGINT'],
+            'codigo_imovel'       => ['type' => 'BIGINT'],
             'cep'                 => ['type' => 'VARCHAR', 'null' => true],
             'rua'                 => ['type' => 'VARCHAR', 'null' => true],
             'numero'              => ['type' => 'VARCHAR', 'null' => true],
@@ -27,6 +27,7 @@ class CreateTableEnderecoImovel extends Migration
             'bairro'              => ['type' => 'VARCHAR', 'null' => true],
             'cidade'              => ['type' => 'VARCHAR', 'null' => true],
             'uf'                  => ['type' => 'VARCHAR', 'null' => true],
+            'mapa'                => ['type' => 'VARCHAR', 'null' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

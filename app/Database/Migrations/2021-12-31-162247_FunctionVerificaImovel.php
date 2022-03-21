@@ -27,7 +27,14 @@ class FunctionVerificaImovel extends Migration
 
                  END IF;
 
-                 IF NEW.valor <= 0 THEN
+                 IF NEW.area_total < NEW.area_construida THEN
+                    RAISE EXCEPTION '|A area construida tem que ser menor que a total|';
+                 END IF;
+
+                 IF NEW.valor_venda <= 0 THEN
+                    RAISE EXCEPTION '|O valor tem que ser maior que 0|';
+                 END IF;
+                 IF NEW.valor_aluguel <= 0 THEN
                     RAISE EXCEPTION '|O valor tem que ser maior que 0|';
                  END IF;
                  RETURN NEW;
