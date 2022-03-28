@@ -18,14 +18,14 @@
                     <div class="col-md-6 col-lg-6">
                         <ul class="list-unstyled">
                             <li><a href="<?= base_url('site') ?>">Home</a></li>
-                            <li><a href="<?= base_url('comprar') ?>">Comprar</a></li>
-                            <li><a href="<?= base_url('alugar') ?>">Alugar</a></li>
+                            <li><a href="<?= base_url('site/buscar?codigo_categoria_imovel=2') ?>">Comprar</a></li>
+                            <li><a href="<?= base_url('site/buscar?codigo_categoria_imovel=1') ?>">Alugar</a></li>
                         </ul>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <ul class="list-unstyled">
-                            <li><a href="<?= base_url('sobre') ?>">Sobre</a></li>
-                            <li><a href="<?= base_url('contato') ?>">Contato</a></li>
+                            <li><a href="<?= base_url('site/sobre') ?>">Sobre</a></li>
+                            <li><a href="<?= base_url('site/contato') ?>">Contato</a></li>
                         </ul>
                     </div>
                 </div>
