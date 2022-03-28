@@ -142,7 +142,7 @@
                                     <input type="text" class="form-control" name="cep" data-mask="cep" required value="<?= old('cep'); ?>">
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-12 mb-2">
-                                    <label class="form-label">Rua</label>
+                                    <label class="form-label">Logradouro</label>
                                     <input type="text" class="form-control" name="rua" required value="<?= old('rua'); ?>">
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-12 mb-2">

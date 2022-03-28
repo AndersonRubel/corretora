@@ -31,7 +31,7 @@ class ProprietarioController extends BaseController
      */
     public function create()
     {
-        return $this->template('proprietario', ['create', 'functions']);
+        return $this->template('proprietario', ['create', 'functions', 'modal']);
     }
 
     /**
@@ -52,7 +52,7 @@ class ProprietarioController extends BaseController
         // Desestrutura os JSONB para preencher os campos no formulário
         $dados['proprietario']['endereco'] = json_decode($dados['proprietario']['endereco'], true);
 
-        return $this->template('proprietario', ['edit', 'functions'], $dados);
+        return $this->template('proprietario', ['edit', 'functions', 'modal'], $dados);
     }
 
     /**

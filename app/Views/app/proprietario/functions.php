@@ -7,9 +7,14 @@
         init: () => {
             proprietarioFunctions.listenerTipoPessoa();
             proprietarioFunctions.listenerBuscarCep();
-
+            proprietarioFunctions.listenerModalHelp();
             // Atualiza os campos conforme a o tipo de pessoa
             $("#tipoPessoa").trigger('change');
+        },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
         },
         listenerTipoPessoa: () => {
             $(document).on('change', "#tipoPessoa", function() {

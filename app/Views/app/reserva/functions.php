@@ -205,8 +205,15 @@
         init: () => {
             reservaFunctions.listenerCliente();
             reservaFunctions.listenerFiltros();
+            reservaFunctions.listenerModalHelp();
 
         },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
+        },
+
         listenerCliente: () => {
 
             // Ao fechar a Modal limpa os campos

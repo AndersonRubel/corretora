@@ -58,7 +58,7 @@ class ReservaController extends BaseController
         $reservaModel = new ReservaModel;
         $dados['reserva'] = $reservaModel->get([$reservaModel->uuidColumn => $uuid], [], true);
 
-        return $this->template('reserva', ['edit', 'functions'], $dados);
+        return $this->template('reserva', ['edit', 'functions', 'modal'], $dados);
     }
 
     /**

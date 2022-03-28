@@ -57,9 +57,14 @@
             clienteFunctions.listenerTipoPessoa();
             clienteFunctions.listenerBuscarCep();
             clienteFunctions.listenerFiltros();
-
+            clienteFunctions.listenerModalHelp();
             // Atualiza os campos conforme a o tipo de pessoa
             $("#tipoPessoa").trigger('change');
+        },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
         },
         listenerFiltros: () => {
             $(document).on('click', "[data-action='btnLimpar']", () => {

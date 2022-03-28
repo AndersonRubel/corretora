@@ -144,7 +144,7 @@
                                     <input type="text" class="form-control" name="cep" data-mask="cep" required value="<?= old('cep', $endereco['cep']); ?>">
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-12 mb-2">
-                                    <label class="form-label">Rua</label>
+                                    <label class="form-label">Logradouro</label>
                                     <input type="text" class="form-control" name="rua" required value="<?= old('rua', $endereco['rua']); ?>">
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-12 mb-2">
@@ -230,9 +230,13 @@
                     </div>
                 </div>
                 <!-- Fim :: Cadastro  Imagem -->
-                <div id="googleMap" style="width:100%;height:400px;">
+                <div class="card mt-2 mb-2">
+                    <div class="card-header fw-bold">Selecione a localização no mapa</div>
+                    <div class="card-body">
+                        <div id="googleMap" style="width:100%;height:400px;">
+                        </div>
+                    </div>
                 </div>
-            </form>
             </form>
             <div class="d-flex justify-content-end mt-2">
                 <button data-action='form-imovel-submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
@@ -251,7 +255,7 @@
 
         var mapProp = {
             center: new google.maps.LatLng(lat, lng),
-            zoom: 10,
+            zoom: 20,
         };
 
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);

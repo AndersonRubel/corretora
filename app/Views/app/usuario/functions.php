@@ -101,13 +101,22 @@
     };
 
     const usuarioFunctions = {
-        init: () => {},
+        init: () => {
+            usuarioFunctions.listenerModalHelp();
+        },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
+        },
     };
 
     const usuarioPerfilFunctions = {
         init: () => {
             usuarioPerfilFunctions.listenerUploadAvatar();
+
         },
+
         listenerUploadAvatar: () => {
             //Ativa o Plugin
             const pond = FilePond.create(document.getElementById("avatar"), {

@@ -150,7 +150,7 @@ class ImovelModel extends BaseModel
 
         $this->select("
             codigo_imovel AS id
-          , codigo_referencia AS text
+          , 'Ref: ' || codigo_referencia || ' - ('  || (select nome from tipo_imovel as ti where ti.codigo_tipo_imovel = imovel.codigo_tipo_imovel )|| ' - '  || (select bairro from endereco_imovel as ei where ei.codigo_imovel = imovel.codigo_imovel ) || ')' AS text
           , diretorio_imagem
         ", FALSE);
 

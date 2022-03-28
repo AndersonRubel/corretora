@@ -37,14 +37,14 @@ class CadastroMenuSeeder extends DatabaseSeeder
             'icone'       => 'fas fa-sitemap'
         ]);
 
-        $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Empresa',
-            'descricao'   => 'Gestão de Empresas',
-            'path'        => 'empresa',
-            'agrupamento' => 'gestao',
-            'localizacao' => 'sidebar_gestao',
-            'icone'       => 'fas fa-building'
-        ]);
+        // $this->saveOnce('cadastro_menu', [
+        //     'nome'        => 'Empresa',
+        //     'descricao'   => 'Gestão de Empresas',
+        //     'path'        => 'empresa',
+        //     'agrupamento' => 'gestao',
+        //     'localizacao' => 'sidebar_gestao',
+        //     'icone'       => 'fas fa-building'
+        // ]);
 
         $this->saveOnce('cadastro_menu', [
             'nome'        => 'Usuários',

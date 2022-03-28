@@ -6,7 +6,7 @@
             <div class="row g-3 align-items-center justify-content-between">
 
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Alterar Reserva</h1>
+                    <h1 class="app-page-title mb-0">Alterar Reserva <i class="fa fa-question-circle" id="btnHelp"></i></h1>
                 </div>
 
                 <div class="col-auto">

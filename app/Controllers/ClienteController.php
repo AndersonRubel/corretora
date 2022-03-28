@@ -31,7 +31,7 @@ class ClienteController extends BaseController
      */
     public function create()
     {
-        return $this->template('cliente', ['create', 'functions']);
+        return $this->template('cliente', ['create', 'functions', 'modal']);
     }
 
     /**
@@ -52,7 +52,7 @@ class ClienteController extends BaseController
         // Desestrutura os JSONB para preencher os campos no formulário
         $dados['cliente']['endereco'] = json_decode($dados['cliente']['endereco'], true);
 
-        return $this->template('cliente', ['edit', 'functions'], $dados);
+        return $this->template('cliente', ['edit', 'functions', 'modal'], $dados);
     }
 
     /**

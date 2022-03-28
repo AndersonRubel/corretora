@@ -74,7 +74,7 @@
 </div>
 <!-- Fim :: Modal Cadastrar novo Cliente -->
 
-<!-- Inicio :: Modal Cadastrar novo Proprietário -->
+<!-- Inicio :: Modal Help -->
 <div class="modal fade" id="modalHelp" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -83,10 +83,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <ul class="list-group">
-                <li class="list-group-item"><b>Campos com *:</b> É obrigatórios o preenchimento</li>
+                <li class="list-group-item"><b>Campos com *:</b> É obrigatório o preenchimento;</li>
                 <li class="list-group-item"><b>Imagem destaque:</b> Se refere a imagem principal que é exibida no site;</li>
                 <li class="list-group-item"><b>Código Referência:</b> Deve ser preenchido com o código que a corretora utiliza para referênciar o imóvel;</li>
-                <li class="list-group-item"><b>Categoria: Campo para definir se o imóvel é para venda ou locação;</b></li>
+                <li class="list-group-item"><b>Categoria:</b> Campo para definir se o imóvel é para venda ou locação;</li>
                 <li class="list-group-item"><b>Tipo Imóvel:</b> Campo para definir o tipo do imóvel;</li>
                 <li class="list-group-item"><b>Condomínio:</b> Definir se o imóvel ou terreno está localizado em condomínio ou não;</li>
                 <li class="list-group-item"><b>Quarto:</b> Quantos quartos que possui o imóvel sem contar com suites;</li>
@@ -114,4 +114,4 @@
         </div>
     </div>
 </div>
-<!-- Fim :: Modal Cadastrar novo Cliente -->
+<!-- Fim :: Modal Help-->
