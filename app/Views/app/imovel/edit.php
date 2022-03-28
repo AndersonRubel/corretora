@@ -24,7 +24,7 @@
             <!-- Fim :: Titulo e Botões -->
 
             <!-- Inicio :: Formulário -->
-            <form method="POST" action="<?= base_url("imovel/update/{$imovel['uuid_imovel']}"); ?> " enctype=" multipart/form-data">
+            <form id="form-imovel" method="POST" action="<?= base_url("imovel/update/{$imovel['uuid_imovel']}"); ?> " enctype=" multipart/form-data">
 
                 <!-- Inicio :: Cadastro Básico -->
                 <div class="card">
@@ -104,11 +104,11 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="valor_venda">
                                             <label class="form-label">Valor Venda</label>
                                             <input type="text" class="form-control" name="valor_venda" data-mask="dinheiro" required value="<?= old('valor_venda', intToReal($imovel['valor_venda'])); ?>" placeholder="0,00">
                                         </div>
-                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
+                                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="valor_aluguel">
                                             <label class="form-label">Valor Aluguel</label>
                                             <input type="text" class="form-control" name="valor_aluguel" data-mask="dinheiro" required value="<?= old('valor_aluguel', intToReal($imovel['valor_aluguel'])); ?>" placeholder="0,00">
                                         </div>
@@ -166,8 +166,12 @@
                                     <input type="text" class="form-control" name="cidade_completa" readonly required value="<?= old('cidade', $endereco['cidade']); ?>/<?= old('uf', $endereco['uf']); ?>">
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12 mb-4">
-                                    <label class="form-label">Mapa</label>
-                                    <textarea type="text" class="form-control" name="mapa" rows="2" required value="<?= old('mapa', $endereco['mapa']); ?>"></textarea>
+                                    <label class="form-label">Latitude</label>
+                                    <input type="hidden" class="form-control" name="lat" value="<?= $endereco['lat'] ?>">
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 mb-4">
+                                    <label class="form-label">Longitude</label>
+                                    <input type="hidden" class="form-control" name="lng" value="<?= $endereco['lng'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -195,13 +199,6 @@
                     </div>
                 </div>
                 <!-- Fim :: imovel - site -->
-
-
-
-
-
-
-
 
                 <!-- Inicio :: Cadastro Imagem -->
                 <div class="card mt-4">
@@ -233,7 +230,9 @@
                     </div>
                 </div>
                 <!-- Fim :: Cadastro  Imagem -->
-
+                <div id="googleMap" style="width:100%;height:400px;">
+                </div>
+            </form>
             </form>
             <div class="d-flex justify-content-end mt-2">
                 <button data-action='form-imovel-submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
@@ -244,3 +243,36 @@
 
 
 <!-- Fim :: Formulário -->
+
+<script>
+    function myMap() {
+        const lat = '<?= !empty($endereco['lat']) ? $endereco['lat'] : '-25.0927465'; ?>';
+        const lng = '<?= !empty($endereco['lng']) ? $endereco['lng'] : '-50.1707468'; ?>';
+
+        var mapProp = {
+            center: new google.maps.LatLng(lat, lng),
+            zoom: 10,
+        };
+
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+            position: {
+                lat: parseFloat(lat),
+                lng: parseFloat(lng)
+            },
+            map: map,
+            draggable: true,
+        });
+
+        marker.addListener("dragend", () => {
+            localizacao = marker.getPosition().toJSON();
+            $("[name='lat']").val(`${localizacao.lat}`);
+            $("[name='lng']").val(`${localizacao.lng}`);
+            console.log(localizacao);
+
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA03uqmKd3hJg9KIfS3d8MH1pkW6TY-WH0&callback=myMap"></script>

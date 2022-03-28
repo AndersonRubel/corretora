@@ -50,6 +50,7 @@ class SiteModel extends BaseModel
                       , COALESCE(area_construida,0) AS area_construida
                       , COALESCE(area_total,0) AS area_total
                       , edicula
+                      , condominio
                       , (SELECT nome FROM categoria_imovel
                           WHERE categoria_imovel.codigo_categoria_imovel = imovel.codigo_categoria_imovel
                         ) as categoria_imovel
@@ -59,9 +60,12 @@ class SiteModel extends BaseModel
                       , (SELECT rua ||', '|| numero ||' - '|| bairro ||', '|| cidade || ' - ' || uf FROM endereco_imovel
                           WHERE endereco_imovel.codigo_imovel = imovel.codigo_imovel
                           ) as endereco
-                      , (SELECT mapa FROM endereco_imovel
+                      , (SELECT lat FROM endereco_imovel
                           WHERE endereco_imovel.codigo_imovel = imovel.codigo_imovel
-                          ) as mapa
+                          ) as lat
+                          , (SELECT lng FROM endereco_imovel
+                          WHERE endereco_imovel.codigo_imovel = imovel.codigo_imovel
+                          ) as lng
                       ", FALSE);
 
         if ($uuid) {
@@ -103,6 +107,7 @@ class SiteModel extends BaseModel
                       , COALESCE(area_construida,0) AS area_construida
                       , COALESCE(area_total,0) AS area_total
                       , edicula
+                      , condominio
                       , (SELECT nome FROM categoria_imovel
                           WHERE categoria_imovel.codigo_categoria_imovel = imovel.codigo_categoria_imovel
                         ) as categoria_imovel
@@ -122,8 +127,13 @@ class SiteModel extends BaseModel
             $this->where('imovel.codigo_tipo_imovel', $filtros['codigo_tipo_imovel']);
         }
         if (!empty($filtros['codigo_categoria_imovel'])) {
-            $this->where('imovel.codigo_categoria_imovel', $filtros['codigo_categoria_imovel']);
-            $this->where('imovel.codigo_categoria_imovel', '3');
+            if ($filtros['codigo_categoria_imovel'] == '1') {
+                $this->where('imovel.codigo_categoria_imovel <> 2');
+            } else if ($filtros['codigo_categoria_imovel'] == '2') {
+                $this->where('imovel.codigo_categoria_imovel <> 1');
+            } else {
+                $this->where('imovel.codigo_categoria_imovel', 3);
+            }
         }
         if (!empty($filtros['condominio'])) {
             $this->where('imovel.condominio', $filtros['condominio']);

@@ -40,6 +40,7 @@ class EnderecoImovelModel extends BaseModel
         'bairro',
         'cidade',
         'uf',
-        'mapa'
+        'lat',
+        'lng'
     ];
 }

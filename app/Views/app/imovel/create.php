@@ -27,7 +27,7 @@
             <form id="form-imovel" method="POST" action="<?= base_url('imovel/store'); ?> " enctype=" multipart/form-data">
 
                 <!-- Inicio :: Cadastro Básico -->
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header fw-bold">Dados Básicos</div>
                     <div class="app-card shadow-sm p-4">
                         <div class="app-card-body">
@@ -127,11 +127,12 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Fim :: Cadastro Básico -->
 
                 <!-- Início :: imovel - endereço -->
 
-                <div class="card mb-5">
+                <div class="card mb-2">
                     <div class="card-header fw-bold">Endereço</div>
                     <div class="card-body">
                         <div class="form-group col-12">
@@ -162,12 +163,8 @@
                                     <input type="hidden" name="uf" required value="<?= old('uf'); ?>">
                                     <input type="text" class="form-control" name="cidade_completa" readonly required value="<?= old('cidade'); ?>/<?= old('uf'); ?>">
                                 </div>
-                                <div class="col-md-12 col-lg-12 col-sm-12 mb-5">
-                                    <label class="form-label">Mapa</label>
-
-                                    <textarea type="text" class="form-control" name="mapa" rows="2" required value="<?= old('mapa'); ?>" placeholder="Como adicionar ? 1° Acesse o Google Maps, 2° Busque o endereço, 3° Clique em compartilhar, 4° Mude para a aba Incorporar um mapa, 5° Copiar HTML, 6° Colar neste campo"></textarea>
-                                    <a href="https://www.google.com/maps" target="_blank" rel="noopener">Google Maps</a>
-                                </div>
+                                <input type="hidden" class="form-control" name="lat">
+                                <input type="hidden" class="form-control" name="lng">
                             </div>
                         </div>
                     </div>
@@ -177,7 +174,7 @@
 
                 <!-- Inicio :: imovel - site -->
 
-                <div class="card mt-2">
+                <div class="card mb-2">
                     <div class="card-header fw-bold">Opções do site</div>
                     <div class="card-body">
                         <div class="form-group col-12">
@@ -196,11 +193,9 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Fim :: imovel - site -->
 
                 <!-- Inicio :: imovel - imagem imovel -->
-
                 <div class="card mt-2 mb-2">
                     <div class="card-header fw-bold">Imagens do imóvel</div>
                     <div class="card-body">
@@ -214,17 +209,51 @@
                     </div>
                 </div>
 
-                <!-- Fim :: imovel - imagem imovel -->
-
-
-
+                <div class="card mt-2 mb-2">
+                    <div class="card-header fw-bold">Selecione a localização no mapa</div>
+                    <div class="card-body">
+                        <div id="googleMap" style="width:100%;height:400px;">
+                        </div>
+                    </div>
+                </div>
             </form>
+            <!-- Fim :: imovel - imagem imovel -->
             <div class="d-flex justify-content-end mt-2">
                 <button data-action='form-imovel-submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
             </div>
             <!-- Fim :: Formulário -->
-
-
         </div>
     </div>
 </div>
+<script>
+    function myMap() {
+        const lat = '<?= !empty($endereco['lat']) ? $endereco['lat'] : '-25.0927465'; ?>';
+        const lng = '<?= !empty($endereco['lng']) ? $endereco['lng'] : '-50.1707468'; ?>';
+
+        var mapProp = {
+            center: new google.maps.LatLng(lat, lng),
+            zoom: 10,
+        };
+
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+            position: {
+                lat: parseFloat(lat),
+                lng: parseFloat(lng)
+            },
+            map: map,
+            draggable: true,
+        });
+
+        marker.addListener("dragend", () => {
+            localizacao = marker.getPosition().toJSON();
+            $("[name='lat']").val(`${localizacao.lat}`);
+            $("[name='lng']").val(`${localizacao.lng}`);
+            console.log(localizacao);
+
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA03uqmKd3hJg9KIfS3d8MH1pkW6TY-WH0&callback=myMap"></script>

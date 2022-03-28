@@ -123,7 +123,6 @@ class ImovelModel extends BaseModel
         if (!empty($configDataGrid->filtros['codigo_proprietario'])) {
             $this->where("{$this->table}.codigo_proprietario", $configDataGrid->filtros['codigo_proprietario']);
         }
-
         /////// Fim :: Filtros ///////
 
         $queryCompiled = $this->getCompiledSelect();

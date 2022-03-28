@@ -222,36 +222,44 @@
             imovelFunctions.listenerModalHelp();
             imovelFunctions.listenerOnSubmit();
             $("[data-select='buscarTipoImovel']").change();
+            $("[data-select='buscarCategoriaImovel']").change();
         },
         listenerOnSubmit: () => {
             $(document).on('click', "[data-action ='form-imovel-submit']", () => {
                 cat_imovel = $("[data-select='buscarCategoriaImovel']").val();
-                console.log(cat_imovel)
+
                 if (cat_imovel == 1) {
                     $("#valor_venda").find('input').removeAttr('required');
-                    $("#valor_venda").val('');
+                    $("#valor_venda").find('input').val('');
                 } else if (cat_imovel == 2) {
                     $("#valor_aluguel").find('input').removeAttr('required')
-                    $("#valor_aluguel").val('');
+                    $("#valor_aluguel").find('input').val('');
                 }
                 $("[id='form-imovel']").submit();
             })
 
         },
         listenerTipoImovel: () => {
-            $(document).on('change', "[data-select='buscarCategoriaImovel']", async function(e) {
-                $("#valor_venda").removeClass('d-none')
-                $("#valor_aluguel").removeClass('d-none')
-                if ($(this).val() == '1' || codigo_categoria_imovel == 1) {
-                    $("#valor_venda").addClass('d-none')
-                } else if ($(this).val() == '2' || codigo_categoria_imovel == 2) {
-                    $("#valor_aluguel").addClass('d-none')
+            $(document).on('change', "[data-select='buscarCategoriaImovel']", function(e) {
+
+                $("#valor_venda").addClass('d-none');
+                $("#valor_aluguel").addClass('d-none');
+                if ($(this).val() == '1') {
+                    console.log($(this).val())
+                    $("#valor_aluguel").removeClass('d-none');
+                } else if ($(this).val() == '2') {
+                    console.log($(this).val())
+                    $("#valor_venda").removeClass('d-none');
+                } else {
+                    console.log($(this).val())
+                    $("#valor_aluguel").removeClass('d-none');
+                    $("#valor_venda").removeClass('d-none');
                 }
 
             });
             $(document).on('change', "[data-select='buscarTipoImovel']", async function(e) {
 
-                if ($(this).val() == '3' || codigo_tipo_imovel == 3) {
+                if ($(this).val() == '3') {
 
                     // $("[name='quarto']").addClass('d-none');
 

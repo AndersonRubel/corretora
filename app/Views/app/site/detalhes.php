@@ -6,7 +6,7 @@
 </div>
 <div class="container mt-5">
     <h2>
-        <?= $imovel['tipo_imovel'] . " à " . strtolower($imovel['categoria_imovel']) . " - " . $imovel['endereco'] ?>
+        <?= $imovel['tipo_imovel'] . " " . ($imovel['categoria_imovel'] == "Aluguel" ? " para " : " à ") . ($imovel['categoria_imovel'] == "Aluguel" ? 'alugar ' : strtolower($imovel['categoria_imovel'])) . " - " . $imovel['endereco'] ?>
     </h2>
 
 </div>
@@ -16,7 +16,7 @@
             <div class="col-lg-8">
                 <div>
                     <div class="slide-one-item home-slider owl-carousel">
-
+                        <img src="<?= $imovel['imagem_destaque'] ?>" alt="Image" style="object-fit:cover; width:100%;height:400px !important">
                         <?php foreach ($imagemImovel as $value) : ?>
                             <div>
                                 <img src="<?= $value['diretorio_imagem'] ?>" alt="Image" style="object-fit:cover; width:100%;height:400px !important">
@@ -26,8 +26,18 @@
                 </div>
                 <div class="bg-white property-body border-bottom border-left border-right">
                     <div class="row mb-5">
-                        <div class="col-md-6">
-                            <strong class="text-success h1 mb-3">R$<?= intToreal($imovel['valor']) ?></strong>
+                        <div class="col-md-12">
+                            <?php if ($imovel['categoria_imovel'] == 'Aluguel') : ?>
+                                <strong class="text-success h1 mb-3 data-mask=" dinheiro">R$<?= intToreal($imovel['valor_aluguel']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($imovel['categoria_imovel'] == 'Venda') : ?>
+                                <strong class="text-success h1 mb-3 data-mask=" dinheiro">R$<?= intToreal($imovel['valor_venda']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($imovel['categoria_imovel'] == 'Venda/Aluguel') : ?>
+                                <strong class="text-success h2 mb-3 data-mask=" dinheiro">R$<?= intToreal($imovel['valor_venda']) . ' / R$' . intToreal($imovel['valor_aluguel']) ?></strong>
+
+                            <?php endif ?>
+
                         </div>
                         <!-- <div class="col-md-6">
                             <ul class="property-specs-wrap mb-3 mb-lg-0  float-lg-right">
@@ -51,6 +61,10 @@
                         <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
                             <span class="d-inline-block text-black mb-0 caption-text">Tipo</span>
                             <strong class="d-block"><?= $imovel['tipo_imovel'] ?></strong>
+                        </div>
+                        <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
+                            <span class="d-inline-block text-black mb-0 caption-text">Condomínio</span>
+                            <strong class="d-block"><?= $imovel['condominio'] == 't' ? 'Sim' : 'Não' ?></strong>
                         </div>
                         <?php if ($imovel['tipo_imovel'] != 'Terreno') : ?>
                             <div class="col-md-6 col-lg-4 text-center border-bottom border-top py-3">
@@ -126,11 +140,11 @@
                     <h3 class="h4 text-black widget-title mb-3">Contato whats</h3>
                     <a class="btn btn-success" href="https://web.whatsapp.com/send?phone=5542998230013"> 55 42 9 9823-0013</a>
                 </div>
-
-            </div>
-            <div class="col-md-12 col-lg-12 mt-3 col-sm-12">
-                <div class="border-map">
-                    <?= $imovel['mapa'] ?>
+                <div class="col-md-12 col-lg-12 mt-3 col-sm-12">
+                    <div class="border-map">
+                        <div id="googleMap" style="width:100%;height:450px;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,7 +182,16 @@
                             <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
                             <h2 class="property-title"><a href="property-details.html"><?= $value['tipo_imovel'] ?></a></h2>
                             <span class="property-location d-block mb-3"><span class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
-                            <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
+                            <?php if ($value['categoria_imovel'] == 'Aluguel') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_aluguel']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($value['categoria_imovel'] == 'Venda') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_venda']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($value['categoria_imovel'] == 'Venda/Aluguel') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_venda']) . ' / R$' . intToreal($value['valor_aluguel']) ?></strong>
+
+                            <?php endif ?>
                             <ul class="property-specs-wrap mb-3 mb-lg-0">
                                 <?php if ($value['tipo_imovel'] != 'Terreno') : ?>
                                     <li>
@@ -201,10 +224,6 @@
 
                         </div>
 
-
-
-
-
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -222,3 +241,26 @@
         border: 1px solid #dee2e6 !important;
     }
 </style>
+<script>
+    function myMap() {
+        const lat = '<?= !empty($imovel['lat']) ? $imovel['lat'] : '-25.0927465'; ?>';
+        const lng = '<?= !empty($imovel['lng']) ? $imovel['lng'] : '-50.1707468'; ?>';
+
+        var mapProp = {
+            center: new google.maps.LatLng(lat, lng),
+            zoom: 20,
+        };
+
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+            position: {
+                lat: parseFloat(lat),
+                lng: parseFloat(lng)
+            },
+            map: map,
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA03uqmKd3hJg9KIfS3d8MH1pkW6TY-WH0&callback=myMap"></script>

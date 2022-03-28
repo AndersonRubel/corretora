@@ -29,7 +29,6 @@
                         <div class="select-wrap">
                             <span class="icon icon-arrow_drop_down"></span>
                             <select name="codigo_categoria_imovel" id="codigo_categoria_imovel" class="form-control d-block rounded-0">
-                                <option value>Todas</option>
                                 <?php foreach ($categoriaImovel as $value) : ?>
                                     <option value="<?= $value['codigo_categoria_imovel'] ?>"><?= $value['nome'] ?></option>
                                 <?php endforeach; ?>
@@ -89,7 +88,16 @@
                             <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
                             <h2 class="property-title"><a href="property-details.html"><?= $value['tipo_imovel'] ?></a></h2>
                             <span class="property-location d-block mb-3"><span class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
-                            <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
+                            <?php if ($value['categoria_imovel'] == 'Aluguel') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_aluguel']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($value['categoria_imovel'] == 'Venda') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_venda']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($value['categoria_imovel'] == 'Venda/Aluguel') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_venda']) . ' / R$' . intToreal($value['valor_aluguel']) ?></strong>
+
+                            <?php endif ?>
                             <ul class="property-specs-wrap mb-3 mb-lg-0">
                                 <?php if ($value['tipo_imovel'] != 'Terreno') : ?>
                                     <li>

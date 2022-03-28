@@ -27,7 +27,8 @@ class CreateTableEnderecoImovel extends Migration
             'bairro'              => ['type' => 'VARCHAR', 'null' => true],
             'cidade'              => ['type' => 'VARCHAR', 'null' => true],
             'uf'                  => ['type' => 'VARCHAR', 'null' => true],
-            'mapa'                => ['type' => 'VARCHAR', 'null' => true],
+            'lat'                 => ['type' => 'VARCHAR', 'null' => true],
+            'lng'                 => ['type' => 'VARCHAR', 'null' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);
