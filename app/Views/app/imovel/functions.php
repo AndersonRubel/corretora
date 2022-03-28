@@ -448,9 +448,42 @@
             });
         },
         listenerValidaCampos: () => {
+            // Válida suítes
             $(document).on('focusout', "input[name='suite']", function(e) {
-                if ($(this).val() >= $("input[name='quarto']").val()) {
+                var quartos = parseInt($("input[name='quarto']").val());
+                var suites = parseInt($(this).val());
+                if (suites > quartos) {
                     notificationFunctions.toastSmall('error', 'O campo suites deve ser menor que o numero de quartos')
+                    $(this).focus()
+                }
+            });
+
+            // Válida área contruída
+            $(document).on('focusout', "input[name='area_construida']", function(e) {
+                var areaConstruida = parseInt($(this).val());
+                var areaTotal = parseInt($("input[name='area_total']").val());
+                if (areaConstruida > areaTotal) {
+                    notificationFunctions.toastSmall('error', 'O campo área contruída deve ser menor que a área total')
+                    $(this).focus()
+                }
+            });
+
+              // Válida suítes
+            $(document).on('focusout', "input[name='quarto']", function(e) {
+                var suites = parseInt($("input[name='suite']").val());
+                var quartos = parseInt($(this).val());
+                if (suites > quartos) {
+                    notificationFunctions.toastSmall('error', 'O campo suites deve ser menor que o numero de quartos')
+                    $(this).focus()
+                }
+            });
+
+            // Válida área contruída
+            $(document).on('focusout', "input[name='area_total']", function(e) {
+               var areaTotal = parseInt($(this).val());
+               var areaConstruida = parseInt($("input[name='area_construida']").val());
+                if (areaConstruida > areaTotal) {
+                    notificationFunctions.toastSmall('error', 'O campo área contruída deve ser menor que a área total')
                     $(this).focus()
                 }
             });
