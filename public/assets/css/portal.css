@@ -10288,7 +10288,7 @@ button.close:focus {
 .app-nav .nav-icon {
     position: absolute;
     left: 1rem;
-    top: 1rem;
+    top: 0.6rem;
 }
 
 .app-nav .nav-icon i {
