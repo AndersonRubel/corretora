@@ -19,14 +19,14 @@ class CadastroMenuSeeder extends DatabaseSeeder
             'icone'       => 'fas fa-home'
         ]);
 
-        $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Cadastro',
-            'descricao'   => 'Cadastros do Sistema',
-            'path'        => '#',
-            'agrupamento' => 'cadastro',
-            'ordenacao'   => '2',
-            'icone'       => 'fas fa-edit'
-        ]);
+        // $this->saveOnce('cadastro_menu', [
+        //     'nome'        => 'Cadastro',
+        //     'descricao'   => 'Cadastros do Sistema',
+        //     'path'        => '#',
+        //     'agrupamento' => 'cadastro',
+        //     'ordenacao'   => '2',
+        //     'icone'       => 'fas fa-edit'
+        // ]);
 
         /////// Inicio :: Menus de Gestão ///////
         $this->saveOnce('cadastro_menu', [
@@ -87,42 +87,42 @@ class CadastroMenuSeeder extends DatabaseSeeder
         ]);
 
         /////// Inicio :: Menus de Cadastro ///////
-        $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Tipo Imóvel',
-            'descricao'   => 'Cadastro de Tipo de Imóvel',
-            'path'        => 'cadastro/tipoImovel',
-            'agrupamento' => 'cadastro',
-            'localizacao' => 'cadastro',
-            'icone'       => 'fas fa-edit',
-            'ordenacao'   => '1'
-        ]);
+        // $this->saveOnce('cadastro_menu', [
+        //     'nome'        => 'Tipo Imóvel',
+        //     'descricao'   => 'Cadastro de Tipo de Imóvel',
+        //     'path'        => 'cadastro/tipoImovel',
+        //     'agrupamento' => 'cadastro',
+        //     'localizacao' => 'cadastro',
+        //     'icone'       => 'fas fa-edit',
+        //     'ordenacao'   => '1'
+        // ]);
 
-        $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Categoria Imóvel',
-            'descricao'   => 'Cadastro de Categoria de Imóvel',
-            'path'        => 'cadastro/categoriaImovel',
-            'agrupamento' => 'cadastro',
-            'localizacao' => 'cadastro',
-            'icone'       => 'fas fa-edit',
-            'ordenacao'   => '2'
-        ]);
+        // $this->saveOnce('cadastro_menu', [
+        //     'nome'        => 'Categoria Imóvel',
+        //     'descricao'   => 'Cadastro de Categoria de Imóvel',
+        //     'path'        => 'cadastro/categoriaImovel',
+        //     'agrupamento' => 'cadastro',
+        //     'localizacao' => 'cadastro',
+        //     'icone'       => 'fas fa-edit',
+        //     'ordenacao'   => '2'
+        // ]);
 
-        $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Grupos',
-            'descricao'   => 'Cadastro de Grupos',
-            'path'        => 'cadastro/grupo',
-            'agrupamento' => 'cadastro',
-            'localizacao' => 'cadastro',
-            'icone'       => 'fas fa-edit'
-        ]);
+        // $this->saveOnce('cadastro_menu', [
+        //     'nome'        => 'Grupos',
+        //     'descricao'   => 'Cadastro de Grupos',
+        //     'path'        => 'cadastro/grupo',
+        //     'agrupamento' => 'cadastro',
+        //     'localizacao' => 'cadastro',
+        //     'icone'       => 'fas fa-edit'
+        // ]);
 
-        $this->saveOnce('cadastro_menu', [
-            'nome'        => 'Menus',
-            'descricao'   => 'Cadastro de Menus de Acesso',
-            'path'        => 'cadastro/menu',
-            'agrupamento' => 'cadastro',
-            'localizacao' => 'cadastro',
-            'icone'       => 'fas fa-edit'
-        ]);
+        // $this->saveOnce('cadastro_menu', [
+        //     'nome'        => 'Menus',
+        //     'descricao'   => 'Cadastro de Menus de Acesso',
+        //     'path'        => 'cadastro/menu',
+        //     'agrupamento' => 'cadastro',
+        //     'localizacao' => 'cadastro',
+        //     'icone'       => 'fas fa-edit'
+        // ]);
     }
 }

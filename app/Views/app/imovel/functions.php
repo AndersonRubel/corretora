@@ -220,40 +220,53 @@
             imovelFunctions.listenerTipoImovel();
             imovelFunctions.listenerValidaCampos();
             imovelFunctions.listenerModalHelp();
-            imovelFunctions.listenerOnSubmit();
+            // imovelFunctions.listenerOnSubmit();
             $("[data-select='buscarTipoImovel']").change();
             $("[data-select='buscarCategoriaImovel']").change();
         },
-        listenerOnSubmit: () => {
-            $(document).on('click', "[data-action ='form-imovel-submit']", () => {
-                cat_imovel = $("[data-select='buscarCategoriaImovel']").val();
+        // listenerOnSubmit: () => {
+        //     $(document).on('click', "[data-action ='form-imovel-submit']", () => {
+        //         var area_construida = convertFunctions.realToNumeric($(this).val());
+        //         var area_total = convertFunctions.realToNumeric($("input[name='area_total']").val());
 
-                if (cat_imovel == 1) {
-                    $("#valor_venda").find('input').removeAttr('required');
-                    $("#valor_venda").find('input').val('');
-                } else if (cat_imovel == 2) {
-                    $("#valor_aluguel").find('input').removeAttr('required')
-                    $("#valor_aluguel").find('input').val('');
-                }
-                $("[id='form-imovel']").submit();
-            })
+        //         cat_imovel = $("[data-select='buscarCategoriaImovel']").val();
 
-        },
+        //         if (cat_imovel == 1) {
+        //             $("#valor_venda").find('input').removeAttr('required');
+        //             $("#valor_venda").find('input').val('');
+        //         } else if (cat_imovel == 2) {
+        //             $("#valor_aluguel").find('input').removeAttr('required')
+        //             $("#valor_aluguel").find('input').val('');
+        //         }
+
+        //         if (parseFloat(area_construida) > parseFloat(area_total)) {
+        //             notificationFunctions.toastSmall('error', 'O campo área contruída deve ser menor que a área total')
+        //             $(this).focus()
+        //         } else {
+        //             $("[id='form-imovel']").submit();
+        //         }
+
+        //     })
+
+        // },
         listenerTipoImovel: () => {
             $(document).on('change', "[data-select='buscarCategoriaImovel']", function(e) {
 
                 $("#valor_venda").addClass('d-none');
                 $("#valor_aluguel").addClass('d-none');
                 if ($(this).val() == '1') {
-                    console.log($(this).val())
                     $("#valor_aluguel").removeClass('d-none');
+                    $("#valor_venda").find('input').removeAttr('required');
+                    $("#valor_venda").find('input').val('');
                 } else if ($(this).val() == '2') {
-                    console.log($(this).val())
                     $("#valor_venda").removeClass('d-none');
-                } else {
-                    console.log($(this).val())
+                    $("#valor_aluguel").find('input').removeAttr('required');
+                    $("#valor_aluguel").find('input').val('');
+                } else if ($(this).val() == '3') {
                     $("#valor_aluguel").removeClass('d-none');
+                    $("#valor_aluguel").find('input').attr('required')
                     $("#valor_venda").removeClass('d-none');
+                    $("#valor_venda").find('input').attr('required');
                 }
 
             });
@@ -455,20 +468,66 @@
                 if (suites > quartos) {
                     notificationFunctions.toastSmall('error', 'O campo suites deve ser menor que o numero de quartos')
                     $(this).focus()
+                } else if (quartos == 0) {
+
                 }
             });
 
+            // Válida quarto
+            $(document).on('focusout', "input[name='quarto']", function(e) {
+
+                var quarto = parseInt($(this).val());
+                if (quarto == 0) {
+                    notificationFunctions.toastSmall('error', 'O Imóvel precisa ter 1 ou mais quartos!')
+                    $(this).focus()
+                }
+            });
+            // Válida banheiro
+            $(document).on('focusout', "input[name='banheiro']", function(e) {
+
+                var banheiro = parseInt($(this).val());
+                if (banheiro == 0) {
+                    notificationFunctions.toastSmall('error', 'O Imóvel precisa ter 1 ou mais banheiros!')
+                    $(this).focus()
+                }
+            });
+
+            // Válida valor de venda
+            $(document).on('focusout', "input[name='valor_venda']", function(e) {
+                var valor_venda = convertFunctions.realToNumeric($("input[name='valor_venda']").val());
+                var valor_aluguel = convertFunctions.realToNumeric($("input[name='valor_aluguel']").val());
+
+                if ($("[data-select='buscarCategoriaImovel']").val() == 3) {
+                    if (parseFloat(valor_venda) < parseFloat(valor_aluguel)) {
+                        notificationFunctions.toastSmall('error', 'O Valor de venda deve ser maior que o de aluguel!')
+                        $(this).focus()
+                    }
+                }
+            });
+
+            // Válida valor de aluguel
+            $(document).on('focusout', "input[name='valor_aluguel']", function(e) {
+                var valor_venda = convertFunctions.realToNumeric($("input[name='valor_venda']").val());
+                var valor_aluguel = convertFunctions.realToNumeric($("input[name='valor_aluguel']").val());
+
+                if ($("[data-select='buscarCategoriaImovel']").val() == 3) {
+                    if (parseFloat(valor_aluguel) > parseFloat(valor_venda)) {
+                        notificationFunctions.toastSmall('error', 'O Valor de aluguel deve ser menor que o de venda!')
+                        $(this).focus()
+                    }
+                }
+            });
             // Válida área contruída
             $(document).on('focusout', "input[name='area_construida']", function(e) {
-                var areaConstruida = parseInt($(this).val());
-                var areaTotal = parseInt($("input[name='area_total']").val());
-                if (areaConstruida > areaTotal) {
+                var areaConstruida = convertFunctions.realToNumeric($(this).val());
+                var areaTotal = convertFunctions.realToNumeric($("input[name='area_total']").val());
+                if (parseFloat(areaConstruida) > parseFloat(areaTotal)) {
                     notificationFunctions.toastSmall('error', 'O campo área contruída deve ser menor que a área total')
                     $(this).focus()
                 }
             });
 
-              // Válida suítes
+            // Válida suítes
             $(document).on('focusout', "input[name='quarto']", function(e) {
                 var suites = parseInt($("input[name='suite']").val());
                 var quartos = parseInt($(this).val());
@@ -480,8 +539,8 @@
 
             // Válida área contruída
             $(document).on('focusout', "input[name='area_total']", function(e) {
-               var areaTotal = parseInt($(this).val());
-               var areaConstruida = parseInt($("input[name='area_construida']").val());
+                var areaTotal = parseInt($(this).val());
+                var areaConstruida = parseInt($("input[name='area_construida']").val());
                 if (areaConstruida > areaTotal) {
                     notificationFunctions.toastSmall('error', 'O campo área contruída deve ser menor que a área total')
                     $(this).focus()
@@ -596,7 +655,7 @@
                 },
                 {
                     "data": "valor_aluguel",
-                    "title": "Valor Venda",
+                    "title": "Valor Aluguel",
                     "className": "text-end",
                     "isreplace": true,
                     "render": (data) => `R$ ${convertFunctions.intToReal(data)}`
@@ -643,11 +702,9 @@
             }];
             mapeamento[1][ROUTE]['columns'] = [{
                     "data": "codigo_imovel",
-                    "visible": true,
                     "title": "Código"
                 }, {
                     "data": "codigo_referencia",
-                    "visible": true,
                     "title": "Referência"
                 },
                 {
@@ -655,8 +712,15 @@
                     "title": "Categoria",
                 },
                 {
-                    "data": "valor",
-                    "title": "Valor",
+                    "data": "valor_venda",
+                    "title": "Valor Venda",
+                    "className": "text-end",
+                    "isreplace": true,
+                    "render": (data) => `R$ ${convertFunctions.intToReal(data)}`
+                },
+                {
+                    "data": "valor_aluguel",
+                    "title": "Valor Aluguel",
                     "className": "text-end",
                     "isreplace": true,
                     "render": (data) => `R$ ${convertFunctions.intToReal(data)}`

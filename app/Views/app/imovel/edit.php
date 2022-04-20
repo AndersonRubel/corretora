@@ -75,27 +75,27 @@
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2" id="quarto">
                                             <label class="form-label">Quarto</label>
-                                            <input class="form-control" name="quarto" type="Number" data-tippy-content="Informe Quantos Quartos" required value="<?= old('quarto', $imovel['quarto']); ?>">
+                                            <input class="form-control" name="quarto" type="Number" min="1" max="50" data-tippy-content="Informe Quantos Quartos" required value="<?= old('quarto', $imovel['quarto'] ? $imovel['quarto'] : 0); ?>">
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2" id="banheiro">
                                             <label class="form-label">Banheiro</label>
-                                            <input class="form-control" name="banheiro" type="Number" data-tippy-content="Informe Quantos Banheiros" required value="<?= old('banheiro', $imovel['banheiro']); ?>">
+                                            <input class="form-control" name="banheiro" type="Number" min="1" max="50" data-tippy-content="Informe Quantos Banheiros" required value="<?= old('banheiro', $imovel['banheiro'] ? $imovel['banheiro'] : 0); ?>">
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2" id="suite">
                                             <label class="form-label">Suite</label>
-                                            <input class="form-control" name="suite" type="Number" data-tippy-content="Informe Quantas Suites" value="<?= old('suite', $imovel['suite']); ?>">
+                                            <input class="form-control" name="suite" type="Number" min="0" max="50" data-tippy-content="Informe Quantas Suites" value="<?= old('suite', $imovel['suite'] ? $imovel['suite'] : 0); ?>">
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2" id="vaga">
                                             <label class="form-label">Vagas(s)</label>
-                                            <input class="form-control" name="vaga" type="Number" data-tippy-content="Informe Quantas Vagas de Garagem" value="<?= old('vaga', $imovel['vaga']); ?>">
+                                            <input class="form-control" name="vaga" type="Number" min="0" max="50" data-tippy-content="Informe Quantas Vagas de Garagem" value="<?= old('vaga', $imovel['vaga'] ? $imovel['vaga'] : 0); ?>">
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2" id="area_construida">
                                             <label class="form-label">Área Construida</label>
-                                            <input class="form-control" name="area_construida" type="Number" data-tippy-content="Informe a Área Construida em M²" value="<?= old('area_construida', $imovel['area_construida']); ?>">
+                                            <input class="form-control" name="area_construida" type="Number" min="0" max="1000000" data-tippy-content="Informe a Área Construida em M²" value="<?= old('area_construida', $imovel['area_construida']); ?>">
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2">
                                             <label class="form-label">Área Total</label>
-                                            <input class="form-control" name="area_total" type="Number" data-tippy-content="Informe a Área Útil em M²" required value="<?= old('area_total', $imovel['area_total']); ?>">
+                                            <input class="form-control" name="area_total" type="Number" min="0" max="1000000" data-tippy-content="Informe a Área Útil em M²" required value="<?= old('area_total', $imovel['area_total']); ?>">
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-sm-12 mb-2" id="valor_venda">
                                             <label class="form-label">Valor Venda</label>
@@ -229,10 +229,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type'submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
+                </div>
             </form>
-            <div class="d-flex justify-content-end mt-2">
-                <button data-action='form-imovel-submit' class="btn app-btn-primary" style="z-index:1">Salvar</button>
-            </div>
+
         </div>
     </div>
 </div>
