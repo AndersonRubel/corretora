@@ -9,8 +9,8 @@
                 </div>
                 <div class="ml-auto d-flex align-items-center">
                     <div>
-                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=2') ?>" id="venda" class="view-list px-3">Venda</a>
-                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=1') ?>" id="aluguel" class="view-list px-3 border-right">Aluguel</a>
+                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=2') ?>" id="venda" class="view-list px-3">Comprar</a>
+                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=1') ?>" id="aluguel" class="view-list px-3 border-right">Alugar</a>
                     </div>
                     <form id="formCondominio" method="GET" action="">
                         <input type="hidden" id="codigo_categoria_imovel_condominio" name="codigo_categoria_imovel" value>

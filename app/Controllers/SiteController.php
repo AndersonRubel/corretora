@@ -33,7 +33,7 @@ class SiteController extends BaseController
         $dados['tipoImovel'] = $tipoImovelModel->get();
         $dados['categoriaImovel'] = $categoriaImovelModel->get();
 
-        $dados['imovel'] = $siteModel->selectImoveisFiltrar(['destque' => 'true']);
+        $dados['imovel'] = $siteModel->selectImoveisFiltrar(['destaque' => 'true']);
         $dados['cidades'] = $siteModel->selectCidades();
         // dd($dados);
 
