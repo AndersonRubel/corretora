@@ -427,8 +427,8 @@
             ];
             mapeamento[1][ROUTE]['btn_montar'] = true;
             mapeamento[1][ROUTE]['btn'] = [{
-                "funcao": "ativar",
-                "metodo": "",
+                "funcao": "visualizar",
+                "metodo": "visualizar",
                 "compare": null
             }, ];
         },
