@@ -47,11 +47,11 @@
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-12 mb-2">
                                     <label class="form-label">Data de Início</label>
-                                    <input type="date" class="form-control" name="data_inicio" required value="<?= old('data_inicio'); ?>" data-tippy-content="Data de Início da Reserva">
+                                    <input type="datetime-local" class="form-control" name="data_inicio" required value="<?= old('data_inicio'); ?>" data-tippy-content="Data de Início da Reserva">
                                 </div>
                                 <div class="col-md-2 col-lg-2 col-sm-12 mb-2">
                                     <label class="form-label">Data Fim</label>
-                                    <input type="date" class="form-control" name="data_fim" required value="<?= old('data_fim'); ?>" data-tippy-content="Data do Fim da Reserva">
+                                    <input type="datetime-local" class="form-control" name="data_fim" required value="<?= old('data_fim'); ?>" data-tippy-content="Data do Fim da Reserva">
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-sm-12 mb-5">
                                     <label class="form-label">Descrição</label>
