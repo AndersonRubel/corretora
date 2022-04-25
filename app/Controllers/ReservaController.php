@@ -26,7 +26,7 @@ class ReservaController extends BaseController
         $dados['reserva'] = $reservaModel->get();
         foreach ($dados['reserva'] as $key => $value) {
 
-            if (date('Y-m-d', strtotime($value['data_fim'])) < strtotime(date('Y-m-d'))) {
+            if (strtotime($value['data_fim']) < strtotime(date('Y-m-d'))) {
                 $reservaModel->customSoftDelete($value['uuid_reserva'], true);
             }
         }

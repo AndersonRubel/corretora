@@ -11,14 +11,15 @@ class FunctionVerificaReserva extends Migration
 		$this->db->query("CREATE OR REPLACE FUNCTION verifica_reserva() RETURNS pg_catalog.trigger AS $$
             BEGIN
 
-                 IF NEW.data_inicio > NEW.data_fim THEN
+
+              IF (TG_OP = 'INSERT') THEN
+              IF NEW.data_inicio > NEW.data_fim THEN
                     RAISE EXCEPTION '|A Data de início não pode ser maior que a data de término|';
                  END IF;
 
                  IF NEW.data_inicio < CURRENT_DATE THEN
                     RAISE EXCEPTION '|A Data de início não pode ser menor que a data atual|';
                  END IF;
-              IF (TG_OP = 'INSERT') THEN
                  -- verifica se não existe reserva para o imovel no periodo
                  IF EXISTS (
                      SELECT 1
