@@ -8,6 +8,7 @@
             proprietarioFunctions.listenerTipoPessoa();
             proprietarioFunctions.listenerBuscarCep();
             proprietarioFunctions.listenerModalHelp();
+
             // Atualiza os campos conforme a o tipo de pessoa
             $("#tipoPessoa").trigger('change');
         },
@@ -74,7 +75,7 @@
                     )
                 }
             });
-        },
+        }
     };
 
     const dataGridFornecedorFunctions = {

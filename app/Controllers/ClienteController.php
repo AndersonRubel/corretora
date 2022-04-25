@@ -89,7 +89,8 @@ class ClienteController extends BaseController
             'tipo_pessoa' => 'required|integer|in_list[1,2]',
             'razao_social' => 'permit_empty|string|min_length[3]|max_length[255]',
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
-            'cpf_cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
+            'cpf' => 'permit_empty|string|min_length[11]|max_length[18]',
+            'cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
             'data_nascimento' => 'permit_empty|valid_date',
@@ -118,6 +119,12 @@ class ClienteController extends BaseController
             return redirect()->back()->withInput();
         }
 
+        if(!empty($dadosRequest['cpf'])){
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
+        } else {
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
+        }
+
         // JSONB de Dados do Endereço
         $clienteEndereco = [
             'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
@@ -139,7 +146,7 @@ class ClienteController extends BaseController
             'celular'         => onlyNumber($dadosRequest['celular']),
             'email'           => $dadosRequest['email'],
             'observacao'      => $dadosRequest['observacao'],
-            'data_nascimento' => $dadosRequest['data_nascimento'],
+            'data_nascimento' => !empty($dadosRequest['data_nascimento']) ? $dadosRequest['data_nascimento'] : null,
             'endereco'        => !empty($clienteEndereco) ? json_encode($clienteEndereco) : null,
         ];
 
@@ -239,7 +246,8 @@ class ClienteController extends BaseController
         $erros = $this->validarRequisicao($this->request, [
             'razao_social' => 'permit_empty|string|min_length[3]|max_length[255]',
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
-            'cpf_cnpj' => 'required|string|min_length[11]|max_length[18]',
+            'cpf' => 'permit_empty|string|min_length[11]|max_length[18]',
+            'cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'observacao' => 'permit_empty|string',
             'data_nascimento' => 'permit_empty|valid_date',
@@ -268,6 +276,12 @@ class ClienteController extends BaseController
             return redirect()->back()->withInput();
         }
 
+        if(!empty($dadosRequest['cpf'])){
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
+        } else {
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
+        }
+
         // JSONB de Dados do Endereço
         $clienteEndereco = [
             'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
@@ -287,7 +301,7 @@ class ClienteController extends BaseController
             'celular'           => onlyNumber($dadosRequest['celular']),
             'email'             => $dadosRequest['email'],
             'observacao'        => $dadosRequest['observacao'],
-            'data_nascimento'   => $dadosRequest['data_nascimento'],
+            'data_nascimento' => !empty($dadosRequest['data_nascimento']) ? $dadosRequest['data_nascimento'] : null,
             'endereco'          => !empty($clienteEndereco) ? json_encode($clienteEndereco) : null,
         ];
 

@@ -3,6 +3,7 @@
         init: () => {
             select2UsuarioFunctions.buscarGrupo();
             select2UsuarioFunctions.buscarEmpresa();
+            
         },
         buscarGrupo: (caller) => {
             let elementSelect2 = $("[data-select='buscarGrupo']");
