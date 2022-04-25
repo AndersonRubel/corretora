@@ -115,7 +115,6 @@
     const usuarioPerfilFunctions = {
         init: () => {
             usuarioPerfilFunctions.listenerUploadAvatar();
-            usuarioPerfilFunctions.listenerValidaCpfCnpj();
 
         },
 
@@ -138,28 +137,6 @@
                 let base64Avatar = pond.getFile().getFileEncodeDataURL();
                 $("input[name='avatar']").val(base64Avatar);
                 $("input[name='avatar_nome']").val(pond.getFile().filename);
-            });
-        },
-        listenerValidaCpfCnpj: () => {
-            $(document).on('focusout', "input[name='cpfCnpj']", function(e) {
-                var value = $(this).val());
-                console.log(value);
-                if (strlen($value) !== 11 || preg_match('/(\d)\1{10}/', $value)) {
-                    notificationFunctions.toastSmall('error', 'O CPF digitado não é válido')
-                    $(this).focus()
-                }
-                for ($t = 9; $t < 11; $t++) {
-                    for ($d = 0, $c = 0; $c < $t; $c++) {
-                        $d += $value{$c} * (($t + 1) - $c);
-                    }
-
-                    $d = ((10 * $d) % 11) % 10;
-
-                    if ($value{$c} != $d) {
-                        notificationFunctions.toastSmall('error', 'O CPF digitado não é válido')
-                        $(this).focus()
-                    }
-                }
             });
         }
     };
