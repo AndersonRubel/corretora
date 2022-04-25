@@ -119,11 +119,12 @@ class ClienteController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cpf']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
         } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
         } else {
+
             $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Invalido.');
             return redirect()->back()->withInput();
         }
@@ -206,7 +207,7 @@ class ClienteController extends BaseController
             return $this->response->setJSON(['mensagem' => formataErros($erros)], 422);
         }
 
-        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cpf']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
         } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
@@ -307,7 +308,7 @@ class ClienteController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cpf']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
         } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];

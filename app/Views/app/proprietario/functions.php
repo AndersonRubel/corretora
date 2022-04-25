@@ -34,11 +34,14 @@
                     // Troca a Label de Nome Fantasia para Nome
                     $("#nomeFantasia").find('label').text('Nome *');
 
-                    // Troca a Label de CNPJ para CPF, e atualiza o tipo de mascara
-                    $("#cpfCnpj").find('label').text('CPF *');
+                   // Esconde o cnpj, remove a obrigatoriedade
+                    $("#cnpj").addClass('d-none').find('input').removeAttr('required');
+                    $("cnpj").val('');
+                    // Mostra cpf, e adiciona a obrigatoriedade
+                    $("#cpf").removeClass('d-none').find('input').attr('required');
 
-                    // Exibe a Data de Nascimento
-                    $("#dataNascimento").removeClass('d-none');
+                    // // Exibe a Data de Nascimento
+                    // $("#dataNascimento").removeClass('d-none');
                 } else {
                     // PESSOA JURÍDICA
 
@@ -46,11 +49,14 @@
                     $("#razaoSocial").removeClass('d-none').find('input').attr('required');
                     $("#nomeFantasia").find('label').text('Nome Fantasia *');
 
-                    // Troca a Label de CPF para CNPJ, e atualiza o tipo de mascara
-                    $("#cpfCnpj").find('label').text('CNPJ *');
+                    // Esconde o Campo de cpf, remove a obrigatoriedade
+                    $("#cpf").addClass('d-none').find('input').removeAttr('required');
+                    $("cpf").val('');
+                    // Mostra cnpj, e adiciona a obrigatoriedade
+                    $("#cnpj").removeClass('d-none').find('input').attr('required');
 
-                    // Oculta a Data de Nascimento
-                    $("#dataNascimento").addClass('d-none');
+                    // // Oculta a Data de Nascimento
+                    // $("#dataNascimento").addClass('d-none');
                 }
 
                 maskFunctions.init();

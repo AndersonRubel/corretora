@@ -118,7 +118,7 @@ class ProprietarioController extends BaseController
             $this->nativeSession->setFlashData('error', formataErros($erros));
             return redirect()->back()->withInput();
         }
-        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cpf']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
         } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
@@ -157,7 +157,7 @@ class ProprietarioController extends BaseController
             'celular'         => onlyNumber($dadosRequest['celular']),
             'email'           => $dadosRequest['email'],
             'observacao'      => $dadosRequest['observacao'],
-            'data_nascimento' => !empty($dadosRequest['data_nascimento'] ? $dadosRequest['data_nascimento'] : null),
+            //'data_nascimento' => !empty($dadosRequest['data_nascimento'] ? $dadosRequest['data_nascimento'] : null),
             'endereco'        => !empty($proprietarioEndereco) ? json_encode($proprietarioEndereco) : null,
         ];
 
@@ -208,7 +208,7 @@ class ProprietarioController extends BaseController
             return $this->response->setJSON(['mensagem' => formataErros($erros)], 422);
         }
 
-        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cpf']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
         } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
@@ -242,7 +242,7 @@ class ProprietarioController extends BaseController
             'telefone'        => onlyNumber($dadosRequest['telefone']),
             'celular'         => onlyNumber($dadosRequest['celular']),
             'email'           => $dadosRequest['email'],
-            'data_nascimento' => !empty($dadosRequest['data_nascimento']) ? $dadosRequest['data_nascimento'] : null,
+        //    'data_nascimento' => !empty($dadosRequest['data_nascimento']) ? $dadosRequest['data_nascimento'] : null,
             'endereco'        => !empty($proprietarioEndereco) ? json_encode($proprietarioEndereco) : null,
         ];
 
@@ -306,7 +306,7 @@ class ProprietarioController extends BaseController
             $this->nativeSession->setFlashData('error', formataErros($erros));
             return redirect()->back()->withInput();
         }
-        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cpf']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
         } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
@@ -344,7 +344,7 @@ class ProprietarioController extends BaseController
             'celular'           => onlyNumber($dadosRequest['celular']),
             'email'             => $dadosRequest['email'],
             'observacao'        => $dadosRequest['observacao'],
-            'data_nascimento' => !empty($dadosRequest['data_nascimento'] ? $dadosRequest['data_nascimento'] : null),
+        //    'data_nascimento' => !empty($dadosRequest['data_nascimento'] ? $dadosRequest['data_nascimento'] : null),
             'endereco'          => !empty($proprietarioEndereco) ? json_encode($proprietarioEndereco) : null,
         ];
 

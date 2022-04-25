@@ -44,11 +44,11 @@
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cnpj">
                                     <label class="form-label">CNPJ</label>
-                                    <input type="text" class="form-control" name="cnpj" data-mask="cnpj" required value="<?= old('cnpj', $cliente['tipo_pessoa'] == 2 ? $cliente['cpf_cnpj'] : ''); ?>">
+                                    <input type="text" class="form-control" name="cnpj" data-mask="cnpj" required value="<?= old('cnpj', $proprietario['tipo_pessoa'] == 2 ? $proprietario['cpf_cnpj'] : ''); ?>">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cpf">
                                     <label class="form-label">CPF</label>
-                                    <input type="text" class="form-control" name="cpf" data-mask="cpf" required value="<?= old('cpf', $cliente['tipo_pessoa'] == 1 ? $cliente['cpf_cnpj'] : ''); ?>">
+                                    <input type="text" class="form-control" name="cpf" data-mask="cpf" required value="<?= old('cpf', $proprietario['tipo_pessoa'] == 1 ? $proprietario['cpf_cnpj'] : ''); ?>">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                     <label class="form-label">Telefone</label>
