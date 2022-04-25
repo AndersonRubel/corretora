@@ -9,17 +9,32 @@
             <form>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6 col-lg-6 col-sm-12 mb-2">
-                            <label class="form-label">Nome</label>
-                            <input type="text" class="form-control" name="nome_fantasia" data-tippy-content="Informe o Nome do Proprietário" required>
+                        <div class="row mb-2">
+                            <div class="col-md-3 col-lg-3 col-sm-12">
+                                <label class="form-label">Tipo de Pessoa</label>
+                                <select class="form-control" name="tipo_pessoa" id="tipoPessoa" required>
+                                    <option value="1" <?= old('tipo_pessoa') == 1 ? 'selected' : '' ?>>Pessoa Física
+                                    </option>
+                                    <option value="2" <?= old('tipo_pessoa') == 2 ? 'selected' : '' ?>>Pessoa
+                                        Jurídica</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                            <label class="form-label">CPF/CNPJ</label>
-                            <input type="text" class="form-control" name="cpf_cnpj" data-mask="cnpjCpf" data-tippy-content="Informe o CPF ou CNPJ do Proprietário">
+                        <div class="col-md-6 col-lg-6 col-sm-12 mb-2" id="razaoSocial">
+                            <label class="form-label">Razão Social</label>
+                            <input type="text" class="form-control" name="razao_social" required value="<?= old('razao_social'); ?>">
                         </div>
-                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
-                            <label class="form-label">Data de Nascimento</label>
-                            <input type="date" class="form-control" name="data_nascimento" data-tippy-content="Informe a Data de Nascimento do Proprietário">
+                        <div class="col-md-6 col-lg-6 col-sm-12 mb-2" id="nomeFantasia">
+                            <label class="form-label">Nome Fantasia</label>
+                            <input type="text" class="form-control" name="nome_fantasia" required value="<?= old('nome_fantasia'); ?>">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2 d-none" id="cnpj">
+                            <label class="form-label">CNPJ</label>
+                            <input type="text" class="form-control" name="cnpj" data-mask="cnpj" required value="<?= old('cnpj'); ?>">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cpf">
+                            <label class="form-label">CPF</label>
+                            <input type="text" class="form-control" name="cpf" data-mask="cpf" required value="<?= old('cpf'); ?>">
                         </div>
                         <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                             <label class="form-label">Telefone</label>

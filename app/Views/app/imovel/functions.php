@@ -220,9 +220,11 @@
             imovelFunctions.listenerTipoImovel();
             imovelFunctions.listenerValidaCampos();
             imovelFunctions.listenerModalHelp();
+            imovelFunctions.listenerTipoPessoa();
             // imovelFunctions.listenerOnSubmit();
             $("[data-select='buscarTipoImovel']").change();
             $("[data-select='buscarCategoriaImovel']").change();
+            $("#tipoPessoa").trigger('change');
         },
         // listenerOnSubmit: () => {
         //     $(document).on('click', "[data-action ='form-imovel-submit']", () => {
@@ -582,11 +584,9 @@
                 await appFunctions.backendCall('POST', `proprietario/storeSimplificado`, {
                     nome_fantasia: $("#modalCadastrarProprietario input[name='nome_fantasia']")
                         .val(),
-                    cpf_cnpj: $("#modalCadastrarProprietario input[name='cpf_cnpj']").val(),
+                    cpf: $("#modalCadastrarProprietario input[name='cpf']").val(),
+                    cnpj: $("#modalCadastrarProprietario input[name='cnpj']").val(),
                     email: $("#modalCadastrarProprietario input[name='email']").val(),
-                    data_nascimento: $(
-                            "#modalCadastrarProprietario input[name='data_nascimento']")
-                        .val(),
                     telefone: $("#modalCadastrarProprietario input[name='telefone']").val(),
                     celular: $("#modalCadastrarProprietario input[name='celular']").val(),
                     cep: $("#modalCadastrarProprietario input[name='cep']").val(),
@@ -602,6 +602,8 @@
                         $("[data-select='buscarProprietario']").select2('val', res
                             .proprietario);
                         $("#modalCadastrarProprietario").modal('hide');
+                    } else {
+                        notificationFunctions.toastSmall('info', res.mensagem)
                     }
                 }).catch(err => notificationFunctions.toastSmall(err.textStatus, err.mensagem));
             });
@@ -611,7 +613,54 @@
             $(document).on('click', "#btnHelp", () => {
                 $("#modalHelp").modal('show');
             });
-        }
+        },
+        listenerTipoPessoa: () => {
+            $(document).on('change', "#tipoPessoa", function() {
+
+                if ($(this).val() !== $('#tipoPessoa').val()) {
+                    // Zera o valor dos campos
+                    $("input[name='razao_social'], input[name='nome_fantasia'], input[name='cpf_cnpj']")
+                        .val('');
+                }
+
+                if ($(this).val() == 1) {
+                    // PESSOA FÍSICA
+
+                    // Esconde o Campo de Razão Social, remove a obrigatoriedade
+                    $("#razaoSocial").addClass('d-none').find('input').removeAttr('required');
+
+                    // Troca a Label de Nome Fantasia para Nome
+                    $("#nomeFantasia").find('label').text('Nome *');
+
+                    // Esconde o cnpj, remove a obrigatoriedade
+                    $("#cnpj").addClass('d-none').find('input').removeAttr('required');
+                    $("cnpj").val('');
+                    // Mostra cpf, e adiciona a obrigatoriedade
+                    $("#cpf").removeClass('d-none').find('input').attr('required');
+
+                    // // Exibe a Data de Nascimento
+                    // $("#dataNascimento").removeClass('d-none');
+                } else {
+                    // PESSOA JURÍDICA
+
+                    // Exibe o Campo de Razão Social, e adiciona a obrigatoriedade
+                    $("#razaoSocial").removeClass('d-none').find('input').attr('required');
+                    $("#nomeFantasia").find('label').text('Nome Fantasia *');
+
+                    // Esconde o Campo de cpf, remove a obrigatoriedade
+                    $("#cpf").addClass('d-none').find('input').removeAttr('required');
+                    $("cpf").val('');
+                    // Mostra cnpj, e adiciona a obrigatoriedade
+                    $("#cnpj").removeClass('d-none').find('input').attr('required');
+
+                    // // Oculta a Data de Nascimento
+                    // $("#dataNascimento").addClass('d-none');
+                }
+
+                appFunctions.addInputLabelRequired();
+                maskFunctions.init();
+            });
+        },
 
 
     };

@@ -119,17 +119,23 @@ class ClienteController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        if(!empty($dadosRequest['cpf'])){
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
-        } else {
+        } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
+        } else {
+            $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Invalido.');
+            return redirect()->back()->withInput();
         }
-        if ($dadosRequest['cpf_cnpj']) {
-            $cliente = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj'])]);
-            if (!empty($cliente)) {
+        if (!empty($dadosRequest['cpf_cnpj'])) {
+            $clienteValida = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj'])]);
+            if (!empty($clienteValida)) {
                 $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Já Cadastrado.');
                 return redirect()->back()->withInput();
             }
+        } else {
+            $this->nativeSession->setFlashData('error', 'Preencha o CPF ou CNPJ.');
+            return redirect()->back()->withInput();
         }
 
         // JSONB de Dados do Endereço
@@ -199,19 +205,22 @@ class ClienteController extends BaseController
         if (!empty($erros)) {
             return $this->response->setJSON(['mensagem' => formataErros($erros)], 422);
         }
-        if (!empty($dadosRequest['cpf'])) {
-            $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
-        } else {
-            $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
-        }
 
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
+        } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
+        } else {
+            return $this->response->setJSON(['mensagem' => 'CPF ou CNPJ Invalido.'], 422);
+        }
         if ($dadosRequest['cpf_cnpj']) {
 
-            $cliente = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj'])]);
-            if (!empty($cliente)) {
+            $clienteValida = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj'])]);
+            if (!empty($clienteValida)) {
                 return $this->response->setJSON(['mensagem' => 'CPF ou CNPJ Já Cadastrado.'], 422);
             }
         }
+
 
         // JSONB de Dados do Endereço
         $clienteEndereco = [
@@ -298,10 +307,24 @@ class ClienteController extends BaseController
             return redirect()->back()->withInput();
         }
 
-        if(!empty($dadosRequest['cpf'])){
+        if (!empty($dadosRequest['cpf']) && strlen($dadosRequest['cnpj']) == 14) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
-        } else {
+        } else if (!empty($dadosRequest['cnpj']) && strlen($dadosRequest['cnpj']) == 18) {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
+        } else {
+            $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Invalido.');
+            return redirect()->back()->withInput();
+        }
+
+        if (!empty($dadosRequest['cpf_cnpj'])) {
+            $clienteValida = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj']), 'uuid_cliente !=' => $uuid]);
+            if (!empty($clienteValida)) {
+                $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Já Cadastrado.');
+                return redirect()->back()->withInput();
+            }
+        } else {
+            $this->nativeSession->setFlashData('error', 'Preencha o CPF ou CNPJ.');
+            return redirect()->back()->withInput();
         }
         if ($dadosRequest['cpf_cnpj']) {
             $cliente = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj']), 'uuid_cliente !=' => $uuid]);

@@ -52,13 +52,13 @@
                                     <label class="form-label">Nome Fantasia</label>
                                     <input type="text" class="form-control" name="nome_fantasia" required value="<?= old('nome_fantasia'); ?>">
                                 </div>
-                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cpfCnpj">
+                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2 d-none" id="cnpj">
                                     <label class="form-label">CNPJ</label>
-                                    <input type="text" class="form-control" name="cpf_cnpj" data-mask="cnpjCpf" required value="<?= old('cpf_cnpj'); ?>">
+                                    <input type="text" class="form-control" name="cnpj" data-mask="cnpj" required value="<?= old('cnpj'); ?>">
                                 </div>
-                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="dataNascimento">
-                                    <label class="form-label">Data de Nascimento</label>
-                                    <input type="date" class="form-control" name="data_nascimento" value="<?= old('data_nascimento'); ?>">
+                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cpf">
+                                    <label class="form-label">CPF</label>
+                                    <input type="text" class="form-control" name="cpf" data-mask="cpf" required value="<?= old('cpf'); ?>">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                     <label class="form-label">Telefone</label>

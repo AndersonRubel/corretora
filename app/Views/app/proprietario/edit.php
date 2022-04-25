@@ -42,13 +42,13 @@
                                     <label class="form-label">Nome Fantasia</label>
                                     <input type="text" class="form-control" name="nome_fantasia" required value="<?= old('nome_fantasia', $proprietario['nome_fantasia']); ?>">
                                 </div>
-                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cpfCnpj">
+                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cnpj">
                                     <label class="form-label">CNPJ</label>
-                                    <input type="text" class="form-control" name="cpf_cnpj" data-mask="cnpjCpf" required value="<?= old('cpf_cnpj', $proprietario['cpf_cnpj']); ?>">
+                                    <input type="text" class="form-control" name="cnpj" data-mask="cnpj" required value="<?= old('cnpj', $cliente['tipo_pessoa'] == 2 ? $cliente['cpf_cnpj'] : ''); ?>">
                                 </div>
-                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="dataNascimento">
-                                    <label class="form-label">Data de Nascimento</label>
-                                    <input type="date" class="form-control" name="data_nascimento" value="<?= old('data_nascimento', $proprietario['data_nascimento']); ?>">
+                                <div class="col-md-3 col-lg-3 col-sm-12 mb-2" id="cpf">
+                                    <label class="form-label">CPF</label>
+                                    <input type="text" class="form-control" name="cpf" data-mask="cpf" required value="<?= old('cpf', $cliente['tipo_pessoa'] == 1 ? $cliente['cpf_cnpj'] : ''); ?>">
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-sm-12 mb-2">
                                     <label class="form-label">Telefone</label>
