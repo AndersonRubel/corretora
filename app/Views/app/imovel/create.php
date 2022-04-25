@@ -236,6 +236,7 @@
         };
 
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
         // The marker, positioned at Uluru
         const marker = new google.maps.Marker({
             position: {
@@ -253,6 +254,37 @@
             console.log(localizacao);
 
         });
+        $(document).on('focusout', "input[name='numero']", function(e) {
+            numero = $(this).val();
+            rua = $("input[name='rua']").val();
+            rua = rua.replaceAll(" ", '+');
+            var url = "https://maps.google.com/maps/api/geocode/json?address=" + rua + "," + numero + "&sensor=false&key=AIzaSyA03uqmKd3hJg9KIfS3d8MH1pkW6TY-WH0&callback=myMap"; //Sua URL
+            console.log(url);
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", url, false);
+            xhttp.send(); //A execução do script pára aqui até a requisição retornar do servidor
+
+            console.log(xhttp.responseText)
+
+            lat2 = JSON.parse(xhttp.responseText).results[0].geometry.location.lat;
+            lng2 = JSON.parse(xhttp.responseText).results[0].geometry.location.lng;
+            var mapProp = {
+                center: new google.maps.LatLng(lat2, lng2),
+                zoom: 15,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            $("[name='lat']").val(`${lat2}`);
+            $("[name='lng']").val(`${lng2}`);
+            const marker = new google.maps.Marker({
+                position: {
+                    lat: lat2,
+                    lng: lng2
+                },
+                map: map,
+                draggable: true,
+            });
+        });
+
     }
 </script>
 
