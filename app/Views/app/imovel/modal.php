@@ -73,3 +73,45 @@
     </div>
 </div>
 <!-- Fim :: Modal Cadastrar novo Cliente -->
+
+<!-- Inicio :: Modal Help -->
+<div class="modal fade" id="modalHelp" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajuda </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item"><b>Campos com *:</b> É obrigatório o preenchimento;</li>
+                <li class="list-group-item"><b>Imagem destaque:</b> Se refere a imagem principal que é exibida no site;</li>
+                <li class="list-group-item"><b>Código Referência:</b> Deve ser preenchido com o código que a corretora utiliza para referênciar o imóvel;</li>
+                <li class="list-group-item"><b>Categoria:</b> Campo para definir se o imóvel é para venda ou locação;</li>
+                <li class="list-group-item"><b>Tipo Imóvel:</b> Campo para definir o tipo do imóvel;</li>
+                <li class="list-group-item"><b>Condomínio:</b> Definir se o imóvel ou terreno está localizado em condomínio ou não;</li>
+                <li class="list-group-item"><b>Quarto:</b> Quantos quartos que possui o imóvel sem contar com suites;</li>
+                <li class="list-group-item"><b>Banheiro(s):</b> Quantos Banheiros possui o imóvel sem contar com suites;</li>
+                <li class="list-group-item"><b>Suite(s):</b> Quantas suites;</li>
+                <li class="list-group-item"><b>Vagas(s):</b> Quantas vagas de estacionamento;</li>
+                <li class="list-group-item"><b>Área Construida:</b> Qual é a área construida;</li>
+                <li class="list-group-item"><b>Área Total:</b> Qual é a área total do terreno;</li>
+                <li class="list-group-item"><b>Possui Edícula:</b> Definir se o imóvel possui edícula ou não; </li>
+                <li class="list-group-item"><b>Valor Venda:</b> Qual é o valor de venda do imóvel;</li>
+                <li class="list-group-item"><b>Valor Aluguel:</b> Qual é o valor de venda do imóvel;</li>
+                <li class="list-group-item"><b>Proprietário:</b> Associar o imóvel ao proprietário não aparece no site;</li>
+                <li class="list-group-item"><b>CEP:</b> CEP do imóvel ou terreno;</li>
+                <li class="list-group-item"><b>Rua:</b> Rua do imóvel ou terreno;</li>
+                <li class="list-group-item"><b>Número:</b> Número do imóvel ou terreno;</li>
+                <li class="list-group-item"><b>Bairro:</b> Bairro do imóvel ou terreno;</li>
+                <li class="list-group-item"><b>Complemento:</b> Complemento do imóvel ou terreno;</li>
+                <li class="list-group-item"><b>Cidade:</b> CECidadeP do imóvel ou terreno;</li>
+                <li class="list-group-item"><b>Mapa:</b>Indique a localizção do imóvel no mapa;</li>
+                <li class="list-group-item"><b>Publicar:</b> Definir se o imóvel vai ser listado no site ou não;</li>
+                <li class="list-group-item"><b>Destaque:</b> Definir se o imóvel será exibido na seção de destaque no site;</li>
+                <li class="list-group-item"><b>Imagens do imóvel:</b> Imagens que vão ser exibidas quando o cliente abrir para ver mais informações;</li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<!-- Fim :: Modal Help-->

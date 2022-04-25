@@ -26,7 +26,7 @@ class ReservaController extends BaseController
         $dados['reserva'] = $reservaModel->get();
         foreach ($dados['reserva'] as $key => $value) {
 
-            if (date('Y-m-d', strtotime($value['data_fim'])) < strtotime(date('Y-m-d'))) {
+            if (strtotime($value['data_fim']) < strtotime(date('Y-m-d'))) {
                 $reservaModel->customSoftDelete($value['uuid_reserva'], true);
             }
         }
@@ -58,7 +58,31 @@ class ReservaController extends BaseController
         $reservaModel = new ReservaModel;
         $dados['reserva'] = $reservaModel->get([$reservaModel->uuidColumn => $uuid], [], true);
 
-        return $this->template('reserva', ['edit', 'functions'], $dados);
+        return $this->template('reserva', ['edit', 'functions', 'modal'], $dados);
+    }
+
+    /**
+     * Exibe a Tela de Alterar o Registro
+     * @param string $uuid UUID do Registro
+     * @return html
+     */
+    public function visualizar(string $uuid)
+    {
+        if (!$this->verificarUuid($uuid)) {
+            $this->nativeSession->setFlashData('error', lang('Errors.geral.validaUuid'));
+            return redirect()->to(base_url("reserva"));
+        }
+
+        $reservaModel = new ReservaModel;
+        $dados['reserva'] = $reservaModel->get([$reservaModel->uuidColumn => $uuid], [], true, [], false, true);
+        // dd($dados);
+        return $this->template(
+            'reserva',
+            [
+                'visualizar', 'functions'
+            ],
+            $dados
+        );
     }
 
     /**
@@ -205,7 +229,9 @@ class ReservaController extends BaseController
         try {
             $reservaModel->where($reservaModel->uuidColumn, $uuid)->set($dadosReserva)->update();
         } catch (Exception $e) {
-            return $this->response->setJSON(['mensagem' => lang('Errors.banco.validaUpdate')], 422);
+            $error = $e->getMessage();
+            $error = explode('|',  $error);
+            return $this->response->setJSON(['mensagem' => lang($error[1])], 422);
         }
 
         return $this->response->setJSON(['mensagem' => lang('Success.default.ativado', ['Reserva'])], 202);

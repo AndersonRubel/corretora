@@ -58,7 +58,7 @@ const maskFunctions = {
         $('[data-mask="cpf"]').attr('data-verificaNumero', true);
         $('[data-mask="cpf"]').mask('999.999.999-99').focusout(function (event) {
             let target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-            if ($(target).val().length != 14 && $(target).val() != '') {
+            if ($(target).val().length == 14 && $(target).val() != '') {
                 if (!validFunctions.cpf($(target).val())) {
                     $(this).focus()
                     notificationFunctions.toastSmall('error', 'CPF inválido');
@@ -70,7 +70,7 @@ const maskFunctions = {
         $('[data-mask="cnpj"]').attr('data-verificaNumero', true);
         $('[data-mask="cnpj"]').mask('99.999.999/9999-99').focusout(function (event) {
             let target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-            if ($(target).val().length != 18 && $(target).val() != '') {
+            if ($(target).val().length == 18 && $(target).val() != '') {
                 if (!validFunctions.cnpj($(target).val())) {
                     $(this).focus()
                     notificationFunctions.toastSmall('error', 'CNPJ inválido');

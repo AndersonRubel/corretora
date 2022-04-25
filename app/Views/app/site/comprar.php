@@ -3,15 +3,14 @@
         <div class="col-md-12">
             <div class="view-options bg-white py-3 px-3 d-md-flex align-items-center">
                 <div class="mr-auto">
-                    <a href="index.html" class="icon-view view-module active"><span class="icon-view_module"></span></a>
-                    <a href="view-list.html" class="icon-view view-list"><span class="icon-view_list"></span></a>
+                    <!-- <a href="index.html" class="icon-view view-module active"><span class="icon-view_module"></span></a> -->
+                    <!-- <a href="view-list.html" class="icon-view view-list"><span class="icon-view_list"></span></a> -->
 
                 </div>
                 <div class="ml-auto d-flex align-items-center">
                     <div>
-                        <a href="<?= base_url("site/buscar") ?>" id="todos" class="view-list px-3 border-right">Todos</a>
-                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=1') ?>" id="aluguel" class="view-list px-3 border-right">Aluguel</a>
-                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=2') ?>" id="venda" class="view-list px-3">Venda</a>
+                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=2') ?>" id="venda" class="view-list px-3">Comprar</a>
+                        <a href="<?= base_url('site/buscar?codigo_categoria_imovel=1') ?>" id="aluguel" class="view-list px-3 border-right">Alugar</a>
                     </div>
                     <form id="formCondominio" method="GET" action="">
                         <input type="hidden" id="codigo_categoria_imovel_condominio" name="codigo_categoria_imovel" value>
@@ -64,6 +63,7 @@
     <div class="container">
 
         <div class="row mb-5">
+
             <?php foreach ($imovel['itens'] as $value) : ?>
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="property-entry h-100">
@@ -82,7 +82,16 @@
                             <a href="#" class="property-favorite"><span class="icon-heart-o"></span></a>
                             <h2 class="property-title"><a href="property-details.html"><?= $value['tipo_imovel'] ?></a></h2>
                             <span class="property-location d-block mb-3"><span class="property-icon icon-room"></span><?= $value['endereco'] ?></span>
-                            <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor']) ?></strong>
+                            <?php if ($value['categoria_imovel'] == 'Aluguel') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_aluguel']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($value['categoria_imovel'] == 'Venda') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_venda']) ?></strong>
+                            <?php endif ?>
+                            <?php if ($value['categoria_imovel'] == 'Venda/Aluguel') : ?>
+                                <strong class="property-price text-primary mb-3 d-block text-success" data-mask="dinheiro">R$<?= intToreal($value['valor_venda']) . ' / R$' . intToreal($value['valor_aluguel']) ?></strong>
+
+                            <?php endif ?>
                             <ul class="property-specs-wrap mb-3 mb-lg-0">
                                 <?php if ($value['tipo_imovel'] != 'Terreno') : ?>
                                     <li>

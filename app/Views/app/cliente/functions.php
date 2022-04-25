@@ -57,9 +57,14 @@
             clienteFunctions.listenerTipoPessoa();
             clienteFunctions.listenerBuscarCep();
             clienteFunctions.listenerFiltros();
-
+            clienteFunctions.listenerModalHelp();
             // Atualiza os campos conforme a o tipo de pessoa
             $("#tipoPessoa").trigger('change');
+        },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
         },
         listenerFiltros: () => {
             $(document).on('click', "[data-action='btnLimpar']", () => {
@@ -116,8 +121,11 @@
                     // Troca a Label de Nome Fantasia para Nome
                     $("#nomeFantasia").find('label').text('Nome *');
 
-                    // Troca a Label de CNPJ para CPF, e atualiza o tipo de mascara
-                    $("#cpfCnpj").find('label').text('CPF');
+                    // Esconde o cnpj, remove a obrigatoriedade
+                    $("#cnpj").addClass('d-none').find('input').removeAttr('required');
+
+                     // Mostra cpf, e adiciona a obrigatoriedade
+                     $("#cpf").removeClass('d-none').find('input').attr('required');
 
                     // Exibe a Data de Nascimento
                     $("#dataNascimento").removeClass('d-none');
@@ -128,8 +136,11 @@
                     $("#razaoSocial").removeClass('d-none').find('input').attr('required');
                     $("#nomeFantasia").find('label').text('Nome Fantasia *');
 
-                    // Troca a Label de CPF para CNPJ, e atualiza o tipo de mascara
-                    $("#cpfCnpj").find('label').text('CNPJ *');
+                    // Esconde o Campo de cpf, remove a obrigatoriedade
+                    $("#cpf").addClass('d-none').find('input').removeAttr('required');
+
+                     // Mostra cnpj, e adiciona a obrigatoriedade
+                     $("#cnpj").removeClass('d-none').find('input').attr('required');
 
                     // Oculta a Data de Nascimento
                     $("#dataNascimento").addClass('d-none');

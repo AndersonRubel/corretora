@@ -50,7 +50,8 @@ class ImovelModel extends BaseModel
         'destaque',
         'publicado',
         'diretorio_imagem',
-        'valor'
+        'valor_venda',
+        'valor_aluguel'
     ];
 
     /**
@@ -78,7 +79,8 @@ class ImovelModel extends BaseModel
           , {$this->table}.vaga
           , {$this->table}.condominio
           , {$this->table}.publicado
-          , {$this->table}.valor
+          , {$this->table}.valor_venda
+          , {$this->table}.valor_aluguel
           , (SELECT array_to_string(array_agg(ci.nome), ', ')
                FROM categoria_imovel ci
               WHERE ci.codigo_categoria_imovel = {$this->table}.codigo_categoria_imovel
@@ -121,7 +123,6 @@ class ImovelModel extends BaseModel
         if (!empty($configDataGrid->filtros['codigo_proprietario'])) {
             $this->where("{$this->table}.codigo_proprietario", $configDataGrid->filtros['codigo_proprietario']);
         }
-
         /////// Fim :: Filtros ///////
 
         $queryCompiled = $this->getCompiledSelect();
@@ -149,7 +150,7 @@ class ImovelModel extends BaseModel
 
         $this->select("
             codigo_imovel AS id
-          , codigo_referencia AS text
+          , 'Ref: ' || codigo_referencia || ' - ('  || (select nome from tipo_imovel as ti where ti.codigo_tipo_imovel = imovel.codigo_tipo_imovel )|| ' - '  || (select bairro from endereco_imovel as ei where ei.codigo_imovel = imovel.codigo_imovel ) || ')' AS text
           , diretorio_imagem
         ", FALSE);
 

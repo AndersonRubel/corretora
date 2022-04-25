@@ -36,8 +36,8 @@ class CreateTableImovel extends Migration
             'destaque'                 => ['type' => 'BOOLEAN', 'default' => true],
             'publicado'                => ['type' => 'BOOLEAN', 'default' => true],
             'diretorio_imagem'         => ['type' => 'VARCHAR', 'null' => true],
-            'valor'                    => ['type' => 'BIGINT', 'null' => true],
-
+            'valor_venda'              => ['type' => 'BIGINT', 'null' => true],
+            'valor_aluguel'            => ['type' => 'BIGINT', 'null' => true],
         ]);
 
         $this->forge->addPrimaryKey($this->primaryKey);

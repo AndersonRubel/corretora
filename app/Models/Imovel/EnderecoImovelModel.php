@@ -39,6 +39,8 @@ class EnderecoImovelModel extends BaseModel
         'complemento',
         'bairro',
         'cidade',
-        'uf'
+        'uf',
+        'lat',
+        'lng'
     ];
 }

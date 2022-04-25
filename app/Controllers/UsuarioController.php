@@ -51,7 +51,7 @@ class UsuarioController extends BaseController
      */
     public function create()
     {
-        return $this->template('usuario', ['create', 'functions']);
+        return $this->template('usuario', ['create', 'functions', 'modal']);
     }
 
     /**
@@ -82,7 +82,7 @@ class UsuarioController extends BaseController
             ) AS grupo_acesso'
         ];
         $dados['usuario'] = $usuarioModel->get([$usuarioModel->uuidColumn => $uuid], $colunas, true);
-        return $this->template('usuario', ['edit', 'functions'], $dados);
+        return $this->template('usuario', ['edit', 'functions', 'modal'], $dados);
     }
 
     /**

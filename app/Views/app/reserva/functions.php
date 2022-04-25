@@ -205,8 +205,15 @@
         init: () => {
             reservaFunctions.listenerCliente();
             reservaFunctions.listenerFiltros();
+            reservaFunctions.listenerModalHelp();
 
         },
+        listenerModalHelp: () => {
+            $(document).on('click', "#btnHelp", () => {
+                $("#modalHelp").modal('show');
+            });
+        },
+
         listenerCliente: () => {
 
             // Ao fechar a Modal limpa os campos
@@ -420,8 +427,8 @@
             ];
             mapeamento[1][ROUTE]['btn_montar'] = true;
             mapeamento[1][ROUTE]['btn'] = [{
-                "funcao": "ativar",
-                "metodo": "",
+                "funcao": "visualizar",
+                "metodo": "visualizar",
                 "compare": null
             }, ];
         },

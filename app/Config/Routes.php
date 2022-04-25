@@ -191,12 +191,13 @@ $routes->group('', ['filter' => 'sessao'], function ($routes) {
             $routes->get('', 'ReservaController::index');
             $routes->get('adicionar', 'ReservaController::create');
             $routes->get('alterar/(:hash)', 'ReservaController::edit/$1');
-
+            $routes->get('visualizar/(:hash)', 'ReservaController::visualizar/$1');
             // Funcionalidades
             $routes->post('store', 'ReservaController::store');
             $routes->post('update/(:hash)', 'ReservaController::update/$1');
             $routes->post('ativar/(:hash)', 'ReservaController::enable/$1');
             $routes->post('desativar/(:hash)', 'ReservaController::disable/$1');
+
             $routes->post('getDataGrid/(:num)', 'ReservaController::getDataGrid/$1');
             $routes->post('backendCall/(:alphanum)', 'ReservaController::backendCall/$1');
         });
