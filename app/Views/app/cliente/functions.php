@@ -123,12 +123,12 @@
 
                     // Esconde o cnpj, remove a obrigatoriedade
                     $("#cnpj").addClass('d-none').find('input').removeAttr('required');
+                    $("cnpj").val('');
+                    // Mostra cpf, e adiciona a obrigatoriedade
+                    $("#cpf").removeClass('d-none').find('input').attr('required');
 
-                     // Mostra cpf, e adiciona a obrigatoriedade
-                     $("#cpf").removeClass('d-none').find('input').attr('required');
-
-                    // Exibe a Data de Nascimento
-                    $("#dataNascimento").removeClass('d-none');
+                    // // Exibe a Data de Nascimento
+                    // $("#dataNascimento").removeClass('d-none');
                 } else {
                     // PESSOA JURÍDICA
 
@@ -138,12 +138,12 @@
 
                     // Esconde o Campo de cpf, remove a obrigatoriedade
                     $("#cpf").addClass('d-none').find('input').removeAttr('required');
+                    $("cpf").val('');
+                    // Mostra cnpj, e adiciona a obrigatoriedade
+                    $("#cnpj").removeClass('d-none').find('input').attr('required');
 
-                     // Mostra cnpj, e adiciona a obrigatoriedade
-                     $("#cnpj").removeClass('d-none').find('input').attr('required');
-
-                    // Oculta a Data de Nascimento
-                    $("#dataNascimento").addClass('d-none');
+                    // // Oculta a Data de Nascimento
+                    // $("#dataNascimento").addClass('d-none');
                 }
 
                 appFunctions.addInputLabelRequired();

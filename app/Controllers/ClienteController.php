@@ -124,6 +124,13 @@ class ClienteController extends BaseController
         } else {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
         }
+        if ($dadosRequest['cpf_cnpj']) {
+            $cliente = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj'])]);
+            if (!empty($cliente)) {
+                $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Já Cadastrado.');
+                return redirect()->back()->withInput();
+            }
+        }
 
         // JSONB de Dados do Endereço
         $clienteEndereco = [
@@ -175,7 +182,8 @@ class ClienteController extends BaseController
 
         $erros = $this->validarRequisicao($this->request, [
             'nome_fantasia' => 'required|string|min_length[3]|max_length[255]',
-            'cpf_cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
+            'cpf' => 'permit_empty|string|min_length[11]|max_length[18]',
+            'cnpj' => 'permit_empty|string|min_length[11]|max_length[18]',
             'email' => 'permit_empty|valid_email|max_length[255]',
             'data_nascimento' => 'permit_empty|valid_date',
             'telefone' => [
@@ -191,6 +199,20 @@ class ClienteController extends BaseController
         if (!empty($erros)) {
             return $this->response->setJSON(['mensagem' => formataErros($erros)], 422);
         }
+        if (!empty($dadosRequest['cpf'])) {
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cpf'];
+        } else {
+            $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
+        }
+
+        if ($dadosRequest['cpf_cnpj']) {
+
+            $cliente = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj'])]);
+            if (!empty($cliente)) {
+                return $this->response->setJSON(['mensagem' => 'CPF ou CNPJ Já Cadastrado.'], 422);
+            }
+        }
+
         // JSONB de Dados do Endereço
         $clienteEndereco = [
             'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
@@ -281,7 +303,13 @@ class ClienteController extends BaseController
         } else {
             $dadosRequest['cpf_cnpj'] = $dadosRequest['cnpj'];
         }
-
+        if ($dadosRequest['cpf_cnpj']) {
+            $cliente = $clienteModel->get(['cpf_cnpj' => onlyNumber($dadosRequest['cpf_cnpj']), 'uuid_cliente !=' => $uuid]);
+            if (!empty($cliente)) {
+                $this->nativeSession->setFlashData('error', 'CPF ou CNPJ Já Cadastrado.');
+                return redirect()->back()->withInput();
+            }
+        }
         // JSONB de Dados do Endereço
         $clienteEndereco = [
             'cep'         => !empty($dadosRequest['cep'])         ? onlyNumber($dadosRequest['cep'])    : '',
@@ -326,10 +354,17 @@ class ClienteController extends BaseController
      */
     public function enable(string $uuid): Response
     {
+        $clienteModel = new ClienteModel;
         if (!$this->verificarUuid($uuid)) {
             return $this->response->setJSON(['mensagem' => lang('Errors.geral.validaUuid')], 400);
         }
 
+        $cliente = $clienteModel->get(['uuid_cliente' => $uuid], ['cpf_cnpj'], true, [], false, true);
+        $existe = $clienteModel->get(['cpf_cnpj' => onlyNumber($cliente['cpf_cnpj']), 'uuid_cliente !=' => $uuid]);
+
+        if (!empty($existe)) {
+            return $this->response->setJSON(['mensagem' => lang('O CPF ou CNPJ está cadastrado em um usuário ativo. ')], 422);
+        }
         $dadosUsuario = $this->nativeSession->get("usuario");
         $clienteModel = new ClienteModel;
 

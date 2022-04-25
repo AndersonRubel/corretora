@@ -206,7 +206,8 @@
             reservaFunctions.listenerCliente();
             reservaFunctions.listenerFiltros();
             reservaFunctions.listenerModalHelp();
-
+            reservaFunctions.listenerTipoPessoa();
+            $("#tipoPessoa").trigger('change');
         },
         listenerModalHelp: () => {
             $(document).on('click', "#btnHelp", () => {
@@ -250,7 +251,8 @@
                 await appFunctions.backendCall('POST', `cliente/storeSimplificado`, {
                     nome_fantasia: $("#modalCadastrarCliente input[name='nome_fantasia']")
                         .val(),
-                    cpf_cnpj: $("#modalCadastrarCliente input[name='cpf_cnpj']").val(),
+                    cpf: $("#modalCadastrarCliente input[name='cpf']").val(),
+                    cnpj: $("#modalCadastrarCliente input[name='cnpj']").val(),
                     email: $("#modalCadastrarCliente input[name='email']").val(),
                     data_nascimento: $("#modalCadastrarCliente input[name='data_nascimento']")
                         .val(),
@@ -267,8 +269,13 @@
                     if (res && res.cliente) {
                         $("[data-select='buscarCliente']").select2('val', res.cliente);
                         $("#modalCadastrarCliente").modal('hide');
+                    } else {
+                        notificationFunctions.toastSmall('info', res.mensagem)
                     }
-                }).catch(err => notificationFunctions.toastSmall(err.textStatus, err.mensagem));
+
+                }).catch(err => {
+                    notificationFunctions.toastSmall(err.textStatus, err.mensagem)
+                });
             });
 
         },
@@ -304,6 +311,53 @@
                 $('#tableAtivos').DataTable(dataGridGlobalFunctions.getSettings(0));
                 $('#tableInativos').DataTable(dataGridGlobalFunctions.getSettings(1));
             })
+        },
+        listenerTipoPessoa: () => {
+            $(document).on('change', "#tipoPessoa", function() {
+
+                if ($(this).val() !== $('#tipoPessoa').val()) {
+                    // Zera o valor dos campos
+                    $("input[name='razao_social'], input[name='nome_fantasia'], input[name='cpf_cnpj']")
+                        .val('');
+                }
+
+                if ($(this).val() == 1) {
+                    // PESSOA FÍSICA
+
+                    // Esconde o Campo de Razão Social, remove a obrigatoriedade
+                    $("#razaoSocial").addClass('d-none').find('input').removeAttr('required');
+
+                    // Troca a Label de Nome Fantasia para Nome
+                    $("#nomeFantasia").find('label').text('Nome *');
+
+                    // Esconde o cnpj, remove a obrigatoriedade
+                    $("#cnpj").addClass('d-none').find('input').removeAttr('required');
+                    $("cnpj").val('');
+                    // Mostra cpf, e adiciona a obrigatoriedade
+                    $("#cpf").removeClass('d-none').find('input').attr('required');
+
+                    // // Exibe a Data de Nascimento
+                    // $("#dataNascimento").removeClass('d-none');
+                } else {
+                    // PESSOA JURÍDICA
+
+                    // Exibe o Campo de Razão Social, e adiciona a obrigatoriedade
+                    $("#razaoSocial").removeClass('d-none').find('input').attr('required');
+                    $("#nomeFantasia").find('label').text('Nome Fantasia *');
+
+                    // Esconde o Campo de cpf, remove a obrigatoriedade
+                    $("#cpf").addClass('d-none').find('input').removeAttr('required');
+                    $("cpf").val('');
+                    // Mostra cnpj, e adiciona a obrigatoriedade
+                    $("#cnpj").removeClass('d-none').find('input').attr('required');
+
+                    // // Oculta a Data de Nascimento
+                    // $("#dataNascimento").addClass('d-none');
+                }
+
+                appFunctions.addInputLabelRequired();
+                maskFunctions.init();
+            });
         },
     };
 
